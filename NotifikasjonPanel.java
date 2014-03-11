@@ -75,7 +75,7 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 		gbc.gridy=0;
 		this.add(bekreftButton, gbc);
 		
-		avslaaButton=new JButton(" Avslå ");
+		avslaaButton=new JButton(" Avslaa ");
 		avslaaButton.addActionListener(this);
 		gbc.gridx=2;
 		gbc.gridy=1;
@@ -94,7 +94,7 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 		if (arg0.getSource()==bekreftButton){
 			System.out.println("Bekreft");
 		}else if(arg0.getSource()==avslaaButton){
-			System.out.println("Avslå");
+			System.out.println("Avslaa");
 		}else if (arg0.getSource()==infoButton){
 			pcs.firePropertyChange(INFO_PROPERTY,"oldvalue","newvalue"); //firepropertyChange til notifikasjonListPanel
 		}
