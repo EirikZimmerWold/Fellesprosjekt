@@ -1,0 +1,693 @@
+package Fellesprosjektet;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import oving4.Person;
+import oving4.PersonPanel;
+
+public class nyAvtale extends JPanel {
+	GridBagConstraints gc;
+	Calendar tid;
+	final JFrame popUpWithMessage = new JFrame();
+	JScrollPane listScrollPane;
+	
+	//Personer
+	Ansatt kari;
+	Ansatt ida;
+	Ansatt henrik;
+	Ansatt gris;
+	Ansatt fredrik;
+	Ansatt nora;
+	Ansatt eline;
+	Ansatt Gina;
+	Ansatt Fridtjof;
+	Ansatt oyvind;
+	Ansatt ola;
+	Ansatt knut;
+	Ansatt eirik;
+	Ansatt truls;
+	Ansatt vert;
+	
+	//Starttid
+	JLabel startTidLabel;
+	JComboBox startTidDag;
+	JComboBox startTidMaaned;
+	JComboBox startTidAar;
+	JTextField startTidKl;
+	
+	//Sluttid
+	JLabel sluttTidLabel;
+	JComboBox sluttTidDag;
+	JComboBox sluttTidMaaned;
+	JComboBox sluttTidAar;
+	JTextField sluttTidKl;
+
+	//Beskrivelse
+	JLabel beskrivelseLabel;
+	JTextField beskrivelseFelt;
+	
+	//Personer
+	JLabel personerLabel;
+	JListScroll personerList;
+	DefaultListModel personModell;
+	
+	//Grupper
+	JLabel grupperLabel;
+	JListScroll grupperList;
+	DefaultListModel gruppeModell;
+	
+	//Deltagere
+	JLabel deltagereLabel;
+	JListScroll deltagereList;
+	DefaultListModel deltagerModell;
+	
+	//Rom
+	JLabel mooteromLabel;
+	JComboBox mooteromFelt;
+	JLabel etterRomLabel;
+	
+	//Buttons
+	JButton fjernButton;
+	JButton velgPersonButton;
+	JButton velgGruppeButton;
+	JButton lagreButton;
+	JButton avbrytButton;
+	JButton finnPassendeRomButton;
+	
+	//Avtaler
+	DefaultListModel avtalerModell;
+	JListScroll avtalerJList;
+	
+	//Dag pr Maaned
+	int januar, mars, mai, juli, august, oktober, desember = 31;
+	int februar = 28;
+	int april, juni, september, november = 30;
+	
+	public nyAvtale()  {
+		super(new GridBagLayout());
+		gc = new GridBagConstraints();
+		tid = new GregorianCalendar();
+		
+		
+		// START-TID
+	
+	    startTidLabel = new JLabel("Start-tidspunkt:");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 1;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(startTidLabel, gc);
+	    
+	    // START ÅR
+	    
+	    startTidAar = new JComboBox();
+	    for (int k = tid.getTime().getYear()+1900; k < 2031; k++) {
+			startTidAar.addItem(k);
+		}
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 2;
+	    gc.gridy = 1;
+	    add(startTidAar, gc);
+	    
+	    // START MÅNED
+	    
+	    startTidMaaned = new JComboBox(Maaned.values());
+	    startTidMaaned.setSelectedIndex(tid.getTime().getMonth());
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 3;
+	    gc.gridy = 1;
+	    add(startTidMaaned, gc);
+	    
+	    // START DAG
+	   
+	    startTidDag = new JComboBox();
+	    for (int i = 1; i < 32; i++) {
+	    	startTidDag.addItem(i);
+		}
+	    
+	    startTidDag.setSelectedIndex(tid.getTime().getDate()-1);
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 4;
+	    gc.gridy = 1;
+	    add(startTidDag, gc);
+	    
+	    // START-TID KLOKKE
+	    
+	    startTidKl = new JTextField();
+	    startTidKl.setEditable(true);
+	    int minutes = tid.getTime().getMinutes();
+	    String minutesWithNull = ""+minutes;
+	    if (minutes < 10) {
+	    	minutesWithNull = "0"+minutes;
+	    }
+	    
+	    tid.getTime().getMinutes();
+	    startTidKl.setText(tid.getTime().getHours()+":" + minutesWithNull);
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 5;
+	    gc.gridy = 1;
+	    add(startTidKl, gc);
+	    
+	    
+	    // SLUTT-TID
+	    
+	    sluttTidLabel = new JLabel("Slutt-tidspunkt:");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 2;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(sluttTidLabel, gc);
+	    
+	    // SLUTT-TID ÅR
+	    
+	    sluttTidAar = new JComboBox();
+	    for (int k = tid.getTime().getYear()+1900; k < 2031; k++) {
+			sluttTidAar.addItem(k);
+		}
+	    sluttTidAar.setSelectedIndex(0);
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 2;
+	    gc.gridy = 2;
+	    add(sluttTidAar, gc);
+	    
+	    // SLUTT-TID MÅNED
+	    
+	    sluttTidMaaned = new JComboBox(Maaned.values());
+	    sluttTidMaaned.setSelectedIndex(tid.getTime().getMonth());
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 3;
+	    gc.gridy = 2;
+	    add(sluttTidMaaned, gc);
+	    
+	    // SLUTT-TID DAG
+	    
+	    sluttTidDag = new JComboBox();
+	    for (int i = 1; i < 32; i++) {
+			sluttTidDag.addItem(i);
+		}
+	    sluttTidDag.setSelectedIndex(tid.getTime().getDate()-1);
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 4;
+	    gc.gridy = 2;
+	    add(sluttTidDag, gc);
+	    
+	    // SLUTT-TID KLOKKE
+	    
+	    sluttTidKl = new JTextField();
+	    sluttTidKl.setEditable(true);
+	    sluttTidKl.setText(1+ tid.getTime().getHours()+":" + minutesWithNull);
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 5;
+	    gc.gridy = 2;
+	    add(sluttTidKl, gc);
+	    
+	    // BESKRIVELSE
+	    
+	    beskrivelseLabel = new JLabel("Beskrivelse:");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 3;
+	    gc.insets = new Insets(0, 0, 50, 0);
+	    add(beskrivelseLabel, gc);
+	    
+	    beskrivelseFelt = new JTextField();
+	    gc.gridwidth = 4;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 2;
+	    gc.gridy = 3;
+	    gc.insets = new Insets(0, 0, 50, 0);
+	    add(beskrivelseFelt, gc);
+	    
+	    // LISTE MED DELTAGERE
+	    deltagereLabel = new JLabel("Deltagere:");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 5;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(deltagereLabel, gc);
+	    
+	    
+		deltagerModell = new DefaultListModel();
+		vert = new Ansatt("Vert");
+	    deltagerModell.addElement(vert);
+	    
+		deltagereList = new JListScroll(deltagerModell);
+		deltagereList.setBorder(new LineBorder(Color.black,2,true));
+		deltagereList.setCellRenderer(new JListCellRenderer());
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 6;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(deltagereList.getJScrollPane(), gc);
+	    
+	    // FJERN - BUTTON
+	    
+	   	fjernButton = new JButton();
+	   	fjernButton.setName("Fjern");
+	   	fjernButton.setText("Fjern =>");
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 7;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(fjernButton, gc);
+	    
+	    
+		// LISTE MED PERSONER
+	    
+	    personerLabel = new JLabel("Personer:");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 3;
+	    gc.gridy = 5;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(personerLabel, gc);
+	    
+		personModell = new DefaultListModel();
+		
+		kari = new Ansatt("Kari");
+		ida = new Ansatt("Ida");
+		henrik = new Ansatt("Henrik");
+		gris = new Ansatt("gris");
+		fredrik = new Ansatt("Fredrik");
+		nora = new Ansatt("Nora");
+		eline = new Ansatt("Eline");
+		Gina = new Ansatt("Gina");
+		Fridtjof = new Ansatt("Fridtjof");
+		oyvind = new Ansatt("Øyvind");
+		ola = new Ansatt("Ola");
+		knut = new Ansatt("Knut");
+		eirik = new Ansatt("Eirik");
+		truls = new Ansatt("Truls");
+		
+		personModell.addElement(kari);
+		personModell.addElement(ida);
+		personModell.addElement(henrik);
+		personModell.addElement(gris);
+		personModell.addElement(fredrik);
+		personModell.addElement(nora);
+		personModell.addElement(eline);
+		personModell.addElement(Gina);
+		personModell.addElement(Fridtjof);
+		personModell.addElement(oyvind);
+		personModell.addElement(ola);
+		personModell.addElement(knut);
+		personModell.addElement(eirik);
+		personModell.addElement(truls);
+		
+		personerList = new JListScroll(personModell);
+	    gc.weightx = 0.5;
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 3;
+	    gc.gridy = 6;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(personerList.getJScrollPane(), gc);
+	    
+	    velgPersonButton = new JButton();
+	    velgPersonButton.setName("Velg");
+	    velgPersonButton.setText("<= Inviter person");
+	    gc.weightx = 0.5;
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 3;
+	    gc.gridy = 7;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(velgPersonButton, gc);
+	    
+		// LISTE MED GRUPPER
+	    
+	    grupperLabel = new JLabel("Grupper:");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 5;
+	    gc.gridy = 5;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(grupperLabel, gc);
+	    
+		gruppeModell = new DefaultListModel();
+		
+		Gruppe rekrutteringsgruppa = new Gruppe("Rekrutteringsgruppa");
+		rekrutteringsgruppa.setNavn("Rekrutteringsgruppa");
+		rekrutteringsgruppa.setMedlem(kari);
+		rekrutteringsgruppa.setMedlem(ida);
+		
+		Gruppe administrerende = new Gruppe("Administrerende");
+		administrerende.setNavn("Administrerende");
+		administrerende.setMedlem(knut);
+		administrerende.setMedlem(Fridtjof);
+		administrerende.setMedlem(ola);
+		administrerende.setMedlem(oyvind);
+		
+		Gruppe utviklere = new Gruppe("Utviklere");
+		utviklere.setNavn("Utviklere");
+		utviklere.setMedlem(eline);
+		utviklere.setMedlem(kari);
+		utviklere.setMedlem(ida);
+		utviklere.setMedlem(truls);
+		utviklere.setMedlem(Gina);
+		utviklere.setMedlem(fredrik);
+		
+		
+		gruppeModell.addElement(rekrutteringsgruppa);
+		gruppeModell.addElement(administrerende);
+		gruppeModell.addElement(utviklere);
+		
+		grupperList = new JListScroll(gruppeModell);
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 5;
+	    gc.gridy = 6;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(grupperList.getJScrollPane(), gc);
+	    
+	    velgGruppeButton = new JButton();
+	    velgGruppeButton.setText("<= Inviter gruppe");
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 5;
+	    gc.gridy = 7;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(velgGruppeButton, gc);
+	    
+	    // MØTEROM
+	    
+	    mooteromLabel = new JLabel("Møterom:");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 8;
+	    gc.insets = new Insets(60, 0, 0, 0);
+	    add(mooteromLabel, gc);
+	    
+	    mooteromFelt = new JComboBox();
+	   
+	    Rom r1 = new Rom("R1", 3);
+	    Rom r2 = new Rom("R2", 10);
+	    Rom r3 = new Rom("R3", 15);
+	    Rom r4 = new Rom("R4", 5);
+	    mooteromFelt.addItem((Rom) r1);
+	    mooteromFelt.addItem((Rom) r2);
+	    mooteromFelt.addItem((Rom) r3);
+	    mooteromFelt.addItem((Rom) r4);
+	    
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 2;
+	    gc.gridy = 8;
+	    gc.insets = new Insets(60, 0, 0, 0);
+	    add(mooteromFelt, gc);
+	    
+	    finnPassendeRomButton = new JButton();
+	   	finnPassendeRomButton.setText("Finn et passende rom");
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 3;
+	    gc.gridy = 8;
+	    gc.insets = new Insets(60, 0, 0, 0);
+	    add(finnPassendeRomButton, gc);
+	    
+	    etterRomLabel = new JLabel("med tanke på antall deltagere");
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 4;
+	    gc.gridy = 8;
+	    gc.insets = new Insets(60, 0, 0, 0);
+	    add(etterRomLabel, gc);
+	    
+	    // AVTALER
+	    /*
+	    System.out.println(avtalerModell);
+	    avtalerJList = new JListScroll(avtalerModell);
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(0, 0, 0, 0);
+	    add(avtalerJList.getJScrollPane(), gc);
+	    */
+	    
+	    // AVBRYT OG LAGRE - BUTTONS
+	    
+	    avbrytButton = new JButton();
+	   	avbrytButton.setText("Avbryt");
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 10;
+	    gc.insets = new Insets(20, 0, 0, 0);
+	    add(avbrytButton, gc);
+	    
+	   	lagreButton = new JButton();
+	   	lagreButton.setText("Lagre avtale");
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 2;
+	    gc.gridy = 10;
+	    gc.insets = new Insets(20, 0, 0, 0);
+	    add(lagreButton, gc);
+	    
+	    
+	    // ACTIONLISTENERS
+	    
+	    startTidAar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if ((Integer) startTidAar.getSelectedItem() > (Integer) sluttTidAar.getSelectedItem()) {
+					sluttTidAar.setSelectedItem(startTidAar.getSelectedItem());
+				}
+			}
+		});
+	    
+	    sluttTidAar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if ((Integer) startTidAar.getSelectedItem() > (Integer) sluttTidAar.getSelectedItem()) {
+					sluttTidAar.setSelectedItem(startTidAar.getSelectedItem());
+				}
+			}
+		});
+	    
+	    startTidMaaned.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if ((Integer) startTidAar.getSelectedItem()-(Integer) sluttTidAar.getSelectedItem() == 0) {
+					if ((Integer) startTidMaaned.getSelectedIndex() > (Integer) sluttTidMaaned.getSelectedIndex()) {
+						sluttTidMaaned.setSelectedIndex(startTidMaaned.getSelectedIndex());
+					}
+				}
+			}
+		});
+	    
+	    sluttTidMaaned.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if ((Integer) startTidAar.getSelectedItem()-(Integer) sluttTidAar.getSelectedItem() == 0) {
+					if ((Integer) startTidMaaned.getSelectedIndex() > (Integer) sluttTidMaaned.getSelectedIndex()) {
+						sluttTidMaaned.setSelectedIndex(startTidMaaned.getSelectedIndex());
+					}
+				}
+			}
+		});
+	    
+	    startTidDag.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (startTidMaaned.getSelectedIndex() - sluttTidMaaned.getSelectedIndex() == 0) {
+					if ((Integer) startTidDag.getSelectedIndex() > (Integer) sluttTidDag.getSelectedIndex()) {
+						sluttTidDag.setSelectedIndex(startTidDag.getSelectedIndex());
+					}
+				}
+				
+			}
+		});
+	    
+	    sluttTidDag.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (startTidMaaned.getSelectedIndex() - sluttTidMaaned.getSelectedIndex() == 0) {
+					if ((Integer) startTidDag.getSelectedIndex() > (Integer) sluttTidDag.getSelectedIndex()) {
+						sluttTidDag.setSelectedIndex(startTidDag.getSelectedIndex());
+					}
+				}
+				
+			}
+		});
+	    
+	    
+	    velgPersonButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deltagerModell.addElement(personerList.getJList().getSelectedValue());
+				deltagereList.setDefaultListModel(deltagerModell);
+				personModell.removeElement(personerList.getJList().getSelectedValue());
+				personerList.setDefaultListModel(personModell);
+				deltagereList.updateUI();	
+				
+			}
+		});
+	    
+	    velgGruppeButton.addActionListener(new ActionListener() {
+	    	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Gruppe g = (Gruppe) grupperList.getJList().getSelectedValue();
+				for (int r = 0; r < g.getCount(); r++) {
+					Ansatt medlem = g.getAnsatt(r);
+					if (deltagerModell.contains(medlem)) {
+						String message = medlem.getBrukernavn() + " er allerede invitert";
+						JOptionPane.showMessageDialog(popUpWithMessage, message);
+					}
+					else {
+						deltagerModell.addElement(medlem);
+						deltagereList.setDefaultListModel(deltagerModell);
+						personModell.removeElement(medlem);
+						personerList.setDefaultListModel(personModell);
+					}
+				}
+			}
+		});
+	    
+	    fjernButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (deltagereList.getJList().getSelectedValue() == vert) {
+					JOptionPane.showMessageDialog(popUpWithMessage, "Verten må delta på arrangementet. Kan ikke fjernes.");
+				}
+				else {
+					personModell.addElement(deltagereList.getJList().getSelectedValue());
+					personerList.setDefaultListModel(personModell);
+					deltagerModell.removeElement(deltagereList.getJList().getSelectedValue());
+					deltagereList.setDefaultListModel(deltagerModell);
+				}
+			}
+		});
+	    
+	    finnPassendeRomButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				int antallDeltagere = deltagereList.getDefaultListModel().getSize();
+				Rom passendeRom = (Rom) mooteromFelt.getItemAt(0);
+				
+				for (int s = 0; s < mooteromFelt.getItemCount(); s++) {
+					Rom rom = (Rom) mooteromFelt.getItemAt(s);
+					if (rom.getMaksAntallPersoner() > antallDeltagere) {
+						if ((rom.getMaksAntallPersoner()-antallDeltagere) < (passendeRom.getMaksAntallPersoner()-antallDeltagere) || passendeRom.getMaksAntallPersoner()-antallDeltagere < 0) {
+							passendeRom = rom;
+						}
+					}
+				}
+				mooteromFelt.setSelectedItem(passendeRom);
+				mooteromFelt.updateUI();
+				
+				// må også søke gjennom alle avtaler, og sjekke om det passende møterommet er ledig på gitt tidspunkt
+				
+				if (passendeRom.getMaksAntallPersoner() < antallDeltagere) {
+					JOptionPane.showMessageDialog(popUpWithMessage, "Det finnes dessverre ikke et stort nok møterom");
+				}
+				
+			}
+		});
+	    
+	    lagreButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
+				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
+				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) mooteromFelt.getSelectedItem(), deltagerModell);
+				avtalerModell.addElement(avtale);
+				
+			}
+		});
+	    
+	    
+	}
+	
+	protected enum Maaned {
+		Januar,
+		Feburar,
+		Mars,
+		April,
+		Mai,
+		Juni,
+		Juli,
+		August,
+		September,
+		Oktober,
+		November,
+		Desember
+	}
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setSize(new Dimension(900,600));
+		nyAvtale na = new nyAvtale();
+		frame.setContentPane(na);
+		frame.setVisible(true);
+		frame.setBackground(Color.white);
+		
+		
+	}
+	
+	private static class JListCellRenderer extends DefaultListCellRenderer {  
+        public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {  
+            Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );  
+            c.setBackground(Color.white);
+            c.setForeground(Color.black);
+            if (cellHasFocus) {
+            	c.setBackground(Color.cyan);
+            }
+            return c;  
+        }  
+    }  
+
+}
