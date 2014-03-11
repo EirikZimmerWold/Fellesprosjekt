@@ -22,14 +22,14 @@ import javax.swing.event.ChangeListener;
 
 //Denne klassen skal dukke opp når man velger en avtale i ukeview.
 //den henter inn avtaleinfo og lager en liste som har alle deltagerene
-//det er 4 knapper. bekreft/avslå for deltagerne og endre/slette avtale for Leder
+//det er 4 knapper. bekreft/Avsla for deltagerne og endre/slette avtale for Leder
 
 public class avtaleview extends JPanel {
 	JScrollPane rull;
 	//må forandres til JList<Ansatt>
 	JList<String> Deltagere;
 	JButton Bekreft;
-	JButton Avslå;
+	JButton Avsla;
 	JButton endre;
 	JButton slette;
 	GridBagConstraints c;
@@ -54,8 +54,8 @@ public class avtaleview extends JPanel {
 		rull.setPreferredSize(new Dimension(125,100));
 		Bekreft = new JButton("Bekreft");
 		Bekreft.addActionListener(new OK());
-		Avslå = new JButton("Avslå");
-		Avslå.addActionListener(new NEI());
+		Avsla = new JButton("Avsla");
+		Avsla.addActionListener(new NEI());
 		endre = new JButton("endre event");
 		endre.addActionListener(new EDIT());
 		slette = new JButton("slett event");
@@ -81,7 +81,7 @@ public class avtaleview extends JPanel {
 		c.gridx=2;
 		add(Bekreft, c);
 		c.gridy=3;
-		add(Avslå, c);
+		add(Avsla, c);
 		c.gridx = 2;
 		c.gridy = 0;
 		add(endre, c);
@@ -107,7 +107,7 @@ public class avtaleview extends JPanel {
 	class NEI implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//sette valgt deltager til avslått status
+			//sette valgt deltager til Avslatt status
 		}
 	}
 	class EDIT implements ActionListener{
