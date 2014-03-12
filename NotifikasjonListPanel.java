@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,10 +25,14 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 		frame.setVisible(true);
 		frame.pack();
 		
-		NotifikasjonPanel notifikasjonPanel=new NotifikasjonPanel();
-		notifikasjonListPanel.addNotifikasjonPanel(notifikasjonPanel);
-		NotifikasjonPanel notifikasjonPanel2=new NotifikasjonPanel();
-		notifikasjonListPanel.addNotifikasjonPanel(notifikasjonPanel2);
+		Rom rom=new Rom("R2");
+		Ansatt leder=new Ansatt("idawol");
+		leder.setNavn("Per");
+		DefaultListModel deltagere=new DefaultListModel();
+		Avtale avtale=new Avtale("2014-03-12-1415","2014-03-12-1600", "Testing av prototype", rom, deltagere, leder);
+		notifikasjonListPanel.addNotifikasjonPanel(avtale);
+		//NotifikasjonPanel notifikasjonPanel2=new NotifikasjonPanel();
+		//notifikasjonListPanel.addNotifikasjonPanel(notifikasjonPanel2);
 	}
 	
 	public NotifikasjonListPanel(){
@@ -46,7 +51,8 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         this.add(avtaleinfo);
 	}
 	
-	public void addNotifikasjonPanel(NotifikasjonPanel panel){
+	public void addNotifikasjonPanel(Avtale avtale){
+		NotifikasjonPanel panel=new NotifikasjonPanel(avtale);
 		gbc=new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;
@@ -59,6 +65,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		avtaleinfo.settInfo();
+		Avtale avtale=((NotifikasjonPanel)evt.getSource()).getNotifikasjon().getAvtale();
+		avtaleinfo.settInfo(avtale);
 	}
 }

@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 
 public class NotifikasjonPanel extends JPanel implements ActionListener{
-	private JLabel lederLabel, tidLabel, beskrivelseLabel, leder, tid, beskrivelse;
+	private JLabel lederLabel, startTidLabel, sluttTidLabel, leder, startTid, sluttTid;
 	private JButton bekreftButton, avslaaButton, infoButton;
 	protected Notifikasjon notifikasjon;
 	private GridBagConstraints gbc;
@@ -23,18 +23,19 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	public final static String INFO_PROPERTY="infoButton";
 	
 	public static void main(String[] args) {
-		JFrame frame=new JFrame();
-		NotifikasjonPanel panel=new NotifikasjonPanel();
-		frame.getContentPane().add(panel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.pack();
+		//JFrame frame=new JFrame();
+		//Avtale avtale=new Avtale();
+		//NotifikasjonPanel panel=new NotifikasjonPanel(avtale);
+		//frame.getContentPane().add(panel);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setVisible(true);
+		//frame.pack();
 	}
 	
-	public NotifikasjonPanel(){ //tar inn avtale/notifikasjon
+	public NotifikasjonPanel(Avtale avtale){
 		pcs=new PropertyChangeSupport(this);
 		
-		notifikasjon=new Notifikasjon(); //skal fjernes
+		notifikasjon=new Notifikasjon(avtale);
 		
 		gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());
@@ -51,25 +52,25 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 		gbc.gridy=0;
 		this.add(leder,gbc);
 		
-		tidLabel=new JLabel("Tid: ");
+		startTidLabel=new JLabel("Start tid: ");
 		gbc.gridx=0;
 		gbc.gridy=1;
-		this.add(tidLabel, gbc);
+		this.add(startTidLabel, gbc);
 		
-		tid=new JLabel(notifikasjon.getTid());
+		startTid=new JLabel(notifikasjon.getStartTid());
 		gbc.gridx=1;
 		gbc.gridy=1;
-		this.add(tid,gbc);
+		this.add(startTid,gbc);
 		
-		beskrivelseLabel=new JLabel("Beskrivelse: ");
+		sluttTidLabel=new JLabel("Slutt tid: ");
 		gbc.gridx=0;
 		gbc.gridy=2;
-		this.add(beskrivelseLabel, gbc);
+		this.add(sluttTidLabel, gbc);
 		
-		beskrivelse=new JLabel(notifikasjon.getBeskrivelse());
+		sluttTid=new JLabel(notifikasjon.getSluttTid());
 		gbc.gridx=1;
 		gbc.gridy=2;
-		this.add(beskrivelse,gbc);
+		this.add(sluttTid,gbc);
 		
 		bekreftButton=new JButton("Bekreft");
 		bekreftButton.addActionListener(this);
@@ -104,5 +105,9 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener){
 		pcs.addPropertyChangeListener(listener);
+	}
+	
+	public Notifikasjon getNotifikasjon(){
+		return this.notifikasjon;
 	}
 }

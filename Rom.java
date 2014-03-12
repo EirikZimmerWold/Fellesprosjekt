@@ -36,5 +36,8 @@ public class Rom {
 	public String toString() {
 		return navn + ", maks: " + maksAntallPersoner + " personer";
 	}
-
+	
+	public String getNavn(){
+		return this.navn;
+	}
 }
