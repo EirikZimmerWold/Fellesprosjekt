@@ -16,10 +16,10 @@ public class Avtale {
 	private String sluttKl;
 	private String beskrivelse;
 	private Rom rom = null;
-	private DefaultListModel<Ansatt> deltagere;
+	private DefaultListModel deltagere;
 	private Ansatt leder;
 	
-	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel<Ansatt> dm, Ansatt leder) {
+	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel dm, Ansatt leder) {
 		/* 
 		 * Start- og sluttidspunkt skal stå på formen:
 		 * 2014-12-20-1415

@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -845,6 +846,13 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 		frame.setVisible(true);
 		frame.setBackground(Color.white);
 		
+		Database db = new Database();
+		try {
+			System.out.println(db.checkUsername("kari1") + "");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	} 
 
