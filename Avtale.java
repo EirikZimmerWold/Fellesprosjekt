@@ -30,7 +30,7 @@ public class Avtale {
 		this.startDag = startParts[2];
 		this.startKl = startParts[3];
 		
-		String[] sluttParts = st.split("-");
+		String[] sluttParts = sl.split("-");
 		this.sluttAar = sluttParts[0];
 		this.sluttMaaned = sluttParts[1];
 		this.sluttDag = sluttParts[2];
