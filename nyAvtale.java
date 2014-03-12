@@ -33,9 +33,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import oving4.Person;
-import oving4.PersonPanel;
-
 public class nyAvtale extends JPanel {
 	GridBagConstraints gc;
 	Calendar tid;
