@@ -69,7 +69,9 @@ public class weekView {
 		frame.getContentPane().add(wkdPanel7);
 		
 		JButton nextButton = new JButton(">");
+	
 		frame.getContentPane().add(nextButton);
+		
 		
 		
 		frame.setVisible(true);
