@@ -12,6 +12,7 @@ import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -25,6 +26,8 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	private GridBagConstraints gbc;
 	private String brukernavn="Ida";
 	private char[] passord={'P','a','s','s','o','r','d'};
+	final JFrame popUpWithMessage = new JFrame();
+	private String message="Feil passord eller brukernavn";
 	
 	public static void main(String[] args) {
 		JFrame frame=new JFrame();
@@ -93,6 +96,8 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	public void actionPerformed(ActionEvent arg0) {
 		if(loggInn()){
 			System.out.println("Du er logget inn");
+		}else{
+			JOptionPane.showMessageDialog(popUpWithMessage, message);
 		}
 	}
 
@@ -105,6 +110,8 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 		if(arg0.getKeyCode()==KeyEvent.VK_ENTER){ 
 			if(loggInn()){
 				System.out.println("Du er logget inn");
+			}else{
+				JOptionPane.showMessageDialog(popUpWithMessage, message);
 			}
         }
 	}
