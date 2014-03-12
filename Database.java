@@ -36,5 +36,21 @@ public class Database {
 			return false;
 		}
 	}
+	
+	// husk Œ sende deltagerliste og! (legg til i database)
+	public void addAvtale(Avtale avtale) throws SQLException {
+		st = c.createStatement();
+		int id = avtale.getId();
+		String beskrivelse = avtale.getBeskrivelse();
+		String startTid = avtale.getStartTid();
+		String sluttTid = avtale.getSluttTid();
+		String adminBrukernavn = avtale.getLeder().getBrukernavn();
+		System.out.println(adminBrukernavn);
+		String rom = avtale.getRom().getNavn();
+		System.out.println(rom);
+		query = "INSERT INTO Avtale(beskrivelse, startTid, sluttTid, adminBrukernavn, romNr) VALUES('" 
+		+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"');";
+		st.executeUpdate(query);
+	}
 
 }
