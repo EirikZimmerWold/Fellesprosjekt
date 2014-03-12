@@ -17,8 +17,9 @@ public class Avtale {
 	private String beskrivelse;
 	private Rom rom = null;
 	private DefaultListModel deltagere;
+	private Ansatt leder;
 	
-	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel dm) {
+	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel dm, Ansatt leder) {
 		/* 
 		 * Start- og sluttidspunkt skal stå på formen:
 		 * 2014-12-20-1415
@@ -40,6 +41,8 @@ public class Avtale {
 		this.deltagere = dm;
 		count += 1;
 		id = count;
+		
+		this.leder=leder;
 	}
 
 	public String getStartAar() {
@@ -125,5 +128,20 @@ public class Avtale {
 	public String toString() {
 		return id + "";
 	}
-
+	
+	public void setLeder(Ansatt leder){
+		this.leder=leder;
+	}
+	
+	public Ansatt getLeder(){
+		return this.leder;
+	}
+	
+	public void setBeskrivelse(String beskrivelse){
+		this.beskrivelse=beskrivelse;
+	}
+	
+	public String getBeskrivelse(){
+		return this.beskrivelse;
+	}
 }

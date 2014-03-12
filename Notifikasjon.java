@@ -1,8 +1,14 @@
+package Fellesprosjektet;
 
 public class Notifikasjon {
 	private String leder, beskrivelse, tid;
 	
-	public void Notifikasjon(){//tar inn en avtale
+	public Notifikasjon(Avtale avtale){
+		this.leder=avtale.getLeder().getNavn();
+		this.beskrivelse=avtale.getBeskrivelse();
+		String startTid=avtale.getStartDag()+"."+avtale.getStartMaaned()+"."+avtale.getStartAar()+" "+avtale.getStartKl();
+		String sluttTid=avtale.getSluttDag()+"."+avtale.getSluttMaaned()+"."+avtale.getSluttAar()+" "+avtale.getSluttKl();
+		this.tid=startTid+" - "+sluttTid;
 	}
 
 	public String getLeder() {

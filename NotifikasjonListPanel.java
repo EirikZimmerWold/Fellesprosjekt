@@ -1,3 +1,5 @@
+package Fellesprosjektet;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,7 +14,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	private GridBagConstraints gbc;
 	private JScrollPane scrollPane;
 	private JPanel list;
-	protected avtaleinfo avtale;
+	protected avtaleinfo avtaleinfo;
 	
 	public static void main(String[] args) {
 		JFrame frame=new JFrame();
@@ -40,8 +42,8 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         scrollPane.setPreferredSize(new Dimension(350,500));
         add(scrollPane);
         
-        avtale=new avtaleinfo();
-        this.add(avtale);
+        avtaleinfo=new avtaleinfo();
+        this.add(avtaleinfo);
 	}
 	
 	public void addNotifikasjonPanel(NotifikasjonPanel panel){
@@ -57,6 +59,6 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		avtale.settInfo();
+		avtaleinfo.settInfo();
 	}
 }
