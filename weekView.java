@@ -1,3 +1,5 @@
+package Fellesprosjektet;
+
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
