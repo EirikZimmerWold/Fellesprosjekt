@@ -6,24 +6,17 @@ public class Avtale {
 	private static int count;
 	
 	private int id;
-	private String startAar;
-	private String startMaaned;
-	private String startDag;
-	private String startKl;
-	private String sluttAar;
-	private String sluttMaaned;
-	private String sluttDag;
-	private String sluttKl;
+	private String startTid;
+	private String sluttTid;
 	private String beskrivelse;
 	private Rom rom = null;
 	private DefaultListModel deltagere;
 	private Ansatt leder;
 	
 	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel dm, Ansatt leder) {
-		/* 
-		 * Start- og sluttidspunkt skal stå på formen:
-		 * 2014-12-20-1415
-		 */
+		/*
+		 * Dette kan brukes dersom tid skal hentes ut av databasen!
+		 * 
 		String[] startParts = st.split("-");
 		this.startAar = startParts[0];
 		this.startMaaned = startParts[1];
@@ -35,7 +28,9 @@ public class Avtale {
 		this.sluttMaaned = sluttParts[1];
 		this.sluttDag = sluttParts[2];
 		this.sluttKl = sluttParts[3];
-		
+		*/
+		startTid = st;
+		sluttTid = sl;
 		this.beskrivelse = besk;
 		this.rom = r;
 		this.deltagere = dm;
@@ -45,69 +40,41 @@ public class Avtale {
 		this.leder=leder;
 	}
 
-	public String getStartAar() {
-		return startAar;
+
+	public static int getCount() {
+		return count;
 	}
 
-	public void setStartAar(String startAar) {
-		this.startAar = startAar;
+
+	public static void setCount(int count) {
+		Avtale.count = count;
 	}
 
-	public String getStartMaaned() {
-		return startMaaned;
+
+	public String getStartTid() {
+		return startTid;
 	}
 
-	public void setStartMaaned(String startMaaned) {
-		this.startMaaned = startMaaned;
+
+	public void setStartTid(String startTid) {
+		this.startTid = startTid;
 	}
 
-	public String getStartDag() {
-		return startDag;
+
+	public String getSluttTid() {
+		return sluttTid;
 	}
 
-	public void setStartDag(String startDag) {
-		this.startDag = startDag;
+
+	public void setSluttTid(String sluttTid) {
+		this.sluttTid = sluttTid;
 	}
 
-	public String getStartKl() {
-		return startKl;
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setStartKl(String startKl) {
-		this.startKl = startKl;
-	}
-
-	public String getSluttAar() {
-		return sluttAar;
-	}
-
-	public void setSluttAar(String sluttAar) {
-		this.sluttAar = sluttAar;
-	}
-
-	public String getSluttMaaned() {
-		return sluttMaaned;
-	}
-
-	public void setSluttMaaned(String sluttMaaned) {
-		this.sluttMaaned = sluttMaaned;
-	}
-
-	public String getSluttDag() {
-		return sluttDag;
-	}
-
-	public void setSluttDag(String sluttDag) {
-		this.sluttDag = sluttDag;
-	}
-
-	public String getSluttKl() {
-		return sluttKl;
-	}
-
-	public void setSluttKl(String sluttKl) {
-		this.sluttKl = sluttKl;
-	}
 
 	public Rom getRom() {
 		return rom;
@@ -143,5 +110,9 @@ public class Avtale {
 	
 	public String getBeskrivelse(){
 		return this.beskrivelse;
+	}
+	
+	public int getId(){
+		return id;
 	}
 }

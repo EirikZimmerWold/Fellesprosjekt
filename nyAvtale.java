@@ -30,6 +30,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	Calendar tid;
 	final JFrame popUpWithMessage = new JFrame();
 	JScrollPane listScrollPane;
+	Database db;
 	
 	//Personer
 	Ansatt kari;
@@ -109,7 +110,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 		super(new GridBagLayout());
 		gc = new GridBagConstraints();
 		tid = new GregorianCalendar();
-		
+		db = new Database();
 		
 		// START-TID
 	
@@ -747,6 +748,12 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
 				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, Fridtjof);
 				beskrivelseAvRomLabel = new JLabel(avtale.toString());
+				try {
+					db.addAvtale(avtale);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	    
@@ -845,14 +852,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 		frame.setContentPane(na);
 		frame.setVisible(true);
 		frame.setBackground(Color.white);
-		
-		Database db = new Database();
-		try {
-			System.out.println(db.checkUsername("kari1") + "");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 	} 
 
