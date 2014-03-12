@@ -41,6 +41,7 @@ public class nyAvtale extends JPanel {
 	Calendar tid;
 	final JFrame popUpWithMessage = new JFrame();
 	JScrollPane listScrollPane;
+	JLabel stringAvtaleLabel;
 	
 	//Personer
 	Ansatt kari;
@@ -93,14 +94,15 @@ public class nyAvtale extends JPanel {
 	DefaultListModel deltagerModell;
 	
 	//Rom
-	JLabel mooteromLabel;
-	JComboBox mooteromFelt;
-	JLabel etterRomLabel;
+
+	JComboBox romBox;
+	JLabel romLabel;
+	JLabel beskjedEtterRomLabel;
 	
 	//Buttons
 	JButton fjernButton;
-	JButton velgPersonButton;
-	JButton velgGruppeButton;
+	JButton inviterPersonButton;
+	JButton inviterGruppeButton;
 	JButton lagreButton;
 	JButton avbrytButton;
 	JButton finnPassendeRomButton;
@@ -109,12 +111,8 @@ public class nyAvtale extends JPanel {
 	DefaultListModel avtalerModell;
 	JListScroll avtalerJList;
 	
-	//Dag pr Maaned
-	int januar, mars, mai, juli, august, oktober, desember = 31;
-	int februar = 28;
-	int april, juni, september, november = 30;
-	
 	public nyAvtale()  {
+		
 		super(new GridBagLayout());
 		gc = new GridBagConstraints();
 		tid = new GregorianCalendar();
@@ -152,15 +150,15 @@ public class nyAvtale extends JPanel {
 	    // START DAG
 	   
 	    startTidDag = new JComboBox();
-	    for (int i = 1; i < 32; i++) {
-	    	startTidDag.addItem(i);
-		}
-	    
+	    Maaned stm = (Maaned) startTidMaaned.getSelectedItem();
+	    //setter antall dager som hoorer til current maaned
+		settStartDager();
 	    startTidDag.setSelectedIndex(tid.getTime().getDate()-1);
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 4;
 	    gc.gridy = 1;
 	    add(startTidDag, gc);
+
 	    
 	    // START-TID KLOKKE
 	    
@@ -213,9 +211,8 @@ public class nyAvtale extends JPanel {
 	    // SLUTT-TID DAG
 	    
 	    sluttTidDag = new JComboBox();
-	    for (int i = 1; i < 32; i++) {
-			sluttTidDag.addItem(i);
-		}
+	    //setter antall dager som hoorer til current maaned
+		settSluttDager();
 	    sluttTidDag.setSelectedIndex(tid.getTime().getDate()-1);
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 4;
@@ -259,12 +256,7 @@ public class nyAvtale extends JPanel {
 	    
 	    
 		deltagerModell = new DefaultListModel();
-		vert = new Ansatt("Vert");
-	    deltagerModell.addElement(vert);
-	    
 		deltagereList = new JListScroll(deltagerModell);
-		deltagereList.setBorder(new LineBorder(Color.black,2,true));
-		deltagereList.setCellRenderer(new JListCellRenderer());
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
@@ -297,37 +289,6 @@ public class nyAvtale extends JPanel {
 	    add(personerLabel, gc);
 	    
 		personModell = new DefaultListModel();
-		
-		kari = new Ansatt("Kari");
-		ida = new Ansatt("Ida");
-		henrik = new Ansatt("Henrik");
-		gris = new Ansatt("gris");
-		fredrik = new Ansatt("Fredrik");
-		nora = new Ansatt("Nora");
-		eline = new Ansatt("Eline");
-		Gina = new Ansatt("Gina");
-		Fridtjof = new Ansatt("Fridtjof");
-		oyvind = new Ansatt("¯yvind");
-		ola = new Ansatt("Ola");
-		knut = new Ansatt("Knut");
-		eirik = new Ansatt("Eirik");
-		truls = new Ansatt("Truls");
-		
-		personModell.addElement(kari);
-		personModell.addElement(ida);
-		personModell.addElement(henrik);
-		personModell.addElement(gris);
-		personModell.addElement(fredrik);
-		personModell.addElement(nora);
-		personModell.addElement(eline);
-		personModell.addElement(Gina);
-		personModell.addElement(Fridtjof);
-		personModell.addElement(oyvind);
-		personModell.addElement(ola);
-		personModell.addElement(knut);
-		personModell.addElement(eirik);
-		personModell.addElement(truls);
-		
 		personerList = new JListScroll(personModell);
 	    gc.weightx = 0.5;
 	    gc.gridwidth = 1;
@@ -338,9 +299,9 @@ public class nyAvtale extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(personerList.getJScrollPane(), gc);
 	    
-	    velgPersonButton = new JButton();
-	    velgPersonButton.setName("Velg");
-	    velgPersonButton.setText("<= Inviter person");
+	    inviterPersonButton = new JButton();
+	    inviterPersonButton.setName("Velg");
+	    inviterPersonButton.setText("<= Inviter person");
 	    gc.weightx = 0.5;
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
@@ -348,7 +309,7 @@ public class nyAvtale extends JPanel {
 	    gc.gridx = 3;
 	    gc.gridy = 7;
 	    gc.insets = new Insets(0, 0, 0, 0);
-	    add(velgPersonButton, gc);
+	    add(inviterPersonButton, gc);
 	    
 		// LISTE MED GRUPPER
 	    
@@ -360,33 +321,6 @@ public class nyAvtale extends JPanel {
 	    add(grupperLabel, gc);
 	    
 		gruppeModell = new DefaultListModel();
-		
-		Gruppe rekrutteringsgruppa = new Gruppe("Rekrutteringsgruppa");
-		rekrutteringsgruppa.setNavn("Rekrutteringsgruppa");
-		rekrutteringsgruppa.setMedlem(kari);
-		rekrutteringsgruppa.setMedlem(ida);
-		
-		Gruppe administrerende = new Gruppe("Administrerende");
-		administrerende.setNavn("Administrerende");
-		administrerende.setMedlem(knut);
-		administrerende.setMedlem(Fridtjof);
-		administrerende.setMedlem(ola);
-		administrerende.setMedlem(oyvind);
-		
-		Gruppe utviklere = new Gruppe("Utviklere");
-		utviklere.setNavn("Utviklere");
-		utviklere.setMedlem(eline);
-		utviklere.setMedlem(kari);
-		utviklere.setMedlem(ida);
-		utviklere.setMedlem(truls);
-		utviklere.setMedlem(Gina);
-		utviklere.setMedlem(fredrik);
-		
-		
-		gruppeModell.addElement(rekrutteringsgruppa);
-		gruppeModell.addElement(administrerende);
-		gruppeModell.addElement(utviklere);
-		
 		grupperList = new JListScroll(gruppeModell);
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
@@ -396,41 +330,31 @@ public class nyAvtale extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(grupperList.getJScrollPane(), gc);
 	    
-	    velgGruppeButton = new JButton();
-	    velgGruppeButton.setText("<= Inviter gruppe");
+	    inviterGruppeButton = new JButton();
+	    inviterGruppeButton.setText("<= Inviter gruppe");
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 5;
 	    gc.gridy = 7;
 	    gc.insets = new Insets(0, 0, 0, 0);
-	    add(velgGruppeButton, gc);
+	    add(inviterGruppeButton, gc);
 	    
 	    // M¯TEROM
 	    
-	    mooteromLabel = new JLabel("M¿terom:");
+	    romLabel = new JLabel("M¿terom:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
 	    gc.gridy = 8;
 	    gc.insets = new Insets(60, 0, 0, 0);
-	    add(mooteromLabel, gc);
+	    add(romLabel, gc);
 	    
-	    mooteromFelt = new JComboBox();
-	   
-	    Rom r1 = new Rom("R1", 3);
-	    Rom r2 = new Rom("R2", 10);
-	    Rom r3 = new Rom("R3", 15);
-	    Rom r4 = new Rom("R4", 5);
-	    mooteromFelt.addItem((Rom) r1);
-	    mooteromFelt.addItem((Rom) r2);
-	    mooteromFelt.addItem((Rom) r3);
-	    mooteromFelt.addItem((Rom) r4);
-	    
+	    romBox = new JComboBox();
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 2;
 	    gc.gridy = 8;
 	    gc.insets = new Insets(60, 0, 0, 0);
-	    add(mooteromFelt, gc);
+	    add(romBox, gc);
 	    
 	    finnPassendeRomButton = new JButton();
 	   	finnPassendeRomButton.setText("Finn et passende rom");
@@ -442,25 +366,23 @@ public class nyAvtale extends JPanel {
 	    gc.insets = new Insets(60, 0, 0, 0);
 	    add(finnPassendeRomButton, gc);
 	    
-	    etterRomLabel = new JLabel("med tanke pŒ antall deltagere");
+	    beskjedEtterRomLabel = new JLabel("med tanke pŒ antall deltagere");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 4;
 	    gc.gridy = 8;
 	    gc.insets = new Insets(60, 0, 0, 0);
-	    add(etterRomLabel, gc);
+	    add(beskjedEtterRomLabel, gc);
 	    
-	    // AVTALER
-	    /*
-	    System.out.println(avtalerModell);
-	    avtalerJList = new JListScroll(avtalerModell);
-	    gc.gridwidth = 1;
+	    // BESKRIVELSE AV ROM
+	    stringAvtaleLabel = new JLabel("Her kommer rombeskrivelse nŒr du har valgt rom");
+	    gc.gridwidth = 3;
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
 	    gc.gridy = 9;
 	    gc.insets = new Insets(0, 0, 0, 0);
-	    add(avtalerJList.getJScrollPane(), gc);
-	    */
+	    add(stringAvtaleLabel, gc);
+	    
 	    
 	    // AVBRYT OG LAGRE - BUTTONS
 	    
@@ -483,6 +405,79 @@ public class nyAvtale extends JPanel {
 	    gc.gridy = 10;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(lagreButton, gc);
+	    
+	    // LEGGER INN VERDIER FOR  TESTE
+	    
+	    // Han som inviterer (MŒ legge til ekstra funksjoner til han)
+	    vert = new Ansatt("Vert");
+	    deltagerModell.addElement(vert);
+		
+	    // Ansatte
+		kari = new Ansatt("Kari");
+		ida = new Ansatt("Ida");
+		henrik = new Ansatt("Henrik");
+		gris = new Ansatt("gris");
+		fredrik = new Ansatt("Fredrik");
+		nora = new Ansatt("Nora");
+		eline = new Ansatt("Eline");
+		Gina = new Ansatt("Gina");
+		Fridtjof = new Ansatt("Fridtjof");
+		oyvind = new Ansatt("¯yvind");
+		ola = new Ansatt("Ola");
+		knut = new Ansatt("Knut");
+		eirik = new Ansatt("Eirik");
+		truls = new Ansatt("Truls");
+		personModell.addElement(kari);
+		personModell.addElement(ida);
+		personModell.addElement(henrik);
+		personModell.addElement(gris);
+		personModell.addElement(fredrik);
+		personModell.addElement(nora);
+		personModell.addElement(eline);
+		personModell.addElement(Gina);
+		personModell.addElement(Fridtjof);
+		personModell.addElement(oyvind);
+		personModell.addElement(ola);
+		personModell.addElement(knut);
+		personModell.addElement(eirik);
+		personModell.addElement(truls);
+		
+		//Grupper
+		Gruppe rekrutteringsgruppa = new Gruppe("Rekrutteringsgruppa");
+		rekrutteringsgruppa.setNavn("Rekrutteringsgruppa");
+		rekrutteringsgruppa.setMedlem(kari);
+		rekrutteringsgruppa.setMedlem(ida);
+		Gruppe administrerende = new Gruppe("Administrerende");
+		administrerende.setNavn("Administrerende");
+		administrerende.setMedlem(knut);
+		administrerende.setMedlem(Fridtjof);
+		administrerende.setMedlem(ola);
+		administrerende.setMedlem(oyvind);
+		Gruppe utviklere = new Gruppe("Utviklere");
+		utviklere.setNavn("Utviklere");
+		utviklere.setMedlem(eline);
+		utviklere.setMedlem(kari);
+		utviklere.setMedlem(ida);
+		utviklere.setMedlem(truls);
+		utviklere.setMedlem(Gina);
+		utviklere.setMedlem(fredrik);
+		gruppeModell.addElement(rekrutteringsgruppa);
+		gruppeModell.addElement(administrerende);
+		gruppeModell.addElement(utviklere);
+		
+		//Rom
+	    Rom r1 = new Rom("R1", 3);
+	    Rom r2 = new Rom("R2", 10);
+	    Rom r3 = new Rom("R3", 15);
+	    Rom r4 = new Rom("R4", 5);
+	    r1.setBeskrivelse("beskrivelse av rom r1");
+	    r2.setBeskrivelse("beskrivelse av rom r2");
+	    r3.setBeskrivelse("beskrivelse av rom r3");
+	    r4.setBeskrivelse("beskrivelse av rom r4");
+	    romBox.addItem((Rom) r1);
+	    romBox.addItem((Rom) r2);
+	    romBox.addItem((Rom) r3);
+	    romBox.addItem((Rom) r4);
 	    
 	    
 	    // ACTIONLISTENERS
@@ -511,11 +506,20 @@ public class nyAvtale extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				startTidDag.removeAllItems();
+				
+			    //setter antall dager som hoorer til current maaned
+				settStartDager();
+			
+				//Sjekker at starttid skal v¾re f¿r sluttid
 				if ((Integer) startTidAar.getSelectedItem()-(Integer) sluttTidAar.getSelectedItem() == 0) {
 					if ((Integer) startTidMaaned.getSelectedIndex() > (Integer) sluttTidMaaned.getSelectedIndex()) {
 						sluttTidMaaned.setSelectedIndex(startTidMaaned.getSelectedIndex());
 					}
 				}
+				//Setter dag til dagens dato
+				startTidDag.setSelectedIndex(tid.getTime().getDate()-1);
+				
 			}
 		});
 	    
@@ -523,11 +527,18 @@ public class nyAvtale extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				sluttTidDag.removeAllItems();
+				
+			    //setter antall dager som hoorer til current maaned
+				settSluttDager();
+				
+				//Sjekker at sluttid er etter starttid
 				if ((Integer) startTidAar.getSelectedItem()-(Integer) sluttTidAar.getSelectedItem() == 0) {
 					if ((Integer) startTidMaaned.getSelectedIndex() > (Integer) sluttTidMaaned.getSelectedIndex()) {
 						sluttTidMaaned.setSelectedIndex(startTidMaaned.getSelectedIndex());
 					}
 				}
+				sluttTidDag.setSelectedIndex(tid.getTime().getDate()-1);
 			}
 		});
 	    
@@ -549,16 +560,14 @@ public class nyAvtale extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (startTidMaaned.getSelectedIndex() - sluttTidMaaned.getSelectedIndex() == 0) {
-					if ((Integer) startTidDag.getSelectedIndex() > (Integer) sluttTidDag.getSelectedIndex()) {
+					if ((Integer) startTidDag.getSelectedIndex() > (Integer) sluttTidDag.getSelectedIndex() && sluttTidDag.getItemCount() > 27) {
 						sluttTidDag.setSelectedIndex(startTidDag.getSelectedIndex());
 					}
 				}
-				
 			}
 		});
 	    
-	    
-	    velgPersonButton.addActionListener(new ActionListener() {
+	    inviterPersonButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -571,7 +580,7 @@ public class nyAvtale extends JPanel {
 			}
 		});
 	    
-	    velgGruppeButton.addActionListener(new ActionListener() {
+	    inviterGruppeButton.addActionListener(new ActionListener() {
 	    	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -614,18 +623,19 @@ public class nyAvtale extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				int antallDeltagere = deltagereList.getDefaultListModel().getSize();
-				Rom passendeRom = (Rom) mooteromFelt.getItemAt(0);
+				Rom passendeRom = (Rom) romBox.getItemAt(0);
 				
-				for (int s = 0; s < mooteromFelt.getItemCount(); s++) {
-					Rom rom = (Rom) mooteromFelt.getItemAt(s);
+				for (int s = 0; s < romBox.getItemCount(); s++) {
+					Rom rom = (Rom) romBox.getItemAt(s);
 					if (rom.getMaksAntallPersoner() > antallDeltagere) {
 						if ((rom.getMaksAntallPersoner()-antallDeltagere) < (passendeRom.getMaksAntallPersoner()-antallDeltagere) || passendeRom.getMaksAntallPersoner()-antallDeltagere < 0) {
 							passendeRom = rom;
 						}
 					}
 				}
-				mooteromFelt.setSelectedItem(passendeRom);
-				mooteromFelt.updateUI();
+				romBox.setSelectedItem(passendeRom);
+				romBox.updateUI();
+				stringAvtaleLabel.setText(passendeRom.getBeskrivelse());
 				
 				// mŒ ogsŒ s¿ke gjennom alle avtaler, og sjekke om det passende m¿terommet er ledig pŒ gitt tidspunkt
 				
@@ -643,9 +653,8 @@ public class nyAvtale extends JPanel {
 				// TODO Auto-generated method stub
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) mooteromFelt.getSelectedItem(), deltagerModell);
-				avtalerModell.addElement(avtale);
-				
+				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell);
+				stringAvtaleLabel = new JLabel(avtale.toString());
 			}
 		});
 	    
@@ -667,17 +676,63 @@ public class nyAvtale extends JPanel {
 		Desember
 	}
 	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(new Dimension(900,600));
-		nyAvtale na = new nyAvtale();
-		frame.setContentPane(na);
-		frame.setVisible(true);
-		frame.setBackground(Color.white);
+	private void settStartDager() {
+		// det er start-dager som skal settes
+		Maaned stm = (Maaned) startTidMaaned.getSelectedItem();
+		if (stm == Maaned.Feburar) {
+			for (int dag = 1; dag < 29; dag++) {
+				startTidDag.addItem(dag);
+			}
+			// Dersom det er skuddŒr skal det v¾re 29 dager i februar
+			if (tid.getTime().getYear() % 4 == 0) {
+				startTidDag.addItem(29);
+			}
+		}
 		
+		else if(stm == Maaned.Januar || stm == Maaned.Mars || stm == Maaned.Mai || stm == Maaned.Juli || stm == Maaned.August || stm == Maaned.Oktober || stm == Maaned.Desember) {
+			for (int dag = 1; dag < 32; dag++) {
+				startTidDag.addItem(dag);
+			}
+		}
 		
+		else if(stm == Maaned.April || stm == Maaned.Juni || stm == Maaned.September || stm == Maaned.November) {
+			for (int dag = 1; dag < 31; dag++) {
+				startTidDag.addItem(dag);
+			}
+			
+		}
 	}
 	
+	private void settSluttDager() {
+		// det er slutt-dager som skal settes
+		Maaned sltm = (Maaned) sluttTidMaaned.getSelectedItem();
+		if (sltm == Maaned.Feburar) {
+			for (int dag = 1; dag < 29; dag++) {
+				sluttTidDag.addItem(dag);
+			}
+			// Dersom det er skuddŒr skal det v¾re 29 dager i februar
+			if (tid.getTime().getYear() % 4 == 0) {
+				sluttTidDag.addItem(29);
+			}
+		}
+		
+		else if(sltm == Maaned.Januar || sltm == Maaned.Mars || sltm == Maaned.Mai || sltm == Maaned.Juli || sltm == Maaned.August || sltm == Maaned.Oktober || sltm == Maaned.Desember) {
+			for (int dag = 1; dag < 32; dag++) {
+				sluttTidDag.addItem(dag);
+			}
+		}
+		
+		else if(sltm == Maaned.April || sltm == Maaned.Juni || sltm == Maaned.September || sltm == Maaned.November) {
+			for (int dag = 1; dag < 31; dag++) {
+				sluttTidDag.addItem(dag);
+			}
+		}
+
+	}
+	
+	// CELL-RENDERER - SKAL VI BRUKE DENNE?
+	
+	/*
 	private static class JListCellRenderer extends DefaultListCellRenderer {  
         public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {  
             Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );  
@@ -688,6 +743,18 @@ public class nyAvtale extends JPanel {
             }
             return c;  
         }  
-    }  
+    }
+    */ 
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setSize(new Dimension(900,600));
+		nyAvtale na = new nyAvtale();
+		frame.setContentPane(na);
+		frame.setVisible(true);
+		frame.setBackground(Color.white);
+		
+		
+	} 
 
 }
