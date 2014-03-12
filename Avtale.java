@@ -10,10 +10,9 @@ public class Avtale {
 	private String sluttTid;
 	private String beskrivelse;
 	private Rom rom = null;
-	private DefaultListModel deltagere;
 	private Ansatt leder;
 	
-	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel dm, Ansatt leder) {
+	public Avtale(String st, String sl, String besk, Rom r, Ansatt leder) {
 		/*
 		 * Dette kan brukes dersom tid skal hentes ut av databasen!
 		 * 
@@ -33,7 +32,6 @@ public class Avtale {
 		sluttTid = sl;
 		this.beskrivelse = besk;
 		this.rom = r;
-		this.deltagere = dm;
 		count += 1;
 		id = count;
 		
@@ -82,14 +80,6 @@ public class Avtale {
 
 	public void setRom(Rom rom) {
 		this.rom = rom;
-	}
-
-	public DefaultListModel getDeltagere() {
-		return deltagere;
-	}
-
-	public void setDeltagere(DefaultListModel deltagere) {
-		this.deltagere = deltagere;
 	}
 	
 	public String toString() {

@@ -45,12 +45,25 @@ public class Database {
 		String startTid = avtale.getStartTid();
 		String sluttTid = avtale.getSluttTid();
 		String adminBrukernavn = avtale.getLeder().getBrukernavn();
-		System.out.println(adminBrukernavn);
 		String rom = avtale.getRom().getNavn();
-		System.out.println(rom);
 		query = "INSERT INTO Avtale(beskrivelse, startTid, sluttTid, adminBrukernavn, romNr) VALUES('" 
 		+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"');";
 		st.executeUpdate(query);
+	}
+	// NŒ blir deltagerne i avtalen invitert til avtalen, med "null" som bekreftet-status fordi de ikke har svart enda
+	public void invitertTilAvtale(String ansattInvitert, int id) throws SQLException {
+		st = c.createStatement();
+		boolean b = (Boolean) null;
+		query = "INSERT INTO PersonDeltarAvtale(brukernavn, avtaleId, bekreftet) VALUES('"+ansattInvitert+"','"+id+"','"+b+"');";
+		st.executeUpdate(query);
+		
+	}
+	
+	// Ny ansatt - brukes til Œ registrere ny bruker hvis vi skal ha med det
+	public void nyAnsatt(String brukernavn, String navn, String adresse, String telefon, String stilling, String passord) throws SQLException {
+		st = c.createStatement();
+		query = "INSERT INTO Ansatt(brukernavn, navn, adresse, telefon, stilling, passord) VALUES('" 
+				+brukernavn+ "','" +navn+ "','"+ adresse+ "','"+ telefon +"','"+stilling+"','"+ passord+"');";
 	}
 
 }

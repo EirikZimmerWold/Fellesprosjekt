@@ -746,13 +746,24 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				// TODO Auto-generated method stub
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, Fridtjof);
+				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), Fridtjof);
 				beskrivelseAvRomLabel = new JLabel(avtale.toString());
+				
 				try {
 					db.addAvtale(avtale);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				}
+				//Inviterer alle deltagerne
+				for (int a = 0; a < deltagerModell.getSize(); a++) {
+					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn();
+					try {
+						((Database) db).invitertTilAvtale(ansattInvitert, avtale.getId());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
