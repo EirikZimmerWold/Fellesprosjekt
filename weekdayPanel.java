@@ -54,7 +54,7 @@ public class weekdayPanel extends JPanel{
 		add(scrollPane, gc);
 		
 		
-		System.out.println(data.getSize());
+		//System.out.println(data.getSize());
 		
 		
 
