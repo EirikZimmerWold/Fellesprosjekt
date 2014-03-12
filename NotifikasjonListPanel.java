@@ -28,11 +28,9 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 		Rom rom=new Rom("R2");
 		Ansatt leder=new Ansatt("idawol");
 		leder.setNavn("Per");
-		DefaultListModel deltagere=new DefaultListModel();
+		DefaultListModel<Ansatt> deltagere=new DefaultListModel<Ansatt>();
 		Avtale avtale=new Avtale("2014-03-12-1415","2014-03-12-1600", "Testing av prototype", rom, deltagere, leder);
 		notifikasjonListPanel.addNotifikasjonPanel(avtale);
-		//NotifikasjonPanel notifikasjonPanel2=new NotifikasjonPanel();
-		//notifikasjonListPanel.addNotifikasjonPanel(notifikasjonPanel2);
 	}
 	
 	public NotifikasjonListPanel(){

@@ -81,11 +81,4 @@ public class avtaleinfo extends JPanel {
 		moterom.setText(avtale.getRom().getNavn());
 		beskrivelse.setText(avtale.getBeskrivelse());
 	}
-	
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

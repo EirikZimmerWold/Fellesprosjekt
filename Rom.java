@@ -40,4 +40,9 @@ public class Rom {
 	public String getNavn(){
 		return this.navn;
 	}
+	
+	public boolean romLedigPaaGittTidspunkt(String dato) {
+		// return true dersom rommet er ledig pŒ det gitte tidspunktet
+		return true;
+	}
 }
