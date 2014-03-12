@@ -27,25 +27,25 @@ import javax.swing.event.ChangeListener;
 public class avtaleview extends JPanel {
 	JScrollPane rull;
 	//må forandres til JList<Ansatt>
-	JList<String> Deltagere;
+	JList<Ansatt> Deltagere;
 	JButton Bekreft;
 	JButton Avsla;
 	JButton endre;
 	JButton slette;
 	GridBagConstraints c;
-	DefaultListModel<String> model;
+	DefaultListModel<Ansatt> model;
 	avtaleinfo avt;
 	JLabel DeltagereL;
 	
 	public avtaleview() {
 		//forandre <String> til <Ansatt>
-		Deltagere = new JList<String>();
+		Deltagere = new JList<Ansatt>();
 		DeltagereL = new JLabel("Deltagere: ");
-		model = new DefaultListModel<String>();
+		model = new DefaultListModel<Ansatt>();
 		//legge til Ansatt elementer og en cellrenderer
-		model.addElement("Kari");
-		model.addElement("Eirik");
-		model.addElement("Ida");
+		model.addElement(new Ansatt("Kari"));
+		model.addElement(new Ansatt("Eirik"));
+		model.addElement(new Ansatt("Ida"));
 		Deltagere.setModel(model);
 		//maks antall elementer som sees på en gang
 		Deltagere.setVisibleRowCount(5);
@@ -71,7 +71,6 @@ public class avtaleview extends JPanel {
 		c.gridwidth = 2;
 		c.gridheight =2;
 		add(avt,c);
-		avt.settInfo("ahaaha");
 		c.gridwidth = 1;
 		c.gridy=2;
 		add(DeltagereL,c);
