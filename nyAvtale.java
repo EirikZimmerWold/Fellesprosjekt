@@ -1,44 +1,34 @@
 package Fellesprosjektet;
 
+import java.awt.Checkbox;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.DefaultListCellRenderer;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-public class nyAvtale extends JPanel {
+public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	GridBagConstraints gc;
 	Calendar tid;
 	final JFrame popUpWithMessage = new JFrame();
 	JScrollPane listScrollPane;
-	JLabel stringAvtaleLabel;
 	
 	//Personer
 	Ansatt kari;
@@ -91,10 +81,20 @@ public class nyAvtale extends JPanel {
 	DefaultListModel deltagerModell;
 	
 	//Rom
-
+	ButtonGroup buttongroup;
+	
+	JLabel mooteromLabel;
+	
+	JLabel finnEtRomLabel;
+	JCheckBox finnEtRomCheckbox;
 	JComboBox romBox;
-	JLabel romLabel;
-	JLabel beskjedEtterRomLabel;
+	JLabel beskjedEtterFunnetRomLabel;
+	JButton finnPassendeRomButton;
+	JLabel beskrivelseAvRomLabel;
+	
+	JLabel velgEgetRomLabel;
+	JCheckBox egetRomCheckbox;
+	JTextField egetRomFelt;
 	
 	//Buttons
 	JButton fjernButton;
@@ -102,11 +102,6 @@ public class nyAvtale extends JPanel {
 	JButton inviterGruppeButton;
 	JButton lagreButton;
 	JButton avbrytButton;
-	JButton finnPassendeRomButton;
-	
-	//Avtaler
-	DefaultListModel avtalerModell;
-	JListScroll avtalerJList;
 	
 	public nyAvtale()  {
 		
@@ -339,18 +334,39 @@ public class nyAvtale extends JPanel {
 	    
 	    // MØTEROM
 	    
-	    romLabel = new JLabel("Møterom:");
+	    mooteromLabel = new JLabel("Møterom:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
 	    gc.gridy = 8;
 	    gc.insets = new Insets(60, 0, 0, 0);
-	    add(romLabel, gc);
+	    add(mooteromLabel, gc);
+	    
+	    
+	    // Finn et møterom
+	    
+	    finnEtRomLabel = new JLabel("Finn et rom: ");
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(10, 0, 0, 0);
+	    add(finnEtRomLabel, gc);
+	    
+	    finnEtRomCheckbox = new JCheckBox();
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 2;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(10, 0, 0, 0);
+	    add(finnEtRomCheckbox, gc);
 	    
 	    romBox = new JComboBox();
 	    gc.fill = GridBagConstraints.HORIZONTAL;
-	    gc.gridx = 2;
-	    gc.gridy = 8;
-	    gc.insets = new Insets(60, 0, 0, 0);
+	    gc.gridx = 3;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(romBox, gc);
 	    
 	    finnPassendeRomButton = new JButton();
@@ -358,28 +374,65 @@ public class nyAvtale extends JPanel {
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
-	    gc.gridx = 3;
-	    gc.gridy = 8;
-	    gc.insets = new Insets(60, 0, 0, 0);
+	    gc.gridx = 4;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnPassendeRomButton, gc);
 	    
-	    beskjedEtterRomLabel = new JLabel("med tanke på antall deltagere");
+	    beskjedEtterFunnetRomLabel = new JLabel("med tanke på antall deltagere");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
-	    gc.gridx = 4;
-	    gc.gridy = 8;
-	    gc.insets = new Insets(60, 0, 0, 0);
-	    add(beskjedEtterRomLabel, gc);
+	    gc.gridx = 5;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(10, 0, 0, 0);
+	    add(beskjedEtterFunnetRomLabel, gc);
 	    
-	    // BESKRIVELSE AV ROM
-	    stringAvtaleLabel = new JLabel("Her kommer rombeskrivelse når du har valgt rom");
+	    // Beskrivelse av rom
+	    
+	    beskrivelseAvRomLabel = new JLabel("Her kommer rombeskrivelse når du har valgt rom");
 	    gc.gridwidth = 3;
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
-	    gc.gridx = 1;
-	    gc.gridy = 9;
+	    gc.gridx = 3;
+	    gc.gridy = 10;
 	    gc.insets = new Insets(0, 0, 0, 0);
-	    add(stringAvtaleLabel, gc);
+	    add(beskrivelseAvRomLabel, gc);
 	    
+	    // Selvvalgt rom
+	    
+	    velgEgetRomLabel = new JLabel("Eller velg et eget rom: ");
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 11;
+	    gc.insets = new Insets(20, 0, 0, 0);
+	    add(velgEgetRomLabel, gc);
+	    
+	    egetRomCheckbox = new JCheckBox();
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 2;
+	    gc.gridy = 11;
+	    gc.insets = new Insets(20, 0, 0, 0);
+	    add(egetRomCheckbox, gc);
+	    
+	    egetRomFelt = new JTextField();
+	    egetRomFelt.setEditable(false);
+	    gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 3;
+	    gc.gridy = 11;
+	    gc.insets = new Insets(20, 0, 0, 0);
+	    add(egetRomFelt, gc);
+	    
+	    // Buttongroup
+	    
+	    buttongroup = new ButtonGroup();
+	    buttongroup.add(egetRomCheckbox);
+	    buttongroup.add(finnEtRomCheckbox);
+	    finnEtRomCheckbox.setSelected(true);
 	    
 	    // AVBRYT OG LAGRE - BUTTONS
 	    
@@ -389,7 +442,7 @@ public class nyAvtale extends JPanel {
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
-	    gc.gridy = 10;
+	    gc.gridy = 12;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(avbrytButton, gc);
 	    
@@ -399,7 +452,7 @@ public class nyAvtale extends JPanel {
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 2;
-	    gc.gridy = 10;
+	    gc.gridy = 12;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(lagreButton, gc);
 	    
@@ -622,22 +675,63 @@ public class nyAvtale extends JPanel {
 				int antallDeltagere = deltagereList.getDefaultListModel().getSize();
 				Rom passendeRom = (Rom) romBox.getItemAt(0);
 				
+				// må søke gjennom alle avtaler, og sjekke om det passende møterommet er ledig på gitt tidspunkt
+				String datoTest = "testDato";
+				
 				for (int s = 0; s < romBox.getItemCount(); s++) {
 					Rom rom = (Rom) romBox.getItemAt(s);
-					if (rom.getMaksAntallPersoner() > antallDeltagere) {
-						if ((rom.getMaksAntallPersoner()-antallDeltagere) < (passendeRom.getMaksAntallPersoner()-antallDeltagere) || passendeRom.getMaksAntallPersoner()-antallDeltagere < 0) {
+					if (rom.getMaksAntallPersoner() >= antallDeltagere && (rom.romLedigPaaGittTidspunkt(datoTest)==true)) {
+						if ((rom.getMaksAntallPersoner()-antallDeltagere) <= (passendeRom.getMaksAntallPersoner()-antallDeltagere) || passendeRom.getMaksAntallPersoner()-antallDeltagere <= 0) {
 							passendeRom = rom;
 						}
 					}
 				}
 				romBox.setSelectedItem(passendeRom);
 				romBox.updateUI();
-				stringAvtaleLabel.setText(passendeRom.getBeskrivelse());
-				
-				// må også søke gjennom alle avtaler, og sjekke om det passende møterommet er ledig på gitt tidspunkt
+				beskrivelseAvRomLabel.setText(passendeRom.getBeskrivelse());
 				
 				if (passendeRom.getMaksAntallPersoner() < antallDeltagere) {
 					JOptionPane.showMessageDialog(popUpWithMessage, "Det finnes dessverre ikke et stort nok møterom");
+				}
+				
+			}
+		});
+	    
+	    finnEtRomCheckbox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (finnEtRomCheckbox.isSelected()) {
+					romBox.setEditable(true);
+					romBox.setEnabled(true);
+					finnPassendeRomButton.setEnabled(true);
+					egetRomFelt.setEditable(false);
+				}
+				else {
+					romBox.setEditable(false);
+					romBox.setEnabled(false);
+					finnPassendeRomButton.setEnabled(false);
+					egetRomFelt.setEditable(true);
+				}
+				
+			}
+		});
+	    
+	    egetRomCheckbox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (egetRomCheckbox.isSelected()) {
+					egetRomFelt.setEditable(true);
+					romBox.setEditable(false);
+					romBox.setEnabled(false);
+					finnPassendeRomButton.setEnabled(false);
+				}
+				else {
+					egetRomFelt.setEditable(false);
+					romBox.setEditable(true);
+					romBox.setEnabled(true);
+					finnPassendeRomButton.setEnabled(true);
 				}
 				
 			}
@@ -651,7 +745,7 @@ public class nyAvtale extends JPanel {
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
 				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, Fridtjof);
-				stringAvtaleLabel = new JLabel(avtale.toString());
+				beskrivelseAvRomLabel = new JLabel(avtale.toString());
 			}
 		});
 	    
