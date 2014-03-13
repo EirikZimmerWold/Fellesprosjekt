@@ -76,8 +76,8 @@ public class avtaleinfo extends JPanel {
 	//tar inn avtalen man trykket på og setter informasjonen i boksene
 	public void settInfo(Avtale avtale){
 		leder.setText(avtale.getLeder().getNavn());
-		starttid.setText(avtale.getStartDag()+"."+avtale.getStartMaaned()+"."+avtale.getStartAar()+" - "+avtale.getStartKl());
-		sluttid.setText(avtale.getSluttDag()+"."+avtale.getSluttMaaned()+"."+avtale.getSluttAar()+" - "+avtale.getSluttKl());
+		starttid.setText(avtale.getStartTid());
+		sluttid.setText(avtale.getSluttTid());
 		moterom.setText(avtale.getRom().getNavn());
 		beskrivelse.setText(avtale.getBeskrivelse());
 	}

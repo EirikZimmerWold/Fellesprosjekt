@@ -7,8 +7,8 @@ public class Notifikasjon {
 	public Notifikasjon(Avtale avtale){
 		this.avtale=avtale;
 		this.leder=avtale.getLeder().getNavn();
-		this.startTid=avtale.getStartDag()+"."+avtale.getStartMaaned()+"."+avtale.getStartAar()+" - "+avtale.getStartKl();
-		this.sluttTid=avtale.getSluttDag()+"."+avtale.getSluttMaaned()+"."+avtale.getSluttAar()+" - "+avtale.getSluttKl();
+		this.startTid=avtale.getStartTid();
+		this.sluttTid=avtale.getSluttTid();
 	}
 
 	public String getLeder() {

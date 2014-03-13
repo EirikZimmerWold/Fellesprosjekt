@@ -29,7 +29,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 		Ansatt leder=new Ansatt("idawol");
 		leder.setNavn("Per");
 		DefaultListModel<Ansatt> deltagere=new DefaultListModel<Ansatt>();
-		Avtale avtale=new Avtale("2014-03-12-1415","2014-03-12-1600", "Testing av prototype", rom, deltagere, leder);
+		Avtale avtale=new Avtale("2014-03-12-1415","2014-03-12-1600", "Testing av prototype", rom, leder);
 		notifikasjonListPanel.addNotifikasjonPanel(avtale);
 	}
 	
