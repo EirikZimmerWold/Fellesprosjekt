@@ -550,7 +550,7 @@ public class nyAvtale extends JPanel {
 		});
 	}
 	
-	private void rom() {
+	private void rom() throws SQLException {
 		// M¯TEROM
 	    
 	    mooteromLabel = new JLabel("M¿terom:");
@@ -581,7 +581,8 @@ public class nyAvtale extends JPanel {
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnEtRomCheckbox, gc);
 	    
-	    romBox = new JComboBox();
+	    romBox = db.hentRom();
+	    //romBox = new JComboBox();
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 3;
 	    gc.gridy = 9;
@@ -653,21 +654,7 @@ public class nyAvtale extends JPanel {
 	    buttongroup.add(finnEtRomCheckbox);
 	    finnEtRomCheckbox.setSelected(true);
 	    
-	  //Rom
-	    Rom r1 = new Rom("R1", 3);
-	    Rom r2 = new Rom("R2", 10);
-	    Rom r3 = new Rom("R3", 15);
-	    Rom r4 = new Rom("R4", 5);
-	    r1.setBeskrivelse("beskrivelse av rom r1");
-	    r2.setBeskrivelse("beskrivelse av rom r2");
-	    r3.setBeskrivelse("beskrivelse av rom r3");
-	    r4.setBeskrivelse("beskrivelse av rom r4");
-	    romBox.addItem((Rom) r1);
-	    romBox.addItem((Rom) r2);
-	    romBox.addItem((Rom) r3);
-	    romBox.addItem((Rom) r4);
-	    
-finnPassendeRomButton.addActionListener(new ActionListener() {
+	    finnPassendeRomButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

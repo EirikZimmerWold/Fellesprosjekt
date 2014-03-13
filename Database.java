@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
@@ -115,10 +116,36 @@ public class Database {
 		}
 		return ansatt;
 	}
-	
-	
+
 	// Hent alle rom
+	public JComboBox hentRom() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Rom;";
+		rs = st.executeQuery(query);
+		JComboBox result = new JComboBox();
+		
+		while(rs.next()) {
+			Rom rom = new Rom(rs.getString("romNr"));
+			rom.setMaksAntallPersoner(rs.getInt("maksAntallDeltagere"));
+			result.addItem((Rom) rom);
+        }
+		return result;
+		
+	}
 	
 	// Hent bestemt rom
+	
+	public Rom hentBestemtRom(String romNr) throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Rom WHERE romNr='"+romNr+"';";
+		rs = st.executeQuery(query);
+		Rom rom = new Rom("foorRom");
+		
+		while(rs.next()) {
+			rom.setNavn(rs.getString("romNr"));
+			rom.setMaksAntallPersoner(rs.getInt("maksAntallDeltagere"));
+		}
+		return rom;
+	}
 
 }
