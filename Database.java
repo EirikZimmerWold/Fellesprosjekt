@@ -74,7 +74,12 @@ public class Database {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn().toLowerCase();
 		int av = avtale.getId();
-		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+status+"' WHERE brukernavn= '"+brukernavn+"' AND avtaleID = '"+av+"');";
+		
+		int testStatus = 1;
+		String testBrukernavn = "henrik";
+		int testId = 1;
+		
+		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+testStatus+"' WHERE brukernavn= '"+testBrukernavn+"' AND avtaleID = '"+testId+"');";
 		
 	}
 
