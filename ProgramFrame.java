@@ -29,13 +29,25 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	
 	private MainPanel mainPanel;
 	
+	private Database db;
+	
 	public ProgramFrame() {
 		init();
 		initMenu();
 		
+		db = new Database();
+		
 		mainPanel = new MainPanel(this);
 		
 		add(mainPanel);
+	}
+	
+	public Database getDB(){
+		return db;
+	}
+	
+	public MainPanel getMainPanel(){
+		return mainPanel;
 	}
 	
 	@Override

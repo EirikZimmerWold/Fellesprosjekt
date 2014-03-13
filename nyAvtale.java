@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class nyAvtale<finnEtRomCheckbox> extends JPanel {
+public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListener{
 	GridBagConstraints gc;
 	Calendar tid;
 	final JFrame popUpWithMessage = new JFrame();
@@ -107,7 +107,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	
 	public nyAvtale()  {
 		
-		super(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		gc = new GridBagConstraints();
 		tid = new GregorianCalendar();
 		db = new Database();
@@ -768,7 +768,13 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 			}
 		});
 	    
+	    avbrytButton.addActionListener(this);
 	    
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		this.dispose();
 	}
 	
 	protected enum Maaned {

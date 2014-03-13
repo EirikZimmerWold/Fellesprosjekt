@@ -22,7 +22,11 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	private PropertyChangeSupport pcs;
 	public final static String INFO_PROPERTY="infoButton";
 	
-	public NotifikasjonPanel(Avtale avtale){
+	private NotifikasjonListPanel notifListPanel;
+	
+	public NotifikasjonPanel(NotifikasjonListPanel notifListPanel, Avtale avtale){
+		this.notifListPanel = notifListPanel;
+		
 		pcs=new PropertyChangeSupport(this);
 		
 		notifikasjon=new Notifikasjon(avtale);

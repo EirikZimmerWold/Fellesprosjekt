@@ -1,6 +1,10 @@
 package Fellesprosjektet;
 
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,11 +13,19 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 
-public class weekView extends JPanel{
+public class weekView extends JPanel implements ActionListener{
 	
-	public weekView(){
+	private ProgramFrame frame;
+	private String panelName = "Kalender";
+	private JButton nyAvtaleKnapp;
+	
+	public weekView(ProgramFrame frame){
+		this.frame = frame;
+		
 		Calendar cal = Calendar.getInstance();
 		
 		cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
@@ -44,7 +56,7 @@ public class weekView extends JPanel{
 	
 	
 	public void generateThisWeek(int monDate, int month, int year){
-
+		
 		weekdayPanel wkdPanel = new weekdayPanel("Mandag", Integer.toString(monDate) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		weekdayPanel wkdPanel2 = new weekdayPanel("Tirsdag", Integer.toString(monDate +1) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		weekdayPanel wkdPanel3 = new weekdayPanel("Onsdag", Integer.toString(monDate + 2) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
@@ -53,23 +65,59 @@ public class weekView extends JPanel{
 		weekdayPanel wkdPanel6 = new weekdayPanel("L�rdag", Integer.toString(monDate + 5) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		weekdayPanel wkdPanel7 = new weekdayPanel("S�ndag", Integer.toString(monDate + 6) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		
-		
+		nyAvtaleKnapp = new JButton("Ny avtale");
+		nyAvtaleKnapp.addActionListener(this);
 
-		setLayout(new FlowLayout());
-		
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 1;
+		c.gridy = 0;
+		add(nyAvtaleKnapp,c);
 		JButton backButton = new JButton("<");
-		add(backButton);
-		
-		add(wkdPanel);
-		add(wkdPanel2);
-		add(wkdPanel3);
-		add(wkdPanel4);
-		add(wkdPanel5);
-		add(wkdPanel6);
-		add(wkdPanel7);
+		c.gridx=0;
+		c.gridy=2;
+		add(backButton,c);
+		c.gridx=1;
+		c.gridy=2;
+		add(wkdPanel,c);
+		c.gridx=2;
+		c.gridy=2;
+		add(wkdPanel2,c);
+		c.gridx=3;
+		c.gridy=2;
+		add(wkdPanel3,c);
+		c.gridx=4;
+		c.gridy=2;
+		add(wkdPanel4,c);
+		c.gridx=5;
+		c.gridy=2;
+		add(wkdPanel5,c);
+		c.gridx=6;
+		c.gridy=2;
+		add(wkdPanel6,c);
+		c.gridx=7;
+		c.gridy=2;
+		add(wkdPanel7,c);
+		c.gridx=8;
+		c.gridy=2;
 		
 		JButton nextButton = new JButton(">");
+		c.gridx=9;
+		c.gridy=2;
+		add(nextButton,c);
+	}
 	
-		add(nextButton);
+	public String getPanelName(){
+		return panelName;
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(nyAvtaleKnapp)){
+			nyAvtale na = new nyAvtale();
+			na.pack();
+			na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			na.setVisible(true);		}
 	}
 }

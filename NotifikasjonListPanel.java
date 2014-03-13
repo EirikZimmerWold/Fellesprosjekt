@@ -12,12 +12,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class NotifikasjonListPanel extends JPanel implements PropertyChangeListener{
+	
+	private ProgramFrame frame;
+	
 	private GridBagConstraints gbc;
 	private JScrollPane scrollPane;
 	private JPanel list;
 	protected avtaleinfo avtaleinfo;
 	
-	public NotifikasjonListPanel(){
+	private int notifyCount;
+	private String panelName = "Notifikasjoner";
+	
+	public NotifikasjonListPanel(ProgramFrame frame){
+		this.frame = frame;
+		notifyCount = 0;
+		
         list = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -41,7 +50,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	}
 	
 	public void addNotifikasjonPanel(Avtale avtale){
-		NotifikasjonPanel panel=new NotifikasjonPanel(avtale);
+		NotifikasjonPanel panel=new NotifikasjonPanel(this, avtale);
 		gbc=new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;
@@ -50,6 +59,11 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         list.add(panel, gbc, 0);
         validate();
         repaint();
+        notifyCount++;
+	}
+	
+	public String getPanelName(){
+		return panelName;
 	}
 
 	@Override
