@@ -25,28 +25,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class nyAvtale<finnEtRomCheckbox> extends JPanel {
+public class nyAvtale extends JPanel {
 	GridBagConstraints gc;
 	Calendar tid;
 	final JFrame popUpWithMessage = new JFrame();
 	JScrollPane listScrollPane;
 	Database db;
-	
-	//Personer
-	Ansatt kari;
-	Ansatt ida;
-	Ansatt henrik;
-	Ansatt gris;
-	Ansatt fredrik;
-	Ansatt nora;
-	Ansatt eline;
-	Ansatt Gina;
-	Ansatt Fridtjof;
-	Ansatt oyvind;
-	Ansatt ola;
-	Ansatt knut;
-	Ansatt eirik;
-	Ansatt truls;
 	Ansatt vert;
 	
 	//Starttid
@@ -105,7 +89,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	JButton lagreButton;
 	JButton avbrytButton;
 	
-	public nyAvtale()  {
+	public nyAvtale() throws SQLException  {
 		
 		super(new GridBagLayout());
 		gc = new GridBagConstraints();
@@ -241,6 +225,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    add(beskrivelseFelt, gc);
 	    
 	    // LISTE MED DELTAGERE
+	    
 	    deltagereLabel = new JLabel("Deltagere:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
@@ -248,8 +233,18 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(deltagereLabel, gc);
 	    
+		// Legger til vert
+
+		try {
+			vert = db.hentBestemtAnsatt("henrik");
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+			vert = new Ansatt("Dette gikk ikke");
+		}
 	    
 		deltagerModell = new DefaultListModel();
+		deltagerModell.addElement(vert);
 		deltagereList = new JListScroll(deltagerModell);
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
@@ -282,7 +277,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(personerLabel, gc);
 	    
-		personModell = new DefaultListModel();
+		personModell = db.hentAnsatte();
+	    //personModell = new DefaultListModel();
 		personerList = new JListScroll(personModell);
 	    gc.weightx = 0.5;
 	    gc.gridwidth = 1;
@@ -458,65 +454,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(lagreButton, gc);
 	    
-	    // LEGGER INN VERDIER FOR Å TESTE
 	    
-	    // Han som inviterer (Må legge til ekstra funksjoner til han)
-	    vert = new Ansatt("Vert");
-	    deltagerModell.addElement(vert);
-		
-	    // Ansatte
-		kari = new Ansatt("Kari");
-		ida = new Ansatt("Ida");
-		henrik = new Ansatt("Henrik");
-		gris = new Ansatt("gris");
-		fredrik = new Ansatt("Fredrik");
-		nora = new Ansatt("Nora");
-		eline = new Ansatt("Eline");
-		Gina = new Ansatt("Gina");
-		Fridtjof = new Ansatt("Fridtjof");
-		oyvind = new Ansatt("Øyvind");
-		ola = new Ansatt("Ola");
-		knut = new Ansatt("Knut");
-		eirik = new Ansatt("Eirik");
-		truls = new Ansatt("Truls");
-		personModell.addElement(kari);
-		personModell.addElement(ida);
-		personModell.addElement(henrik);
-		personModell.addElement(gris);
-		personModell.addElement(fredrik);
-		personModell.addElement(nora);
-		personModell.addElement(eline);
-		personModell.addElement(Gina);
-		personModell.addElement(Fridtjof);
-		personModell.addElement(oyvind);
-		personModell.addElement(ola);
-		personModell.addElement(knut);
-		personModell.addElement(eirik);
-		personModell.addElement(truls);
-		
-		//Grupper
-		Gruppe rekrutteringsgruppa = new Gruppe("Rekrutteringsgruppa");
-		rekrutteringsgruppa.setNavn("Rekrutteringsgruppa");
-		rekrutteringsgruppa.setMedlem(kari);
-		rekrutteringsgruppa.setMedlem(ida);
-		Gruppe administrerende = new Gruppe("Administrerende");
-		administrerende.setNavn("Administrerende");
-		administrerende.setMedlem(knut);
-		administrerende.setMedlem(Fridtjof);
-		administrerende.setMedlem(ola);
-		administrerende.setMedlem(oyvind);
-		Gruppe utviklere = new Gruppe("Utviklere");
-		utviklere.setNavn("Utviklere");
-		utviklere.setMedlem(eline);
-		utviklere.setMedlem(kari);
-		utviklere.setMedlem(ida);
-		utviklere.setMedlem(truls);
-		utviklere.setMedlem(Gina);
-		utviklere.setMedlem(fredrik);
-		gruppeModell.addElement(rekrutteringsgruppa);
-		gruppeModell.addElement(administrerende);
-		gruppeModell.addElement(utviklere);
-		
+	    
 		//Rom
 	    Rom r1 = new Rom("R1", 3);
 	    Rom r2 = new Rom("R2", 10);
@@ -747,7 +686,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				// TODO Auto-generated method stub
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), Fridtjof);
+				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), vert);
 				beskrivelseAvRomLabel = new JLabel(avtale.toString());
 				
 				try {
@@ -855,7 +794,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
     }
     */ 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		JFrame frame = new JFrame();
 		frame.setSize(new Dimension(900,600));
 		nyAvtale na = new nyAvtale();

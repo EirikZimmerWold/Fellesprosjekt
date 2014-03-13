@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.DefaultListModel;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -63,7 +65,6 @@ public class Database {
 	public void invitertTilAvtale(String ansattInvitert, int id) throws SQLException {
 		st = c.createStatement();
 		int b = -1;
-		System.out.println("id som blir sendt til db: "+id);
 		query = "INSERT INTO PersonDeltarAvtale(brukernavn, avtaleId, bekreftet) VALUES('"+ansattInvitert+"','"+id+"','"+b+"');";
 		st.executeUpdate(query);
 		
@@ -74,13 +75,47 @@ public class Database {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn().toLowerCase();
 		int av = avtale.getId();
-		
-		int testStatus = 1;
-		String testBrukernavn = "henrik";
-		int testId = 1;
-		
-		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+testStatus+"' WHERE brukernavn= '"+testBrukernavn+"' AND avtaleID = '"+testId+"');";
-		
+		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+status+"' WHERE brukernavn= '"+brukernavn+"' AND avtaleID = '"+av+"';";
+		st.executeUpdate(query);
 	}
+	
+	// Hent ansatte
+	public DefaultListModel hentAnsatte() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Ansatt;";
+		rs = st.executeQuery(query);
+		DefaultListModel result = new DefaultListModel();
+		
+		while(rs.next()) {
+			Ansatt ansatt = new Ansatt(rs.getString("brukernavn"));
+			ansatt.setNavn(rs.getString("navn"));
+			ansatt.setAdresse(rs.getString("adresse"));
+			ansatt.setTelefon(rs.getString("telefon"));
+			ansatt.setStilling(rs.getString("stilling"));
+			ansatt.setPassord(rs.getString("passord"));
+			result.addElement((Ansatt) ansatt);
+        }
+		return result;
+	}
+	
+	// Hent en bestemt ansatt
+	public Ansatt hentBestemtAnsatt(String brukernavn) throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
+		rs = st.executeQuery(query);
+
+		Ansatt ansatt = new Ansatt(rs.getString("brukernavn"));
+		ansatt.setNavn(rs.getString("navn"));
+		ansatt.setAdresse(rs.getString("adresse"));
+		ansatt.setTelefon(rs.getString("telefon"));
+		ansatt.setStilling(rs.getString("stilling"));
+		ansatt.setPassord(rs.getString("passord"));
+		return ansatt;
+	}
+	
+	
+	// Hent alle rom
+	
+	// Hent bestemt rom
 
 }
