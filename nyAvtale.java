@@ -757,7 +757,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				}
 				//Inviterer alle deltagerne
 				for (int a = 0; a < deltagerModell.getSize(); a++) {
-					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn();
+					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
 					try {
 						((Database) db).invitertTilAvtale(ansattInvitert, avtale.getId());
 					} catch (SQLException e1) {

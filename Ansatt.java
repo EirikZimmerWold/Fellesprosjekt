@@ -13,6 +13,11 @@ public class Ansatt {
 	private String adresse;
 	private String telefon;
 	private String stilling;
+	
+	protected Ansatt(String b) {
+		// TODO Auto-generated constructor stub
+		brukernavn = b;
+	}
 
 	
 	public String getBrukernavn() {
@@ -77,11 +82,6 @@ public class Ansatt {
 
 	public void setStilling(String stilling) {
 		this.stilling = stilling;
-	}
-
-	protected Ansatt(String b) {
-		// TODO Auto-generated constructor stub
-		brukernavn = b;
 	}
 	
 	public String toString() {

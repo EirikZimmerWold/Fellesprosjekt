@@ -53,7 +53,8 @@ public class Database {
 	// NŒ blir deltagerne i avtalen invitert til avtalen, med "null" som bekreftet-status fordi de ikke har svart enda
 	public void invitertTilAvtale(String ansattInvitert, int id) throws SQLException {
 		st = c.createStatement();
-		boolean b = (Boolean) null;
+		int b = -1;
+		System.out.println("id som blir sendt til db: "+id);
 		query = "INSERT INTO PersonDeltarAvtale(brukernavn, avtaleId, bekreftet) VALUES('"+ansattInvitert+"','"+id+"','"+b+"');";
 		st.executeUpdate(query);
 		
