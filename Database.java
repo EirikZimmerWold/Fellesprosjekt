@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.DefaultListModel;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -14,7 +16,9 @@ public class Database {
 	private java.sql.Connection c;
 	private java.sql.Statement st;
 	private ResultSet rs;
+	private ResultSet rs2;
 	private String query;
+	private Ansatt deltager;
 	
 	public Database() {
 		try {
@@ -88,5 +92,36 @@ public class Database {
 			st.executeUpdate(query);
 		//}
 	}
+	
+	public DefaultListModel<Ansatt> alleDeltagere(Avtale avtale) throws SQLException{
+		st = c.createStatement();
+		int avi = avtale.getId();
+		DefaultListModel<Ansatt> result= new DefaultListModel<Ansatt>();
+		query = "SELECT brukernavn FROM PersonDeltarAvtale WHERE avtaleId= '"+ avi+"';";
+		rs2 = st.executeQuery(query);
+		while (rs2.next()){
+			deltager = hentBestemtAnsatt(rs2.getString("brukernavn"));
+			result.addElement(deltager);
+		}
+		return result;
+	}
+		
+	public Ansatt hentBestemtAnsatt(String brukernavn) throws SQLException {
+			st = c.createStatement();
+			query = "SELECT * FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
+			rs = st.executeQuery(query);
+			Ansatt ansatt = new Ansatt("foorBrukernavn");
+			
+			while(rs.next()) {
+				ansatt.setBrukernavn(rs.getString("brukernavn"));
+				ansatt.setNavn(rs.getString("navn"));
+				ansatt.setAdresse(rs.getString("adresse"));
+				ansatt.setTelefon(rs.getString("telefon"));
+				ansatt.setStilling(rs.getString("stilling"));
+				ansatt.setPassord(rs.getString("passord"));
+			}
+			return ansatt;
+	}
+	
 
 }
