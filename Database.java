@@ -75,7 +75,18 @@ public class Database {
 		String brukernavn = ansatt.getBrukernavn().toLowerCase();
 		int av = avtale.getId();
 		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+status+"' WHERE brukernavn= '"+brukernavn+"' AND avtaleID = '"+av+"');";
-		
+		st.executeUpdate(query);
+	}
+	
+	public void fjerneAvtale (Avtale avtale) throws SQLException {
+		st = c.createStatement();
+		//if setningen kan brukes når vi har satt opp at vi kan sjekke hvem som er pålogget
+		//String leder = avtale.getLeder().getBrukernavn();
+		//if (vårtBrukernavn == leder){
+			int av = avtale.getId();
+			query = "DELETE FROM Avtale WHERE avtaleId= '" + av+ "';";
+			st.executeUpdate(query);
+		//}
 	}
 
 }

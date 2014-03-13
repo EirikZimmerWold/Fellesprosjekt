@@ -136,6 +136,12 @@ public class avtaleview extends JPanel {
 	class SLETT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				db.fjerneAvtale(avtale);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//fjerner avtalen. den slettes fra alle deltagere sine kalendre (cascade?)
 		}
 	}
