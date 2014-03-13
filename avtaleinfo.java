@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 
-//denne klassen lager bokser som inneholder informasjonen om avtalen man trykket på
+//denne klassen lager bokser som inneholder informasjonen om avtalen man trykket pï¿½
 //skal brukes av avtaleview og notifikasjoner klassene
 public class avtaleinfo extends JPanel {
 	JTextField leder;
@@ -73,11 +73,11 @@ public class avtaleinfo extends JPanel {
 		add(beskrivelse,c);
 		
 	}
-	//tar inn avtalen man trykket på og setter informasjonen i boksene
+	//tar inn avtalen man trykket pï¿½ og setter informasjonen i boksene
 	public void settInfo(Avtale avtale){
 		leder.setText(avtale.getLeder().getNavn());
-		starttid.setText(avtale.getStartDag()+"."+avtale.getStartMaaned()+"."+avtale.getStartAar()+" - "+avtale.getStartKl());
-		sluttid.setText(avtale.getSluttDag()+"."+avtale.getSluttMaaned()+"."+avtale.getSluttAar()+" - "+avtale.getSluttKl());
+		starttid.setText(avtale.getStartTid());
+		sluttid.setText(avtale.getSluttTid());
 		moterom.setText(avtale.getRom().getNavn());
 		beskrivelse.setText(avtale.getBeskrivelse());
 	}

@@ -8,10 +8,12 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
-public class weekView {
-	public static void main(String[] args){
+public class weekView extends JPanel{
+	
+	public weekView(){
 		Calendar cal = Calendar.getInstance();
 		
 		cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
@@ -41,40 +43,33 @@ public class weekView {
 	}
 	
 	
-	public static void generateThisWeek(int monDate, int month, int year){
-		JFrame frame = new JFrame("Week");
-		frame.setSize(1000, 1000);
+	public void generateThisWeek(int monDate, int month, int year){
 
 		weekdayPanel wkdPanel = new weekdayPanel("Mandag", Integer.toString(monDate) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		weekdayPanel wkdPanel2 = new weekdayPanel("Tirsdag", Integer.toString(monDate +1) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		weekdayPanel wkdPanel3 = new weekdayPanel("Onsdag", Integer.toString(monDate + 2) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		weekdayPanel wkdPanel4 = new weekdayPanel("Torsdag", Integer.toString(monDate + 3) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		weekdayPanel wkdPanel5 = new weekdayPanel("Fredag", Integer.toString(monDate + 4) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel6 = new weekdayPanel("Lørdag", Integer.toString(monDate + 5) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel7 = new weekdayPanel("Søndag", Integer.toString(monDate + 6) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
+		weekdayPanel wkdPanel6 = new weekdayPanel("Lï¿½rdag", Integer.toString(monDate + 5) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
+		weekdayPanel wkdPanel7 = new weekdayPanel("Sï¿½ndag", Integer.toString(monDate + 6) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
 		
 		
 
-		frame.setLayout(new FlowLayout());
+		setLayout(new FlowLayout());
 		
 		JButton backButton = new JButton("<");
-		frame.getContentPane().add(backButton);
+		add(backButton);
 		
-		frame.getContentPane().add(wkdPanel);
-		frame.getContentPane().add(wkdPanel2);
-		frame.getContentPane().add(wkdPanel3);
-		frame.getContentPane().add(wkdPanel4);
-		frame.getContentPane().add(wkdPanel5);
-		frame.getContentPane().add(wkdPanel6);
-		frame.getContentPane().add(wkdPanel7);
+		add(wkdPanel);
+		add(wkdPanel2);
+		add(wkdPanel3);
+		add(wkdPanel4);
+		add(wkdPanel5);
+		add(wkdPanel6);
+		add(wkdPanel7);
 		
 		JButton nextButton = new JButton(">");
 	
-		frame.getContentPane().add(nextButton);
-		
-		
-		
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(nextButton);
 	}
 }

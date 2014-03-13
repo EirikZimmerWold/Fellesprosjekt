@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 
 public class ProgramFrame extends JFrame implements ActionListener{
 
-	private final Dimension windowSize = new Dimension(600,400); 
+	private final Dimension windowSize = new Dimension(800,650); 
 	private JMenuBar menubar;
 	private JMenu fileMenu;
 	private JMenu netMenu;
@@ -27,38 +27,26 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private JMenuItem connectNetItem;
 	private JMenuItem disconnectNetItem;
 	
-	private JTabbedPane panelTabs;
-	
-	private JPanel testPanel;
-	private JPanel testPanel2; 
+	private MainPanel mainPanel;
 	
 	public ProgramFrame() {
 		init();
 		initMenu();
 		
-		panelTabs = new JTabbedPane();
+		mainPanel = new MainPanel(this);
 		
-		testPanel = new JPanel();
-		testPanel2 = new JPanel();
-		
-		panelTabs.add(testPanel, "Kalender");
-		panelTabs.add(testPanel2, "Notifikasjoner");
-		
-		System.out.println(panelTabs.getComponentCount());
-		System.out.println(panelTabs.getComponent(0).toString());
-		System.out.println(panelTabs.getComponent(1).toString());
-		System.out.println(testPanel.getParent());
-	
-		JLabel test = new JLabel("Logget inn som");
-		
-		add(test);
-		add(panelTabs);
+		add(mainPanel);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == loginItem){
 			LoggInnPanel loggInn = new LoggInnPanel();
+			JFrame frame = new JFrame();
+			frame.setContentPane(loggInn);
+			frame.pack();
+			frame.setVisible(true);
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 	}
 	

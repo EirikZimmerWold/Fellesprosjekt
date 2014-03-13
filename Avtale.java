@@ -12,7 +12,7 @@ public class Avtale {
 	private Rom rom = null;
 	private Ansatt leder;
 	
-	public Avtale(String st, String sl, String besk, Rom r, Ansatt leder) {
+	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel<Ansatt> deltagere, Ansatt leder) {
 		/*
 		 * Dette kan brukes dersom tid skal hentes ut av databasen!
 		 * 

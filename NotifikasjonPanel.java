@@ -22,16 +22,6 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	private PropertyChangeSupport pcs;
 	public final static String INFO_PROPERTY="infoButton";
 	
-	public static void main(String[] args) {
-		//JFrame frame=new JFrame();
-		//Avtale avtale=new Avtale();
-		//NotifikasjonPanel panel=new NotifikasjonPanel(avtale);
-		//frame.getContentPane().add(panel);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setVisible(true);
-		//frame.pack();
-	}
-	
 	public NotifikasjonPanel(Avtale avtale){
 		pcs=new PropertyChangeSupport(this);
 		

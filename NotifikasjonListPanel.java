@@ -17,22 +17,6 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	private JPanel list;
 	protected avtaleinfo avtaleinfo;
 	
-	public static void main(String[] args) {
-		JFrame frame=new JFrame();
-		NotifikasjonListPanel notifikasjonListPanel=new NotifikasjonListPanel();
-		frame.getContentPane().add(notifikasjonListPanel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.pack();
-		
-		Rom rom=new Rom("R2");
-		Ansatt leder=new Ansatt("idawol");
-		leder.setNavn("Per");
-		DefaultListModel<Ansatt> deltagere=new DefaultListModel<Ansatt>();
-		Avtale avtale=new Avtale("2014-03-12-1415","2014-03-12-1600", "Testing av prototype", rom, deltagere, leder);
-		notifikasjonListPanel.addNotifikasjonPanel(avtale);
-	}
-	
 	public NotifikasjonListPanel(){
         list = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -47,6 +31,13 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         
         avtaleinfo=new avtaleinfo();
         this.add(avtaleinfo);
+        
+		Rom rom=new Rom("R2");
+		Ansatt leder=new Ansatt("idawol");
+		leder.setNavn("Per");
+		DefaultListModel<Ansatt> deltagere=new DefaultListModel<Ansatt>();
+		Avtale avtale=new Avtale("2014-03-12-1415","2014-03-12-1600", "Testing av prototype", rom, deltagere, leder);
+		addNotifikasjonPanel(avtale);
 	}
 	
 	public void addNotifikasjonPanel(Avtale avtale){

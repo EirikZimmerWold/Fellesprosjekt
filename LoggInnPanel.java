@@ -29,15 +29,6 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	final JFrame popUpWithMessage = new JFrame();
 	private String message="Feil passord eller brukernavn";
 	
-	public static void main(String[] args) {
-		JFrame frame=new JFrame();
-		LoggInnPanel loggInn=new LoggInnPanel();
-		frame.getContentPane().add(loggInn);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.pack();
-	}
-	
 	public LoggInnPanel(){
 		gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());

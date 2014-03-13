@@ -121,7 +121,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(startTidLabel, gc);
 	    
-	    // START ÅR
+	    // START ÔøΩR
 	    
 	    startTidAar = new JComboBox();
 	    for (int k = tid.getTime().getYear()+1900; k < 2031; k++) {
@@ -132,7 +132,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.gridy = 1;
 	    add(startTidAar, gc);
 	    
-	    // START MÅNED
+	    // START MÔøΩNED
 	    
 	    startTidMaaned = new JComboBox(Maaned.values());
 	    startTidMaaned.setSelectedIndex(tid.getTime().getMonth());
@@ -181,7 +181,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(sluttTidLabel, gc);
 	    
-	    // SLUTT-TID ÅR
+	    // SLUTT-TID ÔøΩR
 	    
 	    sluttTidAar = new JComboBox();
 	    for (int k = tid.getTime().getYear()+1900; k < 2031; k++) {
@@ -193,7 +193,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.gridy = 2;
 	    add(sluttTidAar, gc);
 	    
-	    // SLUTT-TID MÅNED
+	    // SLUTT-TID MÔøΩNED
 	    
 	    sluttTidMaaned = new JComboBox(Maaned.values());
 	    sluttTidMaaned.setSelectedIndex(tid.getTime().getMonth());
@@ -334,9 +334,9 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(inviterGruppeButton, gc);
 	    
-	    // MØTEROM
+	    // MÔøΩTEROM
 	    
-	    mooteromLabel = new JLabel("Møterom:");
+	    mooteromLabel = new JLabel("MÔøΩterom:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
 	    gc.gridy = 8;
@@ -344,7 +344,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    add(mooteromLabel, gc);
 	    
 	    
-	    // Finn et møterom
+	    // Finn et mÔøΩterom
 	    
 	    finnEtRomLabel = new JLabel("Finn et rom: ");
 	    gc.gridwidth = 1;
@@ -381,7 +381,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnPassendeRomButton, gc);
 	    
-	    beskjedEtterFunnetRomLabel = new JLabel("med tanke på antall deltagere");
+	    beskjedEtterFunnetRomLabel = new JLabel("med tanke pÔøΩ antall deltagere");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 5;
 	    gc.gridy = 9;
@@ -390,7 +390,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    
 	    // Beskrivelse av rom
 	    
-	    beskrivelseAvRomLabel = new JLabel("Her kommer rombeskrivelse når du har valgt rom");
+	    beskrivelseAvRomLabel = new JLabel("Her kommer rombeskrivelse nÔøΩr du har valgt rom");
 	    gc.gridwidth = 3;
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
@@ -458,9 +458,9 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(lagreButton, gc);
 	    
-	    // LEGGER INN VERDIER FOR Å TESTE
+	    // LEGGER INN VERDIER FOR ÔøΩ TESTE
 	    
-	    // Han som inviterer (Må legge til ekstra funksjoner til han)
+	    // Han som inviterer (MÔøΩ legge til ekstra funksjoner til han)
 	    vert = new Ansatt("Vert");
 	    deltagerModell.addElement(vert);
 		
@@ -474,7 +474,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 		eline = new Ansatt("Eline");
 		Gina = new Ansatt("Gina");
 		Fridtjof = new Ansatt("Fridtjof");
-		oyvind = new Ansatt("Øyvind");
+		oyvind = new Ansatt("ÔøΩyvind");
 		ola = new Ansatt("Ola");
 		knut = new Ansatt("Knut");
 		eirik = new Ansatt("Eirik");
@@ -563,7 +563,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 			    //setter antall dager som hoorer til current maaned
 				settStartDager();
 			
-				//Sjekker at starttid skal være før sluttid
+				//Sjekker at starttid skal vÔøΩre fÔøΩr sluttid
 				if ((Integer) startTidAar.getSelectedItem()-(Integer) sluttTidAar.getSelectedItem() == 0) {
 					if ((Integer) startTidMaaned.getSelectedIndex() > (Integer) sluttTidMaaned.getSelectedIndex()) {
 						sluttTidMaaned.setSelectedIndex(startTidMaaned.getSelectedIndex());
@@ -658,7 +658,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (deltagereList.getJList().getSelectedValue() == vert) {
-					JOptionPane.showMessageDialog(popUpWithMessage, "Verten må delta på arrangementet. Kan ikke fjernes.");
+					JOptionPane.showMessageDialog(popUpWithMessage, "Verten mÔøΩ delta pÔøΩ arrangementet. Kan ikke fjernes.");
 				}
 				else {
 					personModell.addElement(deltagereList.getJList().getSelectedValue());
@@ -677,7 +677,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				int antallDeltagere = deltagereList.getDefaultListModel().getSize();
 				Rom passendeRom = (Rom) romBox.getItemAt(0);
 				
-				// må søke gjennom alle avtaler, og sjekke om det passende møterommet er ledig på gitt tidspunkt
+				// mÔøΩ sÔøΩke gjennom alle avtaler, og sjekke om det passende mÔøΩterommet er ledig pÔøΩ gitt tidspunkt
 				String datoTest = "testDato";
 				
 				for (int s = 0; s < romBox.getItemCount(); s++) {
@@ -693,7 +693,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				beskrivelseAvRomLabel.setText(passendeRom.getBeskrivelse());
 				
 				if (passendeRom.getMaksAntallPersoner() < antallDeltagere) {
-					JOptionPane.showMessageDialog(popUpWithMessage, "Det finnes dessverre ikke et stort nok møterom");
+					JOptionPane.showMessageDialog(popUpWithMessage, "Det finnes dessverre ikke et stort nok mÔøΩterom");
 				}
 				
 			}
@@ -746,7 +746,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				// TODO Auto-generated method stub
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), Fridtjof);
+				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, Fridtjof);
 				beskrivelseAvRomLabel = new JLabel(avtale.toString());
 				
 				try {
@@ -793,7 +793,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 			for (int dag = 1; dag < 29; dag++) {
 				startTidDag.addItem(dag);
 			}
-			// Dersom det er skuddår skal det være 29 dager i februar
+			// Dersom det er skuddÔøΩr skal det vÔøΩre 29 dager i februar
 			if (tid.getTime().getYear() % 4 == 0) {
 				startTidDag.addItem(29);
 			}
@@ -820,7 +820,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 			for (int dag = 1; dag < 29; dag++) {
 				sluttTidDag.addItem(dag);
 			}
-			// Dersom det er skuddår skal det være 29 dager i februar
+			// Dersom det er skuddÔøΩr skal det vÔøΩre 29 dager i februar
 			if (tid.getTime().getYear() % 4 == 0) {
 				sluttTidDag.addItem(29);
 			}
@@ -855,15 +855,5 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
         }  
     }
     */ 
-	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(new Dimension(900,600));
-		nyAvtale na = new nyAvtale();
-		frame.setContentPane(na);
-		frame.setVisible(true);
-		frame.setBackground(Color.white);
-		
-	} 
 
 }
