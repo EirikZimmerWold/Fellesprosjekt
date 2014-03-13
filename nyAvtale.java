@@ -657,15 +657,16 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				/*
 				if (deltagereList.getJList().getSelectedValue() == vert) {
 					JOptionPane.showMessageDialog(popUpWithMessage, "Verten må delta på arrangementet. Kan ikke fjernes.");
 				}
-				else {
+				else {*/
 					personModell.addElement(deltagereList.getJList().getSelectedValue());
 					personerList.setDefaultListModel(personModell);
 					deltagerModell.removeElement(deltagereList.getJList().getSelectedValue());
 					deltagereList.setDefaultListModel(deltagerModell);
-				}
+				//}
 			}
 		});
 	    
@@ -767,8 +768,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JPanel {
 				}
 			}
 		});
-	    
-	    
 	}
 	
 	protected enum Maaned {
