@@ -103,13 +103,16 @@ public class Database {
 		st = c.createStatement();
 		query = "SELECT * FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
 		rs = st.executeQuery(query);
-
-		Ansatt ansatt = new Ansatt(rs.getString("brukernavn"));
-		ansatt.setNavn(rs.getString("navn"));
-		ansatt.setAdresse(rs.getString("adresse"));
-		ansatt.setTelefon(rs.getString("telefon"));
-		ansatt.setStilling(rs.getString("stilling"));
-		ansatt.setPassord(rs.getString("passord"));
+		Ansatt ansatt = new Ansatt("foorBrukernavn");
+		
+		while(rs.next()) {
+			ansatt.setBrukernavn(rs.getString("brukernavn"));
+			ansatt.setNavn(rs.getString("navn"));
+			ansatt.setAdresse(rs.getString("adresse"));
+			ansatt.setTelefon(rs.getString("telefon"));
+			ansatt.setStilling(rs.getString("stilling"));
+			ansatt.setPassord(rs.getString("passord"));
+		}
 		return ansatt;
 	}
 	
