@@ -106,7 +106,7 @@ public class avtaleview extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				db.endreBekreftetStatus(Deltagere.getSelectedValue(),avtale, 1);
+				db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 1);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -118,7 +118,7 @@ public class avtaleview extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				db.endreBekreftetStatus(Deltagere.getSelectedValue(),avtale, 0);
+				db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 0);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

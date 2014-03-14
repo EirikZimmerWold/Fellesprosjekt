@@ -42,7 +42,7 @@ public class Database {
 	}
 	
 	// husk Œ sende deltagerliste og! (legg til i database)
-	public void addAvtale(Avtale avtale) throws SQLException {
+	public void setNyAvtale(Avtale avtale) throws SQLException {
 		st = c.createStatement();
 		int id = avtale.getId();
 		String beskrivelse = avtale.getBeskrivelse();
@@ -56,14 +56,14 @@ public class Database {
 	}
 	
 	// Ny ansatt - brukes til Œ registrere ny bruker hvis vi skal ha med det
-	public void nyAnsatt(String brukernavn, String navn, String adresse, String telefon, String stilling, String passord) throws SQLException {
+	public void setNyAnsatt(String brukernavn, String navn, String adresse, String telefon, String stilling, String passord) throws SQLException {
 		st = c.createStatement();
 		query = "INSERT INTO Ansatt(brukernavn, navn, adresse, telefon, stilling, passord) VALUES('" 
 				+brukernavn+ "','" +navn+ "','"+ adresse+ "','"+ telefon +"','"+stilling+"','"+ passord+"');";
 	}
 	
 	// NŒ blir deltagerne i avtalen invitert til avtalen, med -1 som bekreftet-status fordi de ikke har svart enda
-	public void invitertTilAvtale(String ansattInvitert, int id) throws SQLException {
+	public void setPersonDeltarAvtale(String ansattInvitert, int id) throws SQLException {
 		st = c.createStatement();
 		int b = -1;
 		query = "INSERT INTO PersonDeltarAvtale(brukernavn, avtaleId, bekreftet) VALUES('"+ansattInvitert+"','"+id+"','"+b+"');";
@@ -72,7 +72,7 @@ public class Database {
 	}
 	
 	// Endre bekreftet-status hos en ansatt i personDeltarAvtale
-	public void endreBekreftetStatus(Ansatt ansatt, Avtale avtale, int status) throws SQLException {
+	public void setBekreftetStatus(Ansatt ansatt, Avtale avtale, int status) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn().toLowerCase();
 		int av = avtale.getId();
@@ -81,7 +81,7 @@ public class Database {
 	}
 	
 	// Hent ansatte
-	public DefaultListModel hentAnsatte() throws SQLException {
+	public DefaultListModel getAlleAnsatte() throws SQLException {
 		st = c.createStatement();
 		query = "SELECT * FROM Ansatt;";
 		rs = st.executeQuery(query);
@@ -100,7 +100,7 @@ public class Database {
 	}
 	
 	// Hent en bestemt ansatt
-	public Ansatt hentBestemtAnsatt(String brukernavn) throws SQLException {
+	public Ansatt getBestemtAnsatt(String brukernavn) throws SQLException {
 		st = c.createStatement();
 		query = "SELECT * FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
 		rs = st.executeQuery(query);
@@ -118,7 +118,7 @@ public class Database {
 	}
 
 	// Hent alle rom
-	public JComboBox hentRom() throws SQLException {
+	public JComboBox getAlleRom() throws SQLException {
 		st = c.createStatement();
 		query = "SELECT * FROM Rom;";
 		rs = st.executeQuery(query);
@@ -135,7 +135,7 @@ public class Database {
 	
 	// Hent bestemt rom
 	
-	public Rom hentBestemtRom(String romNr) throws SQLException {
+	public Rom getBestemtRom(String romNr) throws SQLException {
 		st = c.createStatement();
 		query = "SELECT * FROM Rom WHERE romNr='"+romNr+"';";
 		rs = st.executeQuery(query);

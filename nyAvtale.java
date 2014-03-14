@@ -403,7 +403,7 @@ public class nyAvtale extends JPanel {
 		// Legger til vert
 
 		try {
-			vert = db.hentBestemtAnsatt("henrik");
+			vert = db.getBestemtAnsatt("henrik");
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -444,7 +444,7 @@ public class nyAvtale extends JPanel {
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(personerLabel, gc);
 	    
-		personModell = db.hentAnsatte();
+		personModell = db.getAlleAnsatte();
 	    //personModell = new DefaultListModel();
 		personerList = new JListScroll(personModell);
 	    gc.weightx = 0.5;
@@ -551,8 +551,8 @@ public class nyAvtale extends JPanel {
 	}
 	
 	private void rom() throws SQLException {
+		
 		// M¯TEROM
-	    
 	    mooteromLabel = new JLabel("M¿terom:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
@@ -581,8 +581,7 @@ public class nyAvtale extends JPanel {
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnEtRomCheckbox, gc);
 	    
-	    romBox = db.hentRom();
-	    //romBox = new JComboBox();
+	    romBox = db.getAlleRom(); //henter alle rom fra database
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 3;
 	    gc.gridy = 9;
@@ -760,7 +759,7 @@ public class nyAvtale extends JPanel {
 				beskrivelseAvRomLabel = new JLabel(avtale.toString());
 				
 				try {
-					db.addAvtale(avtale);
+					db.setNyAvtale(avtale);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -769,7 +768,7 @@ public class nyAvtale extends JPanel {
 				for (int a = 0; a < deltagerModell.getSize(); a++) {
 					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
 					try {
-						((Database) db).invitertTilAvtale(ansattInvitert, avtale.getId());
+						((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -779,8 +778,9 @@ public class nyAvtale extends JPanel {
 		});
 	}
 
-	// CELL-RENDERER - SKAL VI BRUKE DENNE?
+	
 	/*
+	 * // CELL-RENDERER - brukes ikke nŒ, men kan tas ibruk dersom vi trenger!
 	private static class JListCellRenderer extends DefaultListCellRenderer {  
         public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {  
             Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );  
