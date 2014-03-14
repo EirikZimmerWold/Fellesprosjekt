@@ -147,5 +147,38 @@ public class Database {
 		}
 		return rom;
 	}
+	
+	// Finn ut om en person er i en bestemt gruppe
+	
+	public boolean getIfPersonHarGruppe(Gruppe gr, Ansatt ansatt) throws SQLException {
+		st = c.createStatement();
+		String brukernavn = ansatt.getBrukernavn();
+		query = "SELECT brukernavn FROM GruppeHarMedlem WHERE brukernavn = '" + brukernavn + "';";
+		rs = st.executeQuery(query);
+		if (rs.next()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
+	// Finn ut om en person er invitert i en bestemt avtale
+	
+	public boolean getIfPersonDeltarAvtale(Ansatt ansatt, Avtale avtale) throws SQLException {
+		st = c.createStatement();
+		String brukernavn = ansatt.getBrukernavn();
+		int avtaleId = avtale.getId();
+		query = "SELECT brukernavn FROM PersonDeltarAvtale WHERE brukernavn = '" + brukernavn + "' AND avtaleId = '" +avtaleId + "';";
+		rs = st.executeQuery(query);
+		if (rs.next()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
 
 }
