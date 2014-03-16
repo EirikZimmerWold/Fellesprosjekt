@@ -657,15 +657,16 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				/*
 				if (deltagereList.getJList().getSelectedValue() == vert) {
 					JOptionPane.showMessageDialog(popUpWithMessage, "Verten m� delta p� arrangementet. Kan ikke fjernes.");
 				}
-				else {
+				else {*/
 					personModell.addElement(deltagereList.getJList().getSelectedValue());
 					personerList.setDefaultListModel(personModell);
 					deltagerModell.removeElement(deltagereList.getJList().getSelectedValue());
 					deltagereList.setDefaultListModel(deltagerModell);
-				}
+				//}
 			}
 		});
 	    
@@ -757,7 +758,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				}
 				//Inviterer alle deltagerne
 				for (int a = 0; a < deltagerModell.getSize(); a++) {
-					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn();
+					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
 					try {
 						((Database) db).invitertTilAvtale(ansattInvitert, avtale.getId());
 					} catch (SQLException e1) {
@@ -767,9 +768,11 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				}
 			}
 		});
+<<<<<<< HEAD
 	    
 	    avbrytButton.addActionListener(this);
-	    
+		
+>>>>>>> 5619ccdfe056b87d97d77d0337a38311613a5334
 	}
 	
 	@Override

@@ -25,6 +25,7 @@ public class Database {
 		}
 	}
 	
+	// Denne metoden er bare for Œ sjekke at brukeren har et brukernavn #TEST
 	public boolean checkUsername(String brukernavn) throws SQLException {
 		st = c.createStatement();
 		query = "SELECT brukernavn FROM Ansatt WHERE brukernavn = '" + brukernavn + "';";
@@ -46,17 +47,9 @@ public class Database {
 		String sluttTid = avtale.getSluttTid();
 		String adminBrukernavn = avtale.getLeder().getBrukernavn();
 		String rom = avtale.getRom().getNavn();
-		query = "INSERT INTO Avtale(beskrivelse, startTid, sluttTid, adminBrukernavn, romNr) VALUES('" 
-		+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"');";
+		query = "INSERT INTO Avtale(avtaleId, beskrivelse, startTid, sluttTid, adminBrukernavn, romNr) VALUES('" 
+		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"');";
 		st.executeUpdate(query);
-	}
-	// NŒ blir deltagerne i avtalen invitert til avtalen, med "null" som bekreftet-status fordi de ikke har svart enda
-	public void invitertTilAvtale(String ansattInvitert, int id) throws SQLException {
-		st = c.createStatement();
-		boolean b = (Boolean) null;
-		query = "INSERT INTO PersonDeltarAvtale(brukernavn, avtaleId, bekreftet) VALUES('"+ansattInvitert+"','"+id+"','"+b+"');";
-		st.executeUpdate(query);
-		
 	}
 	
 	// Ny ansatt - brukes til Œ registrere ny bruker hvis vi skal ha med det
@@ -64,6 +57,30 @@ public class Database {
 		st = c.createStatement();
 		query = "INSERT INTO Ansatt(brukernavn, navn, adresse, telefon, stilling, passord) VALUES('" 
 				+brukernavn+ "','" +navn+ "','"+ adresse+ "','"+ telefon +"','"+stilling+"','"+ passord+"');";
+	}
+	
+	// NŒ blir deltagerne i avtalen invitert til avtalen, med -1 som bekreftet-status fordi de ikke har svart enda
+	public void invitertTilAvtale(String ansattInvitert, int id) throws SQLException {
+		st = c.createStatement();
+		int b = -1;
+		System.out.println("id som blir sendt til db: "+id);
+		query = "INSERT INTO PersonDeltarAvtale(brukernavn, avtaleId, bekreftet) VALUES('"+ansattInvitert+"','"+id+"','"+b+"');";
+		st.executeUpdate(query);
+		
+	}
+	
+	// Endre bekreftet-status hos en ansatt i personDeltarAvtale
+	public void endreBekreftetStatus(Ansatt ansatt, Avtale avtale, int status) throws SQLException {
+		st = c.createStatement();
+		String brukernavn = ansatt.getBrukernavn().toLowerCase();
+		int av = avtale.getId();
+		
+		int testStatus = 1;
+		String testBrukernavn = "henrik";
+		int testId = 1;
+		
+		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+testStatus+"' WHERE brukernavn= '"+testBrukernavn+"' AND avtaleID = '"+testId+"');";
+		
 	}
 
 }

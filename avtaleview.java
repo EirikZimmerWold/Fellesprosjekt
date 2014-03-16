@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -36,8 +37,11 @@ public class avtaleview extends JPanel {
 	DefaultListModel<Ansatt> model;
 	avtaleinfo avt;
 	JLabel DeltagereL;
+	Database db = new Database();
+	Avtale avtale;
 	
-	public avtaleview() {
+	public avtaleview(Avtale avtalen) {
+		avtale = avtalen;
 		//forandre <String> til <Ansatt>
 		Deltagere = new JList<Ansatt>();
 		DeltagereL = new JLabel("Deltagere: ");
@@ -62,6 +66,7 @@ public class avtaleview extends JPanel {
 		slette.addActionListener(new SLETT());
 		//panellet med informasjonen om avtalen
 		avt = new avtaleinfo();
+		avt.settInfo(avtalen);
 		//JPanel panel2 = avt;
     	setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
@@ -100,12 +105,24 @@ public class avtaleview extends JPanel {
 	class OK implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				db.endreBekreftetStatus(Deltagere.getSelectedValue(),avtale, 1);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//sette valgt deltager til bekreftet status
 		}
 	}
 	class NEI implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				db.endreBekreftetStatus(Deltagere.getSelectedValue(),avtale, 0);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//sette valgt deltager til Avslatt status
 		}
 	}
