@@ -768,11 +768,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				}
 			}
 		});
-<<<<<<< HEAD
-	    
 	    avbrytButton.addActionListener(this);
-		
->>>>>>> 5619ccdfe056b87d97d77d0337a38311613a5334
 	}
 	
 	@Override

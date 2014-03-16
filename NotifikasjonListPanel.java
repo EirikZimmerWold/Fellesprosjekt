@@ -20,10 +20,8 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	private JPanel list;
 	protected avtaleinfo avtaleinfo;
 	
-<<<<<<< HEAD
 	private int notifyCount;
 	private String panelName = "Notifikasjoner";
->>>>>>> 5619ccdfe056b87d97d77d0337a38311613a5334
 	
 	public NotifikasjonListPanel(ProgramFrame frame){
 		this.frame = frame;
