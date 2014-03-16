@@ -39,6 +39,8 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		
 		mainPanel = new MainPanel(this);
 		
+		disableComponents();
+		
 		add(mainPanel);
 	}
 	
@@ -60,6 +62,27 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
+	}
+	
+	public void enableComponents(){
+		logoutItem.setEnabled(true);
+		loginItem.setEnabled(false);
+		acceptNetItem.setEnabled(true);
+		connectNetItem.setEnabled(true);
+		disconnectNetItem.setEnabled(true);
+		
+		mainPanel.enableComponents();
+	}
+	
+	public void disableComponents(){
+		logoutItem.setEnabled(false);
+		loginItem.setEnabled(true);
+		acceptNetItem.setEnabled(false);
+		connectNetItem.setEnabled(false);
+		disconnectNetItem.setEnabled(false);
+		
+		mainPanel.disableComponents();
+		
 	}
 	
 	public void initMenu(){
