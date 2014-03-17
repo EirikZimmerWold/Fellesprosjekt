@@ -21,11 +21,14 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	private GridBagConstraints gbc;
 	private PropertyChangeSupport pcs;
 	public final static String INFO_PROPERTY="infoButton";
+	private Database db;
 	
 	private NotifikasjonListPanel notifListPanel;
 	
 	public NotifikasjonPanel(NotifikasjonListPanel notifListPanel, Avtale avtale){
 		this.notifListPanel = notifListPanel;
+		
+		db=new Database();
 		
 		pcs=new PropertyChangeSupport(this);
 		
@@ -110,9 +113,9 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource()==bekreftButton){
-			System.out.println("Bekreft");
+			db.endreBekreftetStatus(frame.get, notifikasjon.getAvtale(), 1);
 		}else if(arg0.getSource()==avslaaButton){
-			System.out.println("Avslaa");
+			db.endreBekreftetStatus(, notifikasjon.getAvtale(), 0);
 		}else if (arg0.getSource()==infoButton){
 			pcs.firePropertyChange(INFO_PROPERTY,"oldvalue","newvalue"); //firepropertyChange til notifikasjonListPanel
 		}
