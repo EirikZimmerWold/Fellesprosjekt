@@ -45,16 +45,20 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         
         avtaleinfo=new avtaleinfo();
         this.add(avtaleinfo);
+        db = new Database();
         }
 	
 	public void seNotifikasjoner() throws SQLException{
+		fjernListe();
 		Ansatt bruker = frame.getUser();
 		if (bruker != null){
 			notifiks = db.avtalerPersonErMed(bruker);
 			String [] delt = notifiks.split("-");
 			for (String verdi:delt){
-				int avID = Integer.parseInt(verdi);
-				addNotifikasjonPanel(db.getBestemtAvtale(avID));
+				if (verdi != ""){
+					int avID = Integer.parseInt(verdi);
+					addNotifikasjonPanel(db.getBestemtAvtale(avID));
+				}
 			}
 		}
 	}
@@ -70,7 +74,16 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         repaint();
         notifyCount++;
 	}
-	
+	private void fjernListe(){
+		list.removeAll();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        list.add(new JPanel(), gbc);
+        list.setBackground(Color.white);
+        
+	}
 	public String getPanelName(){
 		return panelName;
 	}

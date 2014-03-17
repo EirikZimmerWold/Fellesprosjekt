@@ -293,12 +293,11 @@ public class Database {
 	public String avtalerPersonErMed(Ansatt ansatt) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
-		query = "SELECT avtaleId FROM PersonDeltarAvtale WHERE brukernavn = '"
-		+ brukernavn + "' AND bekreftet = -1;";
+		query = "SELECT avtaleId FROM PersonDeltarAvtale WHERE brukernavn = '"+ brukernavn + "' AND bekreftet = -1;";
 		rs = st.executeQuery(query);
 		String IDene ="";
 		while(rs.next()) {
-			IDene += "-"+ rs.getString("avtaleId");
+			IDene += rs.getString("avtaleId")+ "-";
 		}
 		return IDene;
 	}
