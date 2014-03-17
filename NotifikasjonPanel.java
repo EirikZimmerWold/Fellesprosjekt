@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 
 public class NotifikasjonPanel extends JPanel implements ActionListener{
-	private JLabel lederLabel, startTidLabel, sluttTidLabel, leder, startTid, sluttTid;
+	private JLabel lederLabel, startTidLabel, sluttTidLabel, leder, startTid, sluttTid, status;
 	private JButton bekreftButton, avslaaButton, infoButton;
 	protected Notifikasjon notifikasjon;
 	private GridBagConstraints gbc;
@@ -38,52 +38,73 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 		
 		lederLabel=new JLabel("Leder: ");
 		gbc.gridx=0;
-		gbc.gridy=0;
+		gbc.gridy=1;
 		this.add(lederLabel,gbc);
 		
 		leder=new JLabel(notifikasjon.getLeder());
 		gbc.gridx=1;
-		gbc.gridy=0;
+		gbc.gridy=1;
 		this.add(leder,gbc);
 		
 		startTidLabel=new JLabel("Start tid: ");
 		gbc.gridx=0;
-		gbc.gridy=1;
+		gbc.gridy=2;
 		this.add(startTidLabel, gbc);
 		
 		startTid=new JLabel(notifikasjon.getStartTid());
 		gbc.gridx=1;
-		gbc.gridy=1;
+		gbc.gridy=2;
 		this.add(startTid,gbc);
 		
 		sluttTidLabel=new JLabel("Slutt tid: ");
 		gbc.gridx=0;
-		gbc.gridy=2;
+		gbc.gridy=3;
 		this.add(sluttTidLabel, gbc);
 		
 		sluttTid=new JLabel(notifikasjon.getSluttTid());
 		gbc.gridx=1;
-		gbc.gridy=2;
+		gbc.gridy=3;
 		this.add(sluttTid,gbc);
 		
 		bekreftButton=new JButton("Bekreft");
 		bekreftButton.addActionListener(this);
 		gbc.gridx=2;
-		gbc.gridy=0;
+		gbc.gridy=1;
 		this.add(bekreftButton, gbc);
 		
 		avslaaButton=new JButton(" Avslaa ");
 		avslaaButton.addActionListener(this);
 		gbc.gridx=2;
-		gbc.gridy=1;
+		gbc.gridy=2;
 		this.add(avslaaButton, gbc);
 		
 		infoButton=new JButton("    Info    ");
 		infoButton.addActionListener(this);
 		gbc.gridx=2;
-		gbc.gridy=2;
+		gbc.gridy=3;
 		this.add(infoButton, gbc);
 		
+		status=new JLabel(" ");
+		gbc.gridx=0;
+		gbc.gridy=0;
+		gbc.gridwidth=3;
+		this.add(status,gbc);
+	}
+	
+	public void erEndret(){ //sendes til alle 
+		status.setText("Eventen har blitt endret");
+	}
+	
+	public void invitert(){ //sendes til den ansatte som har blitt invitert
+		status.setText("Du har blitt invitert til en event");
+	}
+	
+	public void enAnsattHarAvslaatt(){
+		status.setText(" har avslått avtalen");//skal legge til navn som har avslått
+	}
+	
+	public void erAlarm(){
+		status.setText("Du har en avtale om ");//skal legge til tid for mote
 	}
 
 	@Override

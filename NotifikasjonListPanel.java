@@ -1,5 +1,6 @@
 package Fellesprosjektet;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,6 +34,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         gbc.weightx = 1;
         gbc.weighty = 1;
         list.add(new JPanel(), gbc);
+        list.setBackground(Color.white);
         
         scrollPane=new JScrollPane(list);
         scrollPane.setPreferredSize(new Dimension(350,500));
