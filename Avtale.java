@@ -13,11 +13,6 @@ public class Avtale {
 	private Ansatt leder;
 	
 	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel<Ansatt> deltagere, Ansatt leder) {
-	/*public Avtale(String beskrivelse) {
-		this.beskrivelse = beskrivelse;
-	}
-	
-	public Avtale(String st, String sl, String besk, Rom r, Ansatt leder) {*/
 		/*
 		 * Dette kan brukes dersom tid skal hentes ut av databasen!
 		 * 
