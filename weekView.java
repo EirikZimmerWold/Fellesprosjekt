@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -115,7 +116,13 @@ public class weekView extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(nyAvtaleKnapp)){
-			nyAvtale na = new nyAvtale();
+			nyAvtale na;
+			try {
+				na = new nyAvtale();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			na.pack();
 			na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			na.setVisible(true);		}

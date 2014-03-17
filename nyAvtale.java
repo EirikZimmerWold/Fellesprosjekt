@@ -264,7 +264,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			    //setter antall dager som hoorer til current maaned
 				settStartDager();
 			
-				//Sjekker at starttid skal v¾re f¿r sluttid
+				//Sjekker at starttid skal vï¿½re fï¿½r sluttid
 				if ((Integer) startTidAar.getSelectedItem()-(Integer) sluttTidAar.getSelectedItem() == 0) {
 					if ((Integer) startTidMaaned.getSelectedIndex() > (Integer) sluttTidMaaned.getSelectedIndex()) {
 						sluttTidMaaned.setSelectedIndex(startTidMaaned.getSelectedIndex());
@@ -321,21 +321,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		});
 		
 	}
-
-	protected enum Maaned {
-		Januar,
-		Feburar,
-		Mars,
-		April,
-		Mai,
-		Juni,
-		Juli,
-		August,
-		September,
-		Oktober,
-		November,
-		Desember
-	}
 	
 	private void settStartDager() {
 		// det er start-dager som skal settes
@@ -344,7 +329,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			for (int dag = 1; dag < 29; dag++) {
 				startTidDag.addItem(dag);
 			}
-			// Dersom det er skuddŒr skal det v¾re 29 dager i februar
+			// Dersom det er skuddï¿½r skal det vï¿½re 29 dager i februar
 			if (tid.getTime().getYear() % 4 == 0) {
 				startTidDag.addItem(29);
 			}
@@ -371,7 +356,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			for (int dag = 1; dag < 29; dag++) {
 				sluttTidDag.addItem(dag);
 			}
-			// Dersom det er skuddŒr skal det v¾re 29 dager i februar
+			// Dersom det er skuddï¿½r skal det vï¿½re 29 dager i februar
 			if (tid.getTime().getYear() % 4 == 0) {
 				sluttTidDag.addItem(29);
 			}
@@ -539,7 +524,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			public void actionPerformed(ActionEvent arg0) {
 				/*
 				if (deltagereList.getJList().getSelectedValue() == vert) {
-					JOptionPane.showMessageDialog(popUpWithMessage, "Verten mŒ delta pŒ arrangementet. Kan ikke fjernes.");
+					JOptionPane.showMessageDialog(popUpWithMessage, "Verten mï¿½ delta pï¿½ arrangementet. Kan ikke fjernes.");
 				}
 				else {*/
 					personModell.addElement(deltagereList.getJList().getSelectedValue());
@@ -553,8 +538,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	
 	private void rom() throws SQLException {
 		
-		// M¯TEROM
-	    mooteromLabel = new JLabel("M¿terom:");
+		// Mï¿½TEROM
+	    mooteromLabel = new JLabel("Mï¿½terom:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
 	    gc.gridy = 8;
@@ -756,8 +741,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				// TODO Auto-generated method stub
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, Fridtjof);
-				beskrivelseAvRomLabel = new JLabel(avtale.toString());
+				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
 				
 				try {
 					db.setNyAvtale(avtale);
@@ -800,61 +784,9 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		Desember
 	}
 	
-	private void settStartDager() {
-		// det er start-dager som skal settes
-		Maaned stm = (Maaned) startTidMaaned.getSelectedItem();
-		if (stm == Maaned.Feburar) {
-			for (int dag = 1; dag < 29; dag++) {
-				startTidDag.addItem(dag);
-			}
-			// Dersom det er skuddï¿½r skal det vï¿½re 29 dager i februar
-			if (tid.getTime().getYear() % 4 == 0) {
-				startTidDag.addItem(29);
-			}
-		}
-		
-		else if(stm == Maaned.Januar || stm == Maaned.Mars || stm == Maaned.Mai || stm == Maaned.Juli || stm == Maaned.August || stm == Maaned.Oktober || stm == Maaned.Desember) {
-			for (int dag = 1; dag < 32; dag++) {
-				startTidDag.addItem(dag);
-			}
-		}
-		
-		else if(stm == Maaned.April || stm == Maaned.Juni || stm == Maaned.September || stm == Maaned.November) {
-			for (int dag = 1; dag < 31; dag++) {
-				startTidDag.addItem(dag);
-			}
-			
-		}
-	}
-	
-	private void settSluttDager() {
-		// det er slutt-dager som skal settes
-		Maaned sltm = (Maaned) sluttTidMaaned.getSelectedItem();
-		if (sltm == Maaned.Feburar) {
-			for (int dag = 1; dag < 29; dag++) {
-				sluttTidDag.addItem(dag);
-			}
-			// Dersom det er skuddï¿½r skal det vï¿½re 29 dager i februar
-			if (tid.getTime().getYear() % 4 == 0) {
-				sluttTidDag.addItem(29);
-			}
-		}
-		
-		else if(sltm == Maaned.Januar || sltm == Maaned.Mars || sltm == Maaned.Mai || sltm == Maaned.Juli || sltm == Maaned.August || sltm == Maaned.Oktober || sltm == Maaned.Desember) {
-			for (int dag = 1; dag < 32; dag++) {
-				sluttTidDag.addItem(dag);
-			}
-		}
-		
-		else if(sltm == Maaned.April || sltm == Maaned.Juni || sltm == Maaned.September || sltm == Maaned.November) {
-			for (int dag = 1; dag < 31; dag++) {
-				sluttTidDag.addItem(dag);
-			}
-		}
-
 	
 	/*
-	 * // CELL-RENDERER - brukes ikke nŒ, men kan tas ibruk dersom vi trenger!
+	 * // CELL-RENDERER - brukes ikke nï¿½, men kan tas ibruk dersom vi trenger!
 	private static class JListCellRenderer extends DefaultListCellRenderer {  
         public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {  
             Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );  
