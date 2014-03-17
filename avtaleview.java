@@ -27,7 +27,6 @@ import javax.swing.event.ChangeListener;
 
 public class avtaleview extends JPanel {
 	JScrollPane rull;
-	//må forandres til JList<Ansatt>
 	JList<Ansatt> Deltagere;
 	JButton Bekreft;
 	JButton Avsla;
@@ -37,19 +36,17 @@ public class avtaleview extends JPanel {
 	DefaultListModel<Ansatt> model;
 	avtaleinfo avt;
 	JLabel DeltagereL;
-	Database db = new Database();
 	Avtale avtale;
+	Database db;
 	
-	public avtaleview(Avtale avtalen) {
+	//tar inn avtalen man vil se på
+	public avtaleview(Avtale avtalen) throws SQLException {
 		avtale = avtalen;
-		//forandre <String> til <Ansatt>
 		Deltagere = new JList<Ansatt>();
 		DeltagereL = new JLabel("Deltagere: ");
 		model = new DefaultListModel<Ansatt>();
-		//legge til Ansatt elementer og en cellrenderer
-		model.addElement(new Ansatt("Kari"));
-		model.addElement(new Ansatt("Eirik"));
-		model.addElement(new Ansatt("Ida"));
+		db = new Database();
+		model = db.alleDeltagere(avtale);
 		Deltagere.setModel(model);
 		//maks antall elementer som sees på en gang
 		Deltagere.setVisibleRowCount(5);
@@ -95,11 +92,11 @@ public class avtaleview extends JPanel {
 	
 	public static void main(String[] args) {
 		//skal nok fjernes i ferdig produkt, kjøres i en superklasse
-		JFrame frame = new JFrame();
-		JPanel panel = new avtaleview();
-		frame.add(panel);
-		frame.setVisible(true);
-		frame.setSize(600, 600);
+		//JFrame frame = new JFrame();
+		//JPanel panel = new avtaleview();
+		//frame.add(panel);
+		//frame.setVisible(true);
+		//frame.setSize(600, 600);
 	}
 	
 	class OK implements ActionListener{
@@ -136,6 +133,12 @@ public class avtaleview extends JPanel {
 	class SLETT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try {
+				db.fjerneAvtale(avtale);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//fjerner avtalen. den slettes fra alle deltagere sine kalendre (cascade?)
 		}
 	}
