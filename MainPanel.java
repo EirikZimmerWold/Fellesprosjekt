@@ -1,5 +1,7 @@
 package Fellesprosjektet;
 
+import java.awt.Component;
+
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,13 +27,38 @@ public class MainPanel extends JPanel {
 		
 		panelTabs = new JTabbedPane();
 		
-		weekPanel = new weekView();
-		notifikasjonPanel = new NotifikasjonListPanel();
+		weekPanel = new weekView(frame);
+		notifikasjonPanel = new NotifikasjonListPanel(frame);
 		
 		panelTabs.add("Kalender",weekPanel);
 		panelTabs.add("Notifikasjoner",notifikasjonPanel);
 		
 		initDesign();
+	}
+	
+	public void updatePanelTabTitle(Component object, String title){
+		Component[] clist = panelTabs.getComponents();
+		for(int i = 0;i<clist.length; i++){
+			if(clist[i].equals(object)){
+				panelTabs.setTitleAt(i, title);
+			}
+		}
+	}
+
+	public void enableComponents(){
+		panelTabs.setEnabled(true);
+		for(Component c : weekPanel.getComponents()){
+			c.setEnabled(true);
+		}
+		loggedInLabel.setEnabled(true);
+	}
+	
+	public void disableComponents(){
+		panelTabs.setEnabled(false);
+		for(Component c : weekPanel.getComponents()){
+			c.setEnabled(false);
+		}
+		loggedInLabel.setEnabled(false);
 	}
 	
 	public void initDesign(){
@@ -46,5 +73,5 @@ public class MainPanel extends JPanel {
 				.addComponent(panelTabs)
 		);
 	}
-
 }
+
