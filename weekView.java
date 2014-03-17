@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,12 +23,17 @@ public class weekView extends JPanel implements ActionListener{
 	
 	private ProgramFrame frame;
 	private String panelName = "Kalender";
-	private JButton nyAvtaleKnapp;
+	private JButton nyAvtaleKnapp, nextButton, backButton;
+	private Calendar cal;
+
+	private weekdayPanel wkdPanel, wkdPanel2, wkdPanel3, wkdPanel4, wkdPanel5, wkdPanel6, wkdPanel7;
 	
 	public weekView(ProgramFrame frame){
 		this.frame = frame;
 		
-		Calendar cal = Calendar.getInstance();
+		initDesign();
+
+		cal = Calendar.getInstance();
 		
 		cal.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
 		cal.clear(Calendar.MINUTE);
@@ -44,28 +50,108 @@ public class weekView extends JPanel implements ActionListener{
 		System.out.println(fDay);
 		String[] dates = fDay.split("/");
 		
+		int date = Integer.parseInt(dates[0]); //date of this weeks monday
+		int month = Integer.parseInt(dates[1]);		//current month
+		int year = Integer.parseInt(dates[2]);		//current year
+		
+		//System.out.println(thisWeek);
+		generateThisWeek(date, month, year);
+		
+	}
+	
+	public String getDate(Calendar cal){
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstDay = cal.getTime();
+		String fDay = df.format(firstDay);
+		String[] dates = fDay.split("/");
+		
 		int monDate = Integer.parseInt(dates[0]); //date of this weeks monday
 		int month = Integer.parseInt(dates[1]);		//current month
 		int year = Integer.parseInt(dates[2]);		//current year
 		
-		System.out.println(dates[0]);
-		
-		//System.out.println(thisWeek);
-		generateThisWeek(monDate, month, year);
-		
+		return monDate+"/"+month+"/"+year;
 	}
 	
-	
 	public void generateThisWeek(int monDate, int month, int year){
+		System.out.println("dato: " + monDate + "/" + month + "/" + year);
+		cal = Calendar.getInstance();
 		
-		weekdayPanel wkdPanel = new weekdayPanel("Mandag", Integer.toString(monDate) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel2 = new weekdayPanel("Tirsdag", Integer.toString(monDate +1) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel3 = new weekdayPanel("Onsdag", Integer.toString(monDate + 2) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel4 = new weekdayPanel("Torsdag", Integer.toString(monDate + 3) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel5 = new weekdayPanel("Fredag", Integer.toString(monDate + 4) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel6 = new weekdayPanel("L�rdag", Integer.toString(monDate + 5) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
-		weekdayPanel wkdPanel7 = new weekdayPanel("S�ndag", Integer.toString(monDate + 6) + "/" + Integer.toString(month) + "/" + Integer.toString(year));
+		cal.set(Calendar.YEAR, year);
+		cal.set(Calendar.MONTH, month-1);
+		cal.set(Calendar.DAY_OF_MONTH, monDate);
+		System.out.println(cal.getTime());
+		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+		System.out.println(cal.getTime());
 		
+		wkdPanel.setDate(getDate(cal));
+		cal.add(Calendar.DATE, 1);
+		wkdPanel2.setDate(getDate(cal));
+		cal.add(Calendar.DATE, 1);
+		wkdPanel3.setDate(getDate(cal));
+		cal.add(Calendar.DATE, 1);
+		wkdPanel4.setDate(getDate(cal));
+		cal.add(Calendar.DATE, 1);
+		wkdPanel5.setDate(getDate(cal));
+		cal.add(Calendar.DATE, 1);
+		wkdPanel6.setDate(getDate(cal));
+		cal.add(Calendar.DATE, 1);
+		wkdPanel7.setDate(getDate(cal));
+	}
+	
+	public String getPanelName(){
+		return panelName;
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(nyAvtaleKnapp)){
+			nyAvtale na;
+			try {
+				na = new nyAvtale();
+				na.pack();
+				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				na.setVisible(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}		
+		}
+		if(e.getSource().equals(backButton)){
+			cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+			cal.add(Calendar.DATE, -7);
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			Date firstDay = cal.getTime();
+			String fDay = df.format(firstDay);
+			System.out.println(fDay);
+			String[] dates = fDay.split("/");
+		    int date = Integer.parseInt(dates[0]); 
+		    int month = Integer.parseInt(dates[1]);         
+		    int year = Integer.parseInt(dates[2]);          
+		    generateThisWeek(date, month, year);
+		}if(e.getSource().equals(nextButton)){
+			cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+			cal.add(Calendar.DATE, 7);
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			Date firstDay = cal.getTime();
+			String fDay = df.format(firstDay);
+			System.out.println(fDay);
+			String[] dates = fDay.split("/");
+		    int date = Integer.parseInt(dates[0]); 
+		    int month = Integer.parseInt(dates[1]);         
+		    int year = Integer.parseInt(dates[2]);          
+		    generateThisWeek(date, month, year);    
+    	}
+	}
+
+	public void initDesign(){
+		wkdPanel = new weekdayPanel("Mandag");
+		wkdPanel2 = new weekdayPanel("Tirsdag");
+		wkdPanel3 = new weekdayPanel("Onsdag");
+		wkdPanel4 = new weekdayPanel("Torsdag");
+		wkdPanel5 = new weekdayPanel("Fredag");
+		wkdPanel6= new weekdayPanel("Lørdag");
+		wkdPanel7= new weekdayPanel("Søndag");
 		nyAvtaleKnapp = new JButton("Ny avtale");
 		nyAvtaleKnapp.addActionListener(this);
 
@@ -74,7 +160,7 @@ public class weekView extends JPanel implements ActionListener{
 		c.gridx = 1;
 		c.gridy = 0;
 		add(nyAvtaleKnapp,c);
-		JButton backButton = new JButton("<");
+		backButton = new JButton("<");
 		c.gridx=0;
 		c.gridy=2;
 		add(backButton,c);
@@ -102,29 +188,12 @@ public class weekView extends JPanel implements ActionListener{
 		c.gridx=8;
 		c.gridy=2;
 		
-		JButton nextButton = new JButton(">");
+		nextButton = new JButton(">");
 		c.gridx=9;
 		c.gridy=2;
 		add(nextButton,c);
-	}
-	
-	public String getPanelName(){
-		return panelName;
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(nyAvtaleKnapp)){
-			nyAvtale na;
-			try {
-				na = new nyAvtale();
-				na.pack();
-				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				na.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}		}
+		
+		nextButton.addActionListener(this);
+		backButton.addActionListener(this);
 	}
 }

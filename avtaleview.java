@@ -39,9 +39,11 @@ public class avtaleview extends JPanel {
 	JLabel DeltagereL;
 	Avtale avtale;
 	Database db;
+	ProgramFrame PF;
 	
 	//tar inn avtalen man vil se på
-	public avtaleview(Avtale avtalen) throws SQLException {
+	public avtaleview(Avtale avtalen, ProgramFrame frame) throws SQLException {
+		PF = frame; 
 		avtale = avtalen;
 		Deltagere = new JList<Ansatt>();
 		DeltagereL = new JLabel("Deltagere: ");
@@ -96,11 +98,11 @@ public class avtaleview extends JPanel {
 	
 	public static void main(String[] args) throws SQLException {
 		//skal nok fjernes i ferdig produkt, kjøres i en superklasse
-		JFrame frame = new JFrame();
-		JPanel panel = new avtaleview(new Avtale("", "", "", new Rom("test",10), new DefaultListModel<Ansatt>(), new Ansatt("testperson")));
-		frame.add(panel);
-		frame.setVisible(true);
-		frame.setSize(600, 600);
+		//JFrame frame = new JFrame();
+		//JPanel panel = new avtaleview(new Avtale("", "", "", new Rom("test",10), new DefaultListModel<Ansatt>(), new Ansatt("testperson")));
+		//frame.add(panel);
+		//frame.setVisible(true);
+		//frame.setSize(600, 600);
 	}
 	
 	class OK implements ActionListener{
@@ -127,6 +129,7 @@ public class avtaleview extends JPanel {
 			//sette valgt deltager til Avslatt status
 		}
 	}
+	//sender avtalen til nyAvtale for å endres
 	class EDIT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -134,22 +137,25 @@ public class avtaleview extends JPanel {
 			//kjøre metode som setter informasjonen inn i nyAvtale boksene
 		}
 	}
+	//sender inn avtalen man vil slette, skal bare skje om man er vert for avtalen
 	class SLETT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try {
-				db.fjerneAvtale(avtale);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if (PF.getUser() == avtale.getLeder()){
+				try {
+					db.fjerneAvtale(avtale);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			//fjerner avtalen. den slettes fra alle deltagere sine kalendre (cascade?)
 		}
 	}
+	//sender inn starttiden til Alarmview så man kan sette opp alarm
 	class ALARM implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
 			/*AlarmView na;
 			try {
 				na = new AlarmView(avtale.getStartTid());

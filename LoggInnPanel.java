@@ -32,7 +32,7 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	private ProgramFrame frame;
 	private JFrame jframe;
 	private String brukernavn;
-	
+
 	public LoggInnPanel(ProgramFrame frame, JFrame jframe){
 		gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());

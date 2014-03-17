@@ -21,12 +21,15 @@ import java.awt.GridBagLayout;
 
 public class weekdayPanel extends JPanel{
 
-	public weekdayPanel(String day, String date){
+	JLabel dayName;
+	JLabel dayDate;
+
+	public weekdayPanel(String day){
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		
-		JLabel dayName = new JLabel(day);
-		JLabel dayDate = new JLabel(date);
+		dayName = new JLabel(day);
+		dayDate = new JLabel();
 		
 		
 		DefaultListModel<String> data = new DefaultListModel<String>();
@@ -55,9 +58,9 @@ public class weekdayPanel extends JPanel{
 		
 		
 		//System.out.println(data.getSize());
-		
-		
+	}
 
-		
-	}		
+	public void setDate(String date){
+		dayDate.setText(date);
+	}
 }
