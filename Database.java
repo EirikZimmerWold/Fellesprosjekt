@@ -150,7 +150,7 @@ public class Database {
 	
 	// Finn ut om en person er i en bestemt gruppe
 	
-	public boolean getIfPersonHarGruppe(Gruppe gr, Ansatt ansatt) throws SQLException {
+	public boolean personHarGruppe(Gruppe gr, Ansatt ansatt) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
 		query = "SELECT brukernavn FROM GruppeHarMedlem WHERE brukernavn = '" + brukernavn + "';";
@@ -166,7 +166,7 @@ public class Database {
 
 	// Finn ut om en person er invitert i en bestemt avtale
 	
-	public boolean getIfPersonDeltarAvtale(Ansatt ansatt, Avtale avtale) throws SQLException {
+	public boolean personDeltarAvtale(Ansatt ansatt, Avtale avtale) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
 		int avtaleId = avtale.getId();
@@ -179,6 +179,15 @@ public class Database {
 			return false;
 		}
 		
+	}
+	
+	public void setVarsel(Avtale avtale, int varseltidFoorAvtale, Ansatt ansatt) throws SQLException {
+		st = c.createStatement();
+		int id = avtale.getId();
+		String brukernavn = ansatt.getBrukernavn();
+		int varselId = 45;
+		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId) VALUES('"+varselId+"','"+varseltidFoorAvtale+"','"+brukernavn+"','"+id+"');";
+		st.executeUpdate(query);
 	}
 
 }
