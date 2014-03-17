@@ -18,6 +18,7 @@ public class Database {
 	private java.sql.Statement st;
 	private ResultSet rs;
 	private ResultSet rs2;
+	private ResultSet rs3;
 	private String query;
 	private Ansatt deltager;
 	
@@ -108,6 +109,7 @@ public class Database {
 		st.executeUpdate(query);
 	}
 	
+	//fjerner valgt avtale
 	public void fjerneAvtale (Avtale avtale) throws SQLException {
 		st = c.createStatement();
 		//if setningen kan brukes når vi har satt opp at vi kan sjekke hvem som er pålogget
@@ -119,34 +121,18 @@ public class Database {
 		//}
 	}
 	
-	public DefaultListModel<Ansatt> alleDeltagere(Avtale avtale) throws SQLException{
+	//gir en liste av alle deltagere i gitte avtalen
+	public DefaultListModel alleDeltagere(int avtaleid) throws SQLException{
 		st = c.createStatement();
-		int avi = avtale.getId();
+		int avi = avtaleid;
 		DefaultListModel<Ansatt> result= new DefaultListModel<Ansatt>();
 		query = "SELECT brukernavn FROM PersonDeltarAvtale WHERE avtaleId= '"+ avi+"';";
 		rs2 = st.executeQuery(query);
 		while (rs2.next()){
-			deltager = hentBestemtAnsatt(rs2.getString("brukernavn"));
+			deltager = getBestemtAnsatt(rs2.getString("brukernavn"));
 			result.addElement(deltager);
 		}
 		return result;
-	}
-		
-	public Ansatt hentBestemtAnsatt(String brukernavn) throws SQLException {
-			st = c.createStatement();
-			query = "SELECT * FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
-			rs = st.executeQuery(query);
-			Ansatt ansatt = new Ansatt("foorBrukernavn");
-			
-			while(rs.next()) {
-				ansatt.setBrukernavn(rs.getString("brukernavn"));
-				ansatt.setNavn(rs.getString("navn"));
-				ansatt.setAdresse(rs.getString("adresse"));
-				ansatt.setTelefon(rs.getString("telefon"));
-				ansatt.setStilling(rs.getString("stilling"));
-				ansatt.setPassord(rs.getString("passord"));
-			}
-			return ansatt;
 	}
 	
 	// Hent ansatte
@@ -203,7 +189,6 @@ public class Database {
 	}
 	
 	// Hent bestemt rom
-	
 	public Rom getBestemtRom(String romNr) throws SQLException {
 		st = c.createStatement();
 		query = "SELECT * FROM Rom WHERE romNr='"+romNr+"';";
@@ -218,7 +203,6 @@ public class Database {
 	}
 	
 	// Finn ut om en person er i en bestemt gruppe
-	
 	public boolean personHarGruppe(Gruppe gr, Ansatt ansatt) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
@@ -234,7 +218,6 @@ public class Database {
 	}
 
 	// Finn ut om en person er invitert i en bestemt avtale
-	
 	public boolean personDeltarAvtale(Ansatt ansatt, Avtale avtale) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
@@ -250,6 +233,7 @@ public class Database {
 		
 	}
 	
+	//setter inn varsel i databasen
 	public void setVarsel(Avtale avtale, int varseltidFoorAvtale, Ansatt ansatt) throws SQLException {
 		st = c.createStatement();
 		int id = avtale.getId();
@@ -259,6 +243,7 @@ public class Database {
 		st.executeUpdate(query);
 	}
 	
+	//henter passordet til avtalen
 	public String getPassord(String brukernavn) throws SQLException{
 		st=c.createStatement();
 		query="SELECT passord FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
@@ -270,6 +255,7 @@ public class Database {
 		return string;
 	}
 	
+	//henter navnet når man har et brukernavn
 	public String getNavn(String brukernavn) throws SQLException{
 		st=c.createStatement();
 		query="SELECT navn FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
@@ -280,4 +266,44 @@ public class Database {
 		}
 		return string;
 	}
+
+	public Avtale getBestemtAvtale(int avtaleid) throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Avtale WHERE AvtaleId='"+avtaleid+"';";
+		rs3 = st.executeQuery(query);
+	
+		Avtale avtale = new Avtale("","","",new Rom("midlertidig"),new DefaultListModel(),new Ansatt("midlertidig"));
+		while(rs3.next()) {
+			String st = (rs3.getString("startTid"));
+			avtale.setStartTid(st);
+			String sl = (rs3.getString("startTid"));
+			avtale.setSluttTid(sl);
+			String besk = (rs3.getString("startTid"));
+			avtale.setBeskrivelse(besk);
+			Rom rom = getBestemtRom(rs3.getString("startTid"));
+			avtale.setRom(rom);
+			Ansatt leder = getBestemtAnsatt(rs3.getString("adminBrukernavn"));
+			avtale.setLeder(leder);
+			DefaultListModel model = alleDeltagere(avtaleid);
+			avtale.setModel(model);
+		}	
+		return avtale;
+	}
+	//gir string typen 1-13-12-6 hvor hvert tall er en avtaleId den ansatte deltar i
+	public String avtalerPersonErMed(Ansatt ansatt) throws SQLException {
+		st = c.createStatement();
+		String brukernavn = ansatt.getBrukernavn();
+		query = "SELECT avtaleId FROM PersonDeltarAvtale WHERE brukernavn = '"
+		+ brukernavn + "' AND bekreftet = -1;";
+		rs = st.executeQuery(query);
+		String IDene ="";
+		while(rs.next()) {
+			IDene += "-"+ rs.getString("avtaleId");
+		}
+		return IDene;
+	}
+	
 }
+
+
+

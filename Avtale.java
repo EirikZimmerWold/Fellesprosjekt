@@ -11,8 +11,9 @@ public class Avtale {
 	private String beskrivelse;
 	private Rom rom = null;
 	private Ansatt leder;
+	private DefaultListModel model;
 	
-	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel<Ansatt> deltagere, Ansatt leder) {
+	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel deltagere, Ansatt leder) {
 		/*
 		 * Dette kan brukes dersom tid skal hentes ut av databasen!
 		 * 
@@ -34,7 +35,7 @@ public class Avtale {
 		this.rom = r;
 		this.id = count;
 		count += 1;
-		
+		model = deltagere;
 		this.leder=leder;
 	}
 
@@ -104,5 +105,11 @@ public class Avtale {
 	
 	public int getId(){
 		return id;
+	}
+	public void setModel(DefaultListModel modell){
+		this.model = modell;
+	}
+	public DefaultListModel getModel(){
+		return model;
 	}
 }

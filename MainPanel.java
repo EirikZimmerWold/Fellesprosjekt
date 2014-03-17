@@ -23,7 +23,7 @@ public class MainPanel extends JPanel {
 	
 	private Database db;
 	
-	public MainPanel(ProgramFrame frame) {
+	public MainPanel(ProgramFrame frame) throws SQLException {
 		this.frame = frame;
 		
 		db=new Database();
