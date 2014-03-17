@@ -41,6 +41,10 @@ public class Rom {
 		return this.navn;
 	}
 	
+	public void setNavn(String navn) {
+		this.navn = navn;
+	}
+	
 	public boolean romLedigPaaGittTidspunkt(String dato) {
 		// return true dersom rommet er ledig pŒ det gitte tidspunktet
 		return true;
