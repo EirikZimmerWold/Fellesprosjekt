@@ -12,7 +12,7 @@ public class Avtale {
 	private Rom rom = null;
 	private Ansatt leder;
 	
-	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel<Ansatt> deltagere, Ansatt leder) {
+	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel deltagere, Ansatt leder) {
 	/*public Avtale(String beskrivelse) {
 		this.beskrivelse = beskrivelse;
 	}

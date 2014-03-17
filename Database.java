@@ -73,12 +73,10 @@ public class Database {
 			Rom rom = getBestemtRom(rom1);
 			Ansatt ansatt = getBestemtAnsatt(admin);
 			
-			//Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, ansatt);
-			//result.addElement((Avtale) avtale);
+			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, alleDeltagere(id), ansatt);
+			result.addElement((Avtale) avtale);
 			
 		}
-		
-		
 		return result;
 	}
 
@@ -119,20 +117,19 @@ public class Database {
 		//}
 	}
 	
-	public DefaultListModel<Ansatt> alleDeltagere(Avtale avtale) throws SQLException{
+	public DefaultListModel alleDeltagere(int avi) throws SQLException{
 		st = c.createStatement();
-		int avi = avtale.getId();
-		DefaultListModel<Ansatt> result= new DefaultListModel<Ansatt>();
+		DefaultListModel result= new DefaultListModel();
 		query = "SELECT brukernavn FROM PersonDeltarAvtale WHERE avtaleId= '"+ avi+"';";
 		rs2 = st.executeQuery(query);
 		while (rs2.next()){
-			deltager = hentBestemtAnsatt(rs2.getString("brukernavn"));
+			deltager = getBestemtAnsatt(rs2.getString("brukernavn"));
 			result.addElement(deltager);
 		}
 		return result;
 	}
 		
-	public Ansatt hentBestemtAnsatt(String brukernavn) throws SQLException {
+	public Ansatt getBestemtAnsatt(String brukernavn) throws SQLException {
 			st = c.createStatement();
 			query = "SELECT * FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
 			rs = st.executeQuery(query);
@@ -168,23 +165,6 @@ public class Database {
 		return result;
 	}
 	
-	// Hent en bestemt ansatt
-	public Ansatt getBestemtAnsatt(String brukernavn) throws SQLException {
-		st = c.createStatement();
-		query = "SELECT * FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
-		rs = st.executeQuery(query);
-		Ansatt ansatt = new Ansatt("foorBrukernavn");
-		
-		while(rs.next()) {
-			ansatt.setBrukernavn(rs.getString("brukernavn"));
-			ansatt.setNavn(rs.getString("navn"));
-			ansatt.setAdresse(rs.getString("adresse"));
-			ansatt.setTelefon(rs.getString("telefon"));
-			ansatt.setStilling(rs.getString("stilling"));
-			ansatt.setPassord(rs.getString("passord"));
-		}
-		return ansatt;
-	}
 
 	// Hent alle rom
 	public JComboBox getAlleRom() throws SQLException {
@@ -218,7 +198,6 @@ public class Database {
 	}
 	
 	// Finn ut om en person er i en bestemt gruppe
-	
 	public boolean personHarGruppe(Gruppe gr, Ansatt ansatt) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
@@ -234,7 +213,6 @@ public class Database {
 	}
 
 	// Finn ut om en person er invitert i en bestemt avtale
-	
 	public boolean personDeltarAvtale(Ansatt ansatt, Avtale avtale) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
