@@ -1,5 +1,6 @@
 package Fellesprosjektet;
 
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -7,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,15 +23,17 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	private GridBagConstraints gbc;
 	private PropertyChangeSupport pcs;
 	public final static String INFO_PROPERTY="infoButton";
+	private Database db;
+	private ProgramFrame frame;
 	
 	private NotifikasjonListPanel notifListPanel;
 	
-	public NotifikasjonPanel(NotifikasjonListPanel notifListPanel, Avtale avtale){
+	public NotifikasjonPanel(NotifikasjonListPanel notifListPanel, ProgramFrame frame, Avtale avtale){
 		this.notifListPanel = notifListPanel;
-		
+		db=new Database();
 		pcs=new PropertyChangeSupport(this);
-		
 		notifikasjon=new Notifikasjon(avtale);
+		this.frame=frame;
 		
 		gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());
@@ -110,9 +114,17 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource()==bekreftButton){
-			System.out.println("Bekreft");
+			try {
+				db.setBekreftetStatus(frame.getUser() , notifikasjon.getAvtale(), 1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}else if(arg0.getSource()==avslaaButton){
-			System.out.println("Avslaa");
+			try {
+				db.setBekreftetStatus(frame.getUser(), notifikasjon.getAvtale(), 0);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}else if (arg0.getSource()==infoButton){
 			pcs.firePropertyChange(INFO_PROPERTY,"oldvalue","newvalue"); //firepropertyChange til notifikasjonListPanel
 		}

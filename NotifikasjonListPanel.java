@@ -52,7 +52,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	}
 	
 	public void addNotifikasjonPanel(Avtale avtale){
-		NotifikasjonPanel panel=new NotifikasjonPanel(this, avtale);
+		NotifikasjonPanel panel=new NotifikasjonPanel(this, frame, avtale);
 		gbc=new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;

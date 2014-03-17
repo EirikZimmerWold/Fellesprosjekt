@@ -42,8 +42,7 @@ public class Database {
 			return false;
 		}
 	}
-	
-	// husk Œ sende deltagerliste og! (legg til i database)
+	// Legg inn ny avtale
 	public void setNyAvtale(Avtale avtale) throws SQLException {
 		st = c.createStatement();
 		int id = avtale.getId();
@@ -57,7 +56,34 @@ public class Database {
 		st.executeUpdate(query);
 	}
 	
-	// Ny ansatt - brukes til Œ registrere ny bruker hvis vi skal ha med det
+	// Hent alle avtaler
+	public DefaultListModel getAlleAvtaler() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Avtale;";
+		rs = st.executeQuery(query);
+		DefaultListModel result = new DefaultListModel();
+		while (rs.next()) {
+			int id = rs.getInt("avtaleId");
+			String beskrivelse = rs.getString("beskrivelse");
+			String startTid = rs.getString("startTid");
+			String sluttTid = rs.getString("sluttTid");
+			String admin = rs.getString("adminBrukernavn");
+			String rom1 = rs.getString("romNr");
+			
+			Rom rom = getBestemtRom(rom1);
+			Ansatt ansatt = getBestemtAnsatt(admin);
+			
+			//Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, ansatt);
+			//result.addElement((Avtale) avtale);
+			
+		}
+		
+		
+		return result;
+	}
+
+	
+	// Legg inn ny ansatt
 	public void setNyAnsatt(String brukernavn, String navn, String adresse, String telefon, String stilling, String passord) throws SQLException {
 		st = c.createStatement();
 		query = "INSERT INTO Ansatt(brukernavn, navn, adresse, telefon, stilling, passord) VALUES('" 
@@ -232,5 +258,26 @@ public class Database {
 		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId) VALUES('"+varselId+"','"+varseltidFoorAvtale+"','"+brukernavn+"','"+id+"');";
 		st.executeUpdate(query);
 	}
-
+	
+	public String getPassord(String brukernavn) throws SQLException{
+		st=c.createStatement();
+		query="SELECT passord FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
+		rs = st.executeQuery(query);
+		String string="";
+		while(rs.next()){
+			string = rs.getString("passord");
+		}
+		return string;
+	}
+	
+	public String getNavn(String brukernavn) throws SQLException{
+		st=c.createStatement();
+		query="SELECT navn FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
+		rs = st.executeQuery(query);
+		String string="";
+		while(rs.next()){
+			string = rs.getString("navn");
+		}
+		return string;
+	}
 }
