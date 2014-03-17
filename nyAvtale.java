@@ -9,6 +9,8 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -68,6 +70,14 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	JListScroll deltagereList;
 	DefaultListModel deltagerModell;
 	
+	//ekstern bruker
+	JLabel eksternBrukerLabel;
+	JLabel eksternBrukerNavnLabel;
+	JTextField eksternBrukerNavn;
+	JLabel eksternBrukerEmailLabel;
+	JTextField eksternBrukerEmail;
+	JButton leggTilEksternBrukerButton;
+	
 	//Rom
 	ButtonGroup buttongroup;
 	
@@ -102,6 +112,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		deltagerePersonerGrupper();
 		rom();
 	    avbrytLagreButtons();
+	    eksternBruker();
 	}
 	
 	private void tidBeskrivelse() {
@@ -772,6 +783,63 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			}
 		});
 	    avbrytButton.addActionListener(this);
+	}
+	
+	public void eksternBruker(){
+		eksternBrukerLabel=new JLabel("Ekstern bruker: ");
+		add(eksternBrukerLabel, gc);
+		
+		eksternBrukerNavnLabel=new JLabel("Navn: ");
+		add(eksternBrukerNavnLabel, gc);
+		
+		eksternBrukerNavn=new JTextField(20);
+		add(eksternBrukerNavn, gc);
+		eksternBrukerNavn.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+		
+		eksternBrukerEmailLabel=new JLabel("Mail: ");
+		add(eksternBrukerEmailLabel, gc);
+		
+		eksternBrukerEmail=new JTextField(30);
+		add(eksternBrukerEmail, gc);
+		eksternBrukerEmail.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		});
+		
+		leggTilEksternBrukerButton=new JButton("Add");
+		add(leggTilEksternBrukerButton,gc);
+		leggTilEksternBrukerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 	
 	@Override

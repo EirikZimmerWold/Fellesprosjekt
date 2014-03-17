@@ -43,6 +43,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         avtaleinfo=new avtaleinfo();
         this.add(avtaleinfo);
         
+        //skal fjernes
 		Rom rom=new Rom("R2");
 		Ansatt leder=new Ansatt("idawol");
 		leder.setNavn("Per");
