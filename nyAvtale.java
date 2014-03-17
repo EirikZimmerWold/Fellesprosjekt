@@ -1,4 +1,4 @@
-package Fellesprosjektet;
+﻿package Fellesprosjektet;
 
 import java.awt.Checkbox;
 import java.awt.Color;
@@ -741,7 +741,16 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				// TODO Auto-generated method stub
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
+
 				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
+				/*Avtale avtale;
+				try {
+					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), db.getBestemtAnsatt("henrik"));
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), null);
+				}*/
 				
 				try {
 					db.setNyAvtale(avtale);
@@ -767,6 +776,10 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.dispose();
+	}
+	
+	private void erRomLedig() {
+		
 	}
 
 	protected enum Maaned {

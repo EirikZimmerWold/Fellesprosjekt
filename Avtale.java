@@ -3,7 +3,7 @@ package Fellesprosjektet;
 import javax.swing.DefaultListModel;
 
 public class Avtale {
-	private static int count;
+	private static int count = 0;
 	
 	private int id;
 	private String startTid;
@@ -13,6 +13,11 @@ public class Avtale {
 	private Ansatt leder;
 	
 	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel<Ansatt> deltagere, Ansatt leder) {
+	/*public Avtale(String beskrivelse) {
+		this.beskrivelse = beskrivelse;
+	}
+	
+	public Avtale(String st, String sl, String besk, Rom r, Ansatt leder) {*/
 		/*
 		 * Dette kan brukes dersom tid skal hentes ut av databasen!
 		 * 
@@ -32,8 +37,8 @@ public class Avtale {
 		sluttTid = sl;
 		this.beskrivelse = besk;
 		this.rom = r;
+		this.id = count;
 		count += 1;
-		id = count;
 		
 		this.leder=leder;
 	}
@@ -83,7 +88,7 @@ public class Avtale {
 	}
 	
 	public String toString() {
-		return id + "";
+		return "Id: " + id + "  Rom: " + rom;
 	}
 	
 	public void setLeder(Ansatt leder){
