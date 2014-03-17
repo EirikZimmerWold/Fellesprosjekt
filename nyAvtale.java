@@ -756,7 +756,6 @@ public class nyAvtale extends JPanel {
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
 				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), vert);
-				beskrivelseAvRomLabel = new JLabel(avtale.toString());
 				
 				try {
 					db.setNyAvtale(avtale);
@@ -776,6 +775,10 @@ public class nyAvtale extends JPanel {
 				}
 			}
 		});
+	}
+	
+	private void erRomLedig() {
+		
 	}
 
 	

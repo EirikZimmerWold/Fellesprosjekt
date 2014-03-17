@@ -40,8 +40,7 @@ public class Database {
 			return false;
 		}
 	}
-	
-	// husk Œ sende deltagerliste og! (legg til i database)
+	// Legg inn ny avtale
 	public void setNyAvtale(Avtale avtale) throws SQLException {
 		st = c.createStatement();
 		int id = avtale.getId();
@@ -55,7 +54,40 @@ public class Database {
 		st.executeUpdate(query);
 	}
 	
-	// Ny ansatt - brukes til Œ registrere ny bruker hvis vi skal ha med det
+	// Hent alle avtaler
+	public DefaultListModel getAlleAvtaler() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Avtale;";
+		rs = st.executeQuery(query);
+		DefaultListModel result = new DefaultListModel();
+		
+		while(rs.next()) {
+			String startTid = rs.getString("startTid");
+			System.out.println("starttid: " + startTid);
+			
+			String sluttTid = rs.getString("sluttTid");
+			System.out.println("slutttid: " + sluttTid);
+			
+			String beskrivelse = rs.getString("beskrivelse");
+			
+			Rom rom = getBestemtRom(rs.getString("romNr"));
+			System.out.println(rom);
+			
+			int id = rs.getInt("avtaleId");
+			System.out.println(id);
+			
+			//String admin = rs.getString("romNr");
+			//System.out.println("Admin: " + admin);
+			//Ansatt admin = getBestemtAnsatt(rs.getString("adminBrukernavn"));
+			
+			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, null);
+			result.addElement((Avtale) avtale);
+        }
+		return result;
+	}
+
+	
+	// Legg inn ny ansatt
 	public void setNyAnsatt(String brukernavn, String navn, String adresse, String telefon, String stilling, String passord) throws SQLException {
 		st = c.createStatement();
 		query = "INSERT INTO Ansatt(brukernavn, navn, adresse, telefon, stilling, passord) VALUES('" 
