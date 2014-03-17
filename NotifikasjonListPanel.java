@@ -67,7 +67,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	public String getPanelName(){
 		return panelName;
 	}
-
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		Avtale avtale=((NotifikasjonPanel)evt.getSource()).getNotifikasjon().getAvtale();

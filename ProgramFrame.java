@@ -13,23 +13,31 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-public class ProgramFrame extends JFrame implements ActionListener{
+/*
+ * Hovedklassen som blir kjøres når programmet starter.
+ */
 
+public class ProgramFrame extends JFrame implements ActionListener{
+	
+	/*
+	 * Div variabler. 
+	 */
 	private final Dimension windowSize = new Dimension(800,650); 
 	private JMenuBar menubar;
 	private JMenu fileMenu;
 	private JMenu netMenu;
-	
 	private JMenuItem exitItem;
 	private JMenuItem loginItem;
 	private JMenuItem logoutItem;
 	private JMenuItem acceptNetItem;
 	private JMenuItem connectNetItem;
 	private JMenuItem disconnectNetItem;
-	
 	private MainPanel mainPanel;
-	
 	private Database db;
+	
+	/*
+	 * Konstruktøren. Starter generelt gui med design. 
+	 */
 	
 	public ProgramFrame() {
 		init();
@@ -39,23 +47,37 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		
 		mainPanel = new MainPanel(this);
 		
-		disableComponents();
+		//disableComponents();
 		
 		add(mainPanel);
 	}
+	
+	/*
+	 * Get-metode for databaseobjekt
+	 */
 	
 	public Database getDB(){
 		return db;
 	}
 	
+	/*
+	 * Get-metode for mainPanel som holder annet design og views. 
+	 */
+	
 	public MainPanel getMainPanel(){
 		return mainPanel;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 * 
+	 */
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == loginItem){
-			LoggInnPanel loggInn = new LoggInnPanel();
+			LoggInnPanel loggInn = new LoggInnPanel(this);
 			JFrame frame = new JFrame();
 			frame.setContentPane(loggInn);
 			frame.pack();
@@ -63,6 +85,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 	}
+	
+	/*
+	 * Gjør at alle komponentene i programmet kan brukes.
+	 */ 
 	
 	public void enableComponents(){
 		logoutItem.setEnabled(true);
@@ -73,6 +99,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		
 		mainPanel.enableComponents();
 	}
+	
+	/*
+	 * Gjør at komponentene ikke kan brukes. 
+	 */
 	
 	public void disableComponents(){
 		logoutItem.setEnabled(false);
