@@ -1,12 +1,16 @@
 package Fellesprosjektet;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class MainPanel extends JPanel {
 
@@ -23,7 +27,7 @@ public class MainPanel extends JPanel {
 	
 	private Database db;
 	
-	public MainPanel(ProgramFrame frame) {
+	public MainPanel(ProgramFrame frame) throws SQLException {
 		this.frame = frame;
 		
 		db=new Database();
@@ -37,8 +41,20 @@ public class MainPanel extends JPanel {
 		
 		panelTabs.add("Kalender",weekPanel);
 		panelTabs.add("Notifikasjoner",notifikasjonPanel);
-		
+		panelTabs.addChangeListener(new REFRESH());
 		initDesign();
+	}
+	class REFRESH implements ChangeListener{
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			try {
+				notifikasjonPanel.seNotifikasjoner();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//sette valgt deltager til bekreftet status
+		}
 	}
 	
 	public void updatePanelTabTitle(Component object, String title){
