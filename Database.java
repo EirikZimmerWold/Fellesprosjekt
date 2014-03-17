@@ -60,29 +60,23 @@ public class Database {
 		query = "SELECT * FROM Avtale;";
 		rs = st.executeQuery(query);
 		DefaultListModel result = new DefaultListModel();
-		
-		while(rs.next()) {
-			String startTid = rs.getString("startTid");
-			System.out.println("starttid: " + startTid);
-			
-			String sluttTid = rs.getString("sluttTid");
-			System.out.println("slutttid: " + sluttTid);
-			
-			String beskrivelse = rs.getString("beskrivelse");
-			
-			Rom rom = getBestemtRom(rs.getString("romNr"));
-			System.out.println(rom);
-			
+		while (rs.next()) {
 			int id = rs.getInt("avtaleId");
-			System.out.println(id);
+			String beskrivelse = rs.getString("beskrivelse");
+			String startTid = rs.getString("startTid");
+			String sluttTid = rs.getString("sluttTid");
+			String admin = rs.getString("adminBrukernavn");
+			String rom1 = rs.getString("romNr");
 			
-			//String admin = rs.getString("romNr");
-			//System.out.println("Admin: " + admin);
-			//Ansatt admin = getBestemtAnsatt(rs.getString("adminBrukernavn"));
+			Rom rom = getBestemtRom(rom1);
+			Ansatt ansatt = getBestemtAnsatt(admin);
 			
-			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, null);
+			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, ansatt);
 			result.addElement((Avtale) avtale);
-        }
+			
+		}
+		
+		
 		return result;
 	}
 

@@ -3,7 +3,7 @@ package Fellesprosjektet;
 import javax.swing.DefaultListModel;
 
 public class Avtale {
-	private static int count;
+	private static int count = 0;
 	
 	private int id;
 	private String startTid;
@@ -36,8 +36,8 @@ public class Avtale {
 		sluttTid = sl;
 		this.beskrivelse = besk;
 		this.rom = r;
+		this.id = count;
 		count += 1;
-		id = count;
 		
 		this.leder=leder;
 	}
