@@ -232,5 +232,11 @@ public class Database {
 		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId) VALUES('"+varselId+"','"+varseltidFoorAvtale+"','"+brukernavn+"','"+id+"');";
 		st.executeUpdate(query);
 	}
-
+	
+	public String getPassord(String brukernavn) throws SQLException{
+		st=c.createStatement();
+		query="SELECT passord FROM Ansatt WHERE brukernavn = '"+brukernavn+"' ;";
+		rs = st.executeQuery(query);
+		return rs.getString(passord);
+	}
 }

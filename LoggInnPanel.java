@@ -2,11 +2,13 @@ package Fellesprosjektet;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -24,8 +26,7 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	private JTextField brukernavnTextField;
 	private JPasswordField passordField;
 	private GridBagConstraints gbc;
-	private String brukernavn="Ida";
-	private char[] passord={'P','a','s','s','o','r','d'};
+	private Database db;
 	final JFrame popUpWithMessage = new JFrame();
 	private String message="Feil passord eller brukernavn";
 	
@@ -34,6 +35,7 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 		setLayout(new GridBagLayout());
 		gbc.insets=new Insets(5,5,5,5);
 		
+		db=new Database();
 		
 		brukernavnLabel=new JLabel("Brukernavn: ");
 		gbc.gridx=0;
@@ -65,16 +67,20 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 		loggInnButton.addActionListener((ActionListener) this);
 	}
 	
-	private boolean loggInn(){
-		if(brukernavnTextField.getText().equals(brukernavn)){
-			if(riktigPassord()){
-				return true;
-			}
+	private boolean loggInn()throws SQLException{
+		String brukernavn= brukernavnTextField.getText();
+		if(!db.checkUsername(brukernavn)){
+			return false;
+		}
+		String Passord = db.getPassord(brukernavn);
+		char [] passord=Passord.toCharArray();
+		if(riktigPassord(passord)){
+			return true;
 		}
 		return false;
 	}
 	
-	private boolean riktigPassord(){
+	private boolean riktigPassord(char[] passord){
 		char[] input=passordField.getPassword();
 		if (input.length != passord.length) {
 			return false;
@@ -84,11 +90,15 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if(loggInn()){
-			System.out.println("Du er logget inn");
-		}else{
-			JOptionPane.showMessageDialog(popUpWithMessage, message);
+	public void actionPerformed(ActionEvent arg0){
+		try {
+			if(loggInn()){
+				System.out.println("Du er logget inn");
+			}else{
+				JOptionPane.showMessageDialog(popUpWithMessage, message);
+			}
+		} catch (HeadlessException | SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -99,10 +109,14 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		if(arg0.getKeyCode()==KeyEvent.VK_ENTER){ 
-			if(loggInn()){
-				System.out.println("Du er logget inn");
-			}else{
-				JOptionPane.showMessageDialog(popUpWithMessage, message);
+			try {
+				if(loggInn()){
+					System.out.println("Du er logget inn");
+				}else{
+					JOptionPane.showMessageDialog(popUpWithMessage, message);
+				}
+			} catch (HeadlessException | SQLException e) {
+				e.printStackTrace();
 			}
         }
 	}
