@@ -33,6 +33,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	JScrollPane listScrollPane;
 	Database db;
 	Ansatt vert;
+	boolean avtaleEndres = false;
 	
 	//Starttid
 	JLabel startTidLabel;
@@ -738,33 +739,33 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				//ToDo: nyAvtale() skal også fungere som endreAvtale(), slik at når man trykker på "lagre" må det sjekkes om en avtale opprettes
+				// eller oppdateres.Dersom den oppdateres må den gamle slettes og en ny, oppdatert, lages.
+				
+				
+				// finner lagrede felter : start- og sluttid.
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-
+				
+				// fjerner gammel avtale dersom en bare endres paa
+				
+				// oppretter ny avtale med de feltene som er fylt inn i GUI
 				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
-				/*Avtale avtale;
-				try {
-					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), db.getBestemtAnsatt("henrik"));
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), null);
-				}*/
 				
 				try {
+					// legger til avtalen i databasen
 					db.setNyAvtale(avtale);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				//Inviterer alle deltagerne
 				for (int a = 0; a < deltagerModell.getSize(); a++) {
+					// Inviterer hver enkelt som er valgt
 					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
 					try {
 						((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -780,6 +781,10 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	
 	private void erRomLedig() {
 		
+	}
+
+	public void endreAvtale(Avtale a) {
+		avtaleEndres = true;
 	}
 
 	protected enum Maaned {

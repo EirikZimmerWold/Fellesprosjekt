@@ -42,6 +42,20 @@ public class Database {
 			return false;
 		}
 	}
+	
+	// Sjekker om en avtale eksisterer i databasen (brukes i nyAvtale() for å sjekke om en avtale opprettes eller bare endres på)
+	public boolean avtaleEksisterer(int id) throws SQLException {
+		st = c.createStatement();
+		query = "SELECT avtaleId FROM avtale WHERE avtaleId = '" + id + "';";
+		rs = st.executeQuery(query);
+		if (rs.next()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	// Legg inn ny avtale
 	public void setNyAvtale(Avtale avtale) throws SQLException {
 		st = c.createStatement();
