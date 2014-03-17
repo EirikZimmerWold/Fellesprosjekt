@@ -119,12 +119,12 @@ public class weekView extends JPanel implements ActionListener{
 			nyAvtale na;
 			try {
 				na = new nyAvtale();
+				na.pack();
+				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				na.setVisible(true);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
-			na.pack();
-			na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			na.setVisible(true);		}
+			}		}
 	}
 }
