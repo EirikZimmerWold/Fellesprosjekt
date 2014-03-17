@@ -3,6 +3,7 @@ package Fellesprosjektet;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,8 +29,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private JMenuItem disconnectNetItem;
 	
 	private MainPanel mainPanel;
-	
 	private Database db;
+	
+	private Ansatt User;
 	
 	public ProgramFrame() {
 		init();
@@ -127,6 +129,18 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		menubar.add(netMenu);
 		
 		setJMenuBar(menubar);
+	}
+	
+	public void setUser(String brukernavn){
+		try {
+			this.User=db.getBestemtAnsatt(brukernavn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Ansatt getUser(){
+		return this.User;
 	}
 	
 	public void init(){

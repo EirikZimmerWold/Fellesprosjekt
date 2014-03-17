@@ -102,6 +102,7 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 				frame.enableComponents();
 				jframe.dispose();
 				frame.getMainPanel().setCurrUser(brukernavn);
+				frame.setUser(brukernavn);
 			}else{
 				JOptionPane.showMessageDialog(popUpWithMessage, message);
 			}
@@ -122,6 +123,7 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 					frame.enableComponents();
 					jframe.dispose();
 					frame.getMainPanel().setCurrUser(brukernavn);
+					frame.setUser(brukernavn);
 				}else{
 					JOptionPane.showMessageDialog(popUpWithMessage, message);
 				}
