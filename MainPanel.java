@@ -1,6 +1,7 @@
 package Fellesprosjektet;
 
 import java.awt.Component;
+import java.sql.SQLException;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -20,8 +21,12 @@ public class MainPanel extends JPanel {
 	private String loggedInText = "Logget inn som: ";
 	private String currUser = "";
 	
+	private Database db;
+	
 	public MainPanel(ProgramFrame frame) {
 		this.frame = frame;
+		
+		db=new Database();
 		
 		loggedInLabel = new JLabel(loggedInText + currUser);
 		
@@ -72,6 +77,15 @@ public class MainPanel extends JPanel {
 				.addComponent(loggedInLabel)
 				.addComponent(panelTabs)
 		);
+	}
+	
+	public void setCurrUser(String brukernavn){
+		try {
+			currUser=db.getNavn(brukernavn);
+			loggedInLabel.setText(loggedInText + currUser);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

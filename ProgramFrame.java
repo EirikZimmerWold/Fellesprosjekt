@@ -55,8 +55,8 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == loginItem){
-			LoggInnPanel loggInn = new LoggInnPanel();
 			JFrame frame = new JFrame();
+			LoggInnPanel loggInn = new LoggInnPanel(this, frame);
 			frame.setContentPane(loggInn);
 			frame.pack();
 			frame.setVisible(true);

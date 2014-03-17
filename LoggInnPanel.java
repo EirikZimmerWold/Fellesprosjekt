@@ -29,12 +29,17 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	private Database db;
 	final JFrame popUpWithMessage = new JFrame();
 	private String message="Feil passord eller brukernavn";
+	private ProgramFrame frame;
+	private JFrame jframe;
+	private String brukernavn;
 	
-	public LoggInnPanel(){
+	public LoggInnPanel(ProgramFrame frame, JFrame jframe){
 		gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());
 		gbc.insets=new Insets(5,5,5,5);
 		
+		this.frame=frame;
+		this.jframe=jframe;
 		db=new Database();
 		
 		brukernavnLabel=new JLabel("Brukernavn: ");
@@ -75,6 +80,7 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 		String Passord = db.getPassord(brukernavn);
 		char [] passord=Passord.toCharArray();
 		if(riktigPassord(passord)){
+			this.brukernavn=brukernavn;
 			return true;
 		}
 		return false;
@@ -93,7 +99,9 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 	public void actionPerformed(ActionEvent arg0){
 		try {
 			if(loggInn()){
-				System.out.println("Du er logget inn");
+				frame.enableComponents();
+				jframe.dispose();
+				frame.getMainPanel().setCurrUser(brukernavn);
 			}else{
 				JOptionPane.showMessageDialog(popUpWithMessage, message);
 			}
@@ -111,7 +119,9 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 		if(arg0.getKeyCode()==KeyEvent.VK_ENTER){ 
 			try {
 				if(loggInn()){
-					System.out.println("Du er logget inn");
+					frame.enableComponents();
+					jframe.dispose();
+					frame.getMainPanel().setCurrUser(brukernavn);
 				}else{
 					JOptionPane.showMessageDialog(popUpWithMessage, message);
 				}

@@ -261,8 +261,23 @@ public class Database {
 	
 	public String getPassord(String brukernavn) throws SQLException{
 		st=c.createStatement();
-		query="SELECT passord FROM Ansatt WHERE brukernavn = '"+brukernavn+"' ;";
+		query="SELECT passord FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
 		rs = st.executeQuery(query);
-		return rs.getString(passord);
+		String string="";
+		while(rs.next()){
+			string = rs.getString("passord");
+		}
+		return string;
+	}
+	
+	public String getNavn(String brukernavn) throws SQLException{
+		st=c.createStatement();
+		query="SELECT navn FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
+		rs = st.executeQuery(query);
+		String string="";
+		while(rs.next()){
+			string = rs.getString("navn");
+		}
+		return string;
 	}
 }
