@@ -73,8 +73,8 @@ public class Database {
 			Rom rom = getBestemtRom(rom1);
 			Ansatt ansatt = getBestemtAnsatt(admin);
 			
-			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, ansatt);
-			result.addElement((Avtale) avtale);
+			//Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, ansatt);
+			//result.addElement((Avtale) avtale);
 			
 		}
 		
