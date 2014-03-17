@@ -150,7 +150,6 @@ public class avtaleview extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			//sende til alarmsiden med starttid
-			
 			//alarm(avtale.getStartTid)
 		}
 	}
