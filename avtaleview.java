@@ -32,6 +32,7 @@ public class avtaleview extends JPanel {
 	JButton Avsla;
 	JButton endre;
 	JButton slette;
+	JButton alarm;
 	GridBagConstraints c;
 	DefaultListModel<Ansatt> model;
 	avtaleinfo avt;
@@ -61,42 +62,45 @@ public class avtaleview extends JPanel {
 		endre.addActionListener(new EDIT());
 		slette = new JButton("slett event");
 		slette.addActionListener(new SLETT());
+		alarm = new JButton("Sett Alarm");
+		alarm.addActionListener(new ALARM());
 		//panellet med informasjonen om avtalen
 		avt = new avtaleinfo();
 		avt.settInfo(avtalen);
-		//JPanel panel2 = avt;
     	setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
 		c.insets=new Insets(5,5,5,5);
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 2;
-		c.gridheight =2;
+		c.gridheight =3;
 		add(avt,c);
 		c.gridwidth = 1;
-		c.gridy=2;
+		c.gridy=3;
 		add(DeltagereL,c);
 		c.gridx = 1;
 		add(rull,c);
 		c.gridheight=1;
 		c.gridx=2;
 		add(Bekreft, c);
-		c.gridy=3;
+		c.gridy=4;
 		add(Avsla, c);
 		c.gridx = 2;
 		c.gridy = 0;
 		add(endre, c);
 		c.gridy =1;
+		add(alarm,c);
+		c.gridy =2;
 		add(slette, c);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		//skal nok fjernes i ferdig produkt, kjøres i en superklasse
-		//JFrame frame = new JFrame();
-		//JPanel panel = new avtaleview();
-		//frame.add(panel);
-		//frame.setVisible(true);
-		//frame.setSize(600, 600);
+		JFrame frame = new JFrame();
+		JPanel panel = new avtaleview(new Avtale("", "", "", new Rom("test",10), new DefaultListModel<Ansatt>(), new Ansatt("testperson")));
+		frame.add(panel);
+		frame.setVisible(true);
+		frame.setSize(600, 600);
 	}
 	
 	class OK implements ActionListener{
@@ -142,5 +146,12 @@ public class avtaleview extends JPanel {
 			//fjerner avtalen. den slettes fra alle deltagere sine kalendre (cascade?)
 		}
 	}
-
+	class ALARM implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//sende til alarmsiden med starttid
+			
+			//alarm(avtale.getStartTid)
+		}
+	}
 }
