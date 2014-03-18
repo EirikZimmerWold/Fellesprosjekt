@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -20,9 +21,11 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	private JScrollPane scrollPane;
 	private JPanel list;
 	protected avtaleinfo avtaleinfo;
+	private Database db;
 	
 	private int notifyCount;
 	private String panelName = "Notifikasjoner";
+	private String notifiks ="";
 	
 	public NotifikasjonListPanel(ProgramFrame frame){
 		this.frame = frame;
@@ -42,16 +45,23 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         
         avtaleinfo=new avtaleinfo();
         this.add(avtaleinfo);
-        
-        //skal fjernes
-		Rom rom=new Rom("R2");
-		Ansatt leder=new Ansatt("idawol");
-		leder.setNavn("Per");
-		DefaultListModel<Ansatt> deltagere=new DefaultListModel<Ansatt>();
-		Avtale avtale=new Avtale("2014-03-12-1415","2014-03-12-1600", "Testing av prototype", rom, deltagere, leder);
-		addNotifikasjonPanel(avtale);
-	}
+        db = new Database();
+        }
 	
+	public void seNotifikasjoner() throws SQLException{
+		fjernListe();
+		Ansatt bruker = frame.getUser();
+		if (bruker != null){
+			notifiks = db.avtalerPersonErMed(bruker);
+			String [] delt = notifiks.split("-");
+			for (String verdi:delt){
+				if (verdi != ""){
+					int avID = Integer.parseInt(verdi);
+					addNotifikasjonPanel(db.getBestemtAvtale(avID));
+				}
+			}
+		}
+	}
 	public void addNotifikasjonPanel(Avtale avtale){
 		NotifikasjonPanel panel=new NotifikasjonPanel(this, frame, avtale);
 		gbc=new GridBagConstraints();
@@ -64,7 +74,16 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         repaint();
         notifyCount++;
 	}
-	
+	private void fjernListe(){
+		list.removeAll();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        list.add(new JPanel(), gbc);
+        list.setBackground(Color.white);
+        
+	}
 	public String getPanelName(){
 		return panelName;
 	}

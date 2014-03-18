@@ -1,19 +1,20 @@
 package Fellesprosjektet;
 
+import java.sql.SQLException;
+
 import javax.swing.DefaultListModel;
 
 public class Avtale {
-	private static int count = 0;
-	
 	private int id;
 	private String startTid;
 	private String sluttTid;
 	private String beskrivelse;
 	private Rom rom = null;
 	private Ansatt leder;
+	private DefaultListModel model;
+	private Database db;
 	
-	
-	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel deltagere, Ansatt leder) {
+	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel deltagere, Ansatt leder) throws SQLException {
 		/*
 		 * Dette kan brukes dersom tid skal hentes ut av databasen!
 		 * 
@@ -33,22 +34,12 @@ public class Avtale {
 		sluttTid = sl;
 		this.beskrivelse = besk;
 		this.rom = r;
-		this.id = count;
-		count += 1;
-		
+		model = deltagere;
 		this.leder=leder;
+		
+		db = new Database();
+		this.id = db.getNyAvtaleID();
 	}
-
-
-	public static int getCount() {
-		return count;
-	}
-
-
-	public static void setCount(int count) {
-		Avtale.count = count;
-	}
-
 
 	public String getStartTid() {
 		return startTid;
@@ -105,5 +96,11 @@ public class Avtale {
 	
 	public int getId(){
 		return id;
+	}
+	public void setModel(DefaultListModel modell){
+		this.model = modell;
+	}
+	public DefaultListModel getModel(){
+		return model;
 	}
 }

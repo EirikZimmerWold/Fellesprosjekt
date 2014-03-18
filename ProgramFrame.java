@@ -35,11 +35,11 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private JMenuItem disconnectNetItem;
 	private MainPanel mainPanel;
 	private Database db;
-	private Ansatt User;
+	private Ansatt User = null;
 	/*
 	 * Konstruktøren. Starter generelt gui med design. 
 	 */	
-	public ProgramFrame() {
+	public ProgramFrame() throws SQLException {
 		init();
 		initMenu();
 		
@@ -47,7 +47,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		
 		mainPanel = new MainPanel(this);
 		
-		//disableComponents();
+		disableComponents();
 		
 		add(mainPanel);
 	}
@@ -183,7 +183,12 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ProgramFrame();
+                try {
+					new ProgramFrame();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 	}

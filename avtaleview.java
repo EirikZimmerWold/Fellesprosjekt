@@ -99,7 +99,7 @@ public class avtaleview extends JPanel {
 	public static void main(String[] args) throws SQLException {
 		//skal nok fjernes i ferdig produkt, kjøres i en superklasse
 		//JFrame frame = new JFrame();
-		//JPanel panel = new avtaleview(new Avtale("", "", "", new Rom("test",10), new DefaultListModel<Ansatt>(), new Ansatt("testperson")));
+		//JPanel panel = new avtaleview(new Avtale("", "", "", new Rom("test",10), new DefaultListModel<Ansatt>(), new Ansatt("testperson")), new ProgramFrame());
 		//frame.add(panel);
 		//frame.setVisible(true);
 		//frame.setSize(600, 600);
