@@ -44,6 +44,37 @@ public class Database {
 		}
 	}
 	
+	// Hent alle grupper
+	public DefaultListModel getAlleGrupper() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT * FROM Gruppe;";
+		rs = st.executeQuery(query);
+		DefaultListModel result = new DefaultListModel();
+		DefaultListModel medlemmer;
+		while (rs.next()) {
+			int id = rs.getInt("gruppeId");
+			String navn = rs.getString("gruppeNavn");
+			medlemmer = getDeltagereIGruppe(id);
+			Gruppe gruppe = new Gruppe(id, navn, medlemmer);
+			result.addElement((Gruppe) gruppe);
+		}
+		return result;
+	}
+	
+	// Hent deltagere i gruppe
+	public DefaultListModel getDeltagereIGruppe(int gruppeId) throws SQLException {
+		st = c.createStatement();
+		DefaultListModel result= new DefaultListModel();
+		query = "SELECT brukernavn FROM GruppeHarMedlem WHERE gruppeId= '"+ gruppeId+"';";
+		rs2 = st.executeQuery(query);
+		
+		while (rs2.next()){
+			deltager = getBestemtAnsatt(rs2.getString("brukernavn"));
+			result.addElement(deltager);
+		}
+		return result;
+	}
+	
 	// Sjekker om en avtale eksisterer i databasen (brukes i nyAvtale() for å sjekke om en avtale opprettes eller bare endres på)
 	public boolean avtaleEksisterer(int id) throws SQLException {
 		st = c.createStatement();
@@ -85,6 +116,7 @@ public class Database {
 		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"');";
 		st.executeUpdate(query);
 	}
+	
 	
 	// Hent alle avtaler
 	public DefaultListModel getAlleAvtaler() throws SQLException {

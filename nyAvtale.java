@@ -477,7 +477,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(grupperLabel, gc);
 	    
-		gruppeModell = new DefaultListModel();
+	    gruppeModell = db.getAlleGrupper();
+		//gruppeModell = new DefaultListModel();
 		grupperList = new JListScroll(gruppeModell);
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
@@ -498,7 +499,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    add(inviterGruppeButton, gc);
 	    
 	    
- inviterPersonButton.addActionListener(new ActionListener() {
+	    inviterPersonButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -847,10 +848,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.dispose();
-	}
-	
-	private void erRomLedig() {
-		
 	}
 
 	public void endreAvtale(Avtale a) {
