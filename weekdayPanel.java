@@ -63,6 +63,9 @@ public class weekdayPanel extends JPanel implements PropertyChangeListener{
 		dayDate.setText(date);
 	}
 	
+	public void leggeTilAvtale(Ansatt eier){
+		
+	}
 	public void addAvtalePanel(Avtale avtale){
 		AvtalePanel panel=new AvtalePanel(avtale);
 		gbc=new GridBagConstraints();
