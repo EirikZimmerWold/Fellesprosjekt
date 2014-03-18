@@ -133,8 +133,17 @@ public class avtaleview extends JPanel {
 	class EDIT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//sendes til nyAvtale siden 
-			//kjøre metode som setter informasjonen inn i nyAvtale boksene
+			nyAvtale na;
+			try {
+				na = new nyAvtale();
+				na.pack();
+				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				na.setVisible(true);
+				na.endreAvtale(avtale);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	//sender inn avtalen man vil slette, skal bare skje om man er vert for avtalen
