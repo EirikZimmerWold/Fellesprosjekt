@@ -374,18 +374,21 @@ public class Database {
 		return false;
 	}
 	
+	// legger ny ekstern bruker i database
 	public void setNyEksternBruker(String mail, String navn) throws SQLException{
 		st=c.createStatement();
 		query="INSERT INTO EksternBruker(mail, navn) VALUES ('"+mail.toLowerCase()+"','"+navn+"');";
 		st.executeUpdate(query);
 	}
 	
+	// legger til at en ekstern bruker deltar i en event
 	public void setEksternBrukerDeltar(String mail, int id) throws SQLException{
 		st=c.createStatement();
 		query="INSERT INTO EksternBrukerDeltarAvtale(mail, avtaleId) VALUES('"+mail+"','"+id+"');";
 		st.executeUpdate(query);
 	}
 	
+	// henter ekstern bruker
 	public EksternBruker getEksternBruker(String mail) throws SQLException{
 		st=c.createStatement();
 		query="SELECT * FROM EksternBruker WHERE mail='"+mail+"';";
