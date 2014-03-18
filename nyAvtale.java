@@ -779,7 +779,25 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 					e1.printStackTrace();
 				}
 				
-
+				//Inviterer alle deltagerne
+				for (int a = 0; a < deltagerModell.getSize(); a++) {
+					// Inviterer hver enkelt som er valgt
+					if(deltagerModell.get(a) instanceof Ansatt){//deltageren er ansatt
+						String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
+						try {
+							((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}else{//deltageren er eksternbruker
+						String invitert = ((EksternBruker) deltagerModell.get(a)).getMail();
+						try {
+							((Database) db).setPersonDeltarAvtale(invitert, avtale.getId());
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
 			}
 		});
 	    avbrytButton.addActionListener(this);

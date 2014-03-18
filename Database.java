@@ -1,5 +1,6 @@
 package Fellesprosjektet;
 
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -326,6 +327,39 @@ public class Database {
 			IDene += rs.getString("avtaleId")+ "-";
 		}
 		return IDene;
+	}
+	
+	public boolean eksternBrukerenEksisterer(String mail) throws SQLException{
+		st=c.createStatement();
+		query="SELECT * FROM eksternBruker WHERE mail='"+mail.toLowerCase()+"';";
+		rs=st.executeQuery(query);
+		if(rs.next()){
+			return true;
+		}
+		return false;
+	}
+	
+	public void setNyEksternBruker(String mail, String navn) throws SQLException{
+		st=c.createStatement();
+		query="INSERT INTO EksternBruker(mail, navn) VALUES ('"+mail.toLowerCase()+"','"+navn+"');";
+		st.executeUpdate(query);
+	}
+	
+	public void setEksternBrukerDeltar(String mail, int id) throws SQLException{
+		st=c.createStatement();
+		query="INSERT INTO EksternBrukerDeltarAvtale(mail, avtaleId) VALUES('"+mail+"','"+id+"');";
+		st.executeUpdate(query);
+	}
+	
+	public EksternBruker getEksternBruker(String mail) throws SQLException{
+		st=c.createStatement();
+		query="SELECT * FROM EksternBruker WHERE mail='"+mail+"';";
+		rs=st.executeQuery(query);
+		rs.next();
+		String eksternBrukerMail=rs.getString("mail");
+		String eksternBrukerNavn=rs.getString("navn");
+		EksternBruker bruker=new EksternBruker(eksternBrukerMail, eksternBrukerNavn);
+		return bruker;
 	}
 	
 }
