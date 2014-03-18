@@ -25,20 +25,6 @@ public class AvtalePanel extends JPanel{
 	private Database db;
 	public final static String SEPAAAVTALE_PROPERTY="sepaaAvtaleButton";
 	
-	public static void main(String[] args) throws SQLException {
-		Rom rom=new Rom("r2");
-		DefaultListModel deltagere=new DefaultListModel();
-		Ansatt leder=new Ansatt("ida");
-		Avtale avtale=new Avtale("13:00", "15:00", "dfsgd", rom , deltagere, leder);
-		AvtalePanel avtalePanel=new AvtalePanel(avtale);
-		
-		JFrame frame=new JFrame();
-		frame.getContentPane().add(avtalePanel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.pack();
-	}
-	
 	public AvtalePanel(Avtale avtale){
 		db=new Database();
 		pcs=new PropertyChangeSupport(this);
