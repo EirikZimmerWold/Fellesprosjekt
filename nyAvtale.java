@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import oving4.PersonPanel;
+
 public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListener{
 
 	GridBagConstraints gc;
@@ -869,6 +871,15 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		Desember
 	}
 	
+	/*
+	public static void main(String[] args) throws SQLException {
+		JFrame frame = new JFrame();
+		frame.setSize(new Dimension(400,200));
+		nyAvtale pp = new nyAvtale();
+		frame.setContentPane(pp);
+		frame.setVisible(true);
+	}
+	*/
 	
 	/*
 	 * // CELL-RENDERER - brukes ikke n�, men kan tas ibruk dersom vi trenger!
