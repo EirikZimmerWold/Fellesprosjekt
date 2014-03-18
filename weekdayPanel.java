@@ -32,7 +32,7 @@ public class weekdayPanel extends JPanel{
 		dayDate = new JLabel();
 		
 		
-		DefaultListModel<String> data = new DefaultListModel<String>();
+		DefaultListModel data = new DefaultListModel();
 		
 		//Test
 		
@@ -42,7 +42,7 @@ public class weekdayPanel extends JPanel{
 		}
 		
 	
-		JList<String> appointments = new JList<String>(data);
+		JList appointments = new JList(data);
 		JScrollPane scrollPane = new JScrollPane(appointments);
 		appointments.setFixedCellHeight(25);	
 		appointments.setVisibleRowCount(10);

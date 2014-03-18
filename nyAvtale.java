@@ -37,7 +37,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	JScrollPane listScrollPane;
 	Database db;
 	Ansatt vert;
-	boolean avtaleEndres = false;
+	Avtale oldAvtale = null;
 	
 	//Starttid
 	JLabel startTidLabel;
@@ -759,12 +759,13 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				// finner lagrede felter : start- og sluttid.
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-				
-				// fjerner gammel avtale dersom en bare endres paa
-				
-				
+			
 				Avtale avtale;
 				try {
+					// fjerner gammel avtale dersom en bare endres paa
+					if (oldAvtale != null) {
+						db.fjerneAvtale(oldAvtale);
+					}
 					// oppretter ny avtale med de feltene som er fylt inn i GUI
 					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
 					// legger til avtalen i databasen
@@ -853,7 +854,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	}
 
 	public void endreAvtale(Avtale a) {
-		avtaleEndres = true;
+		oldAvtale = a;
 	}
 
 	protected enum Maaned {
