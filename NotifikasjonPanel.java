@@ -23,6 +23,7 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 	private GridBagConstraints gbc;
 	private PropertyChangeSupport pcs;
 	public final static String INFO_PROPERTY="infoButton";
+	public final static String UPDATE_PROPERTY="bekreftbutton";
 	private Database db;
 	private ProgramFrame frame;
 	
@@ -116,12 +117,14 @@ public class NotifikasjonPanel extends JPanel implements ActionListener{
 		if (arg0.getSource()==bekreftButton){
 			try {
 				db.setBekreftetStatus(frame.getUser() , notifikasjon.getAvtale(), 1);
+				pcs.firePropertyChange(UPDATE_PROPERTY,"oldvalue","newvalue");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}else if(arg0.getSource()==avslaaButton){
 			try {
 				db.setBekreftetStatus(frame.getUser(), notifikasjon.getAvtale(), 0);
+				pcs.firePropertyChange(UPDATE_PROPERTY,"oldvalue","newvalue");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
