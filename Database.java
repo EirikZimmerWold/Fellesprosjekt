@@ -133,6 +133,7 @@ public class Database {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn().toLowerCase();
 		int av = avtale.getId();
+		System.out.println(brukernavn + " "+ status + " " + av);
 		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+status+"' WHERE brukernavn= '"+brukernavn+"' AND avtaleId = '"+av+"';";
 		st.executeUpdate(query);
 	}
@@ -313,6 +314,7 @@ public class Database {
 			avtale.setLeder(leder);
 			DefaultListModel model = alleDeltagere(avtaleid);
 			avtale.setModel(model);
+			avtale.setId(avtaleid);
 		}	
 		return avtale;
 	}
