@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -496,7 +497,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    add(inviterGruppeButton, gc);
 	    
 	    
- inviterPersonButton.addActionListener(new ActionListener() {
+	    inviterPersonButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -554,7 +555,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    mooteromLabel = new JLabel("M�terom:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
-	    gc.gridy = 8;
+	    gc.gridy = 11;
 	    gc.insets = new Insets(60, 0, 0, 0);
 	    add(mooteromLabel, gc);
 	    
@@ -566,7 +567,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
-	    gc.gridy = 9;
+	    gc.gridy = 12;
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnEtRomLabel, gc);
 	    
@@ -575,14 +576,14 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 2;
-	    gc.gridy = 9;
+	    gc.gridy = 12;
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnEtRomCheckbox, gc);
 	    
 	    romBox = db.getAlleRom(); //henter alle rom fra database
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 3;
-	    gc.gridy = 9;
+	    gc.gridy = 12;
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(romBox, gc);
 	    
@@ -592,14 +593,14 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 4;
-	    gc.gridy = 9;
+	    gc.gridy = 12;
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnPassendeRomButton, gc);
 	    
 	    beskjedEtterFunnetRomLabel = new JLabel("med tanke p� antall deltagere");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 5;
-	    gc.gridy = 9;
+	    gc.gridy = 12;
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(beskjedEtterFunnetRomLabel, gc);
 	    
@@ -610,7 +611,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 3;
-	    gc.gridy = 10;
+	    gc.gridy = 13;
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(beskrivelseAvRomLabel, gc);
 	    
@@ -621,7 +622,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
-	    gc.gridy = 11;
+	    gc.gridy = 14;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(velgEgetRomLabel, gc);
 	    
@@ -630,7 +631,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 2;
-	    gc.gridy = 11;
+	    gc.gridy = 14;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(egetRomCheckbox, gc);
 	    
@@ -640,7 +641,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 3;
-	    gc.gridy = 11;
+	    gc.gridy = 14;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(egetRomFelt, gc);
 	    
@@ -732,7 +733,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
-	    gc.gridy = 12;
+	    gc.gridy = 15;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(avbrytButton, gc);
 	    
@@ -742,7 +743,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 2;
-	    gc.gridy = 12;
+	    gc.gridy = 15;
 	    gc.insets = new Insets(20, 0, 0, 0);
 	    add(lagreButton, gc);
 	    
@@ -773,11 +774,20 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				//Inviterer alle deltagerne
 				for (int a = 0; a < deltagerModell.getSize(); a++) {
 					// Inviterer hver enkelt som er valgt
-					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
-					try {
-						((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
-					} catch (SQLException e1) {
-						e1.printStackTrace();
+					if(deltagerModell.get(a) instanceof Ansatt){//deltageren er ansatt
+						String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
+						try {
+							((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}else{//deltageren er eksternbruker
+						String invitert = ((EksternBruker) deltagerModell.get(a)).getMail();
+						try {
+							((Database) db).setPersonDeltarAvtale(invitert, avtale.getId());
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
 			}
@@ -787,57 +797,102 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	
 	public void eksternBruker(){
 		eksternBrukerLabel=new JLabel("Ekstern bruker: ");
+		gc.gridwidth = 1;
+	    gc.gridheight = 1;
+	    gc.fill = GridBagConstraints.HORIZONTAL;
+	    gc.gridx = 1;
+	    gc.gridy = 8;
+	    gc.insets = new Insets(15, 0, 0, 0);
 		add(eksternBrukerLabel, gc);
 		
-		eksternBrukerNavnLabel=new JLabel("Navn: ");
-		add(eksternBrukerNavnLabel, gc);
-		
-		eksternBrukerNavn=new JTextField(20);
-		add(eksternBrukerNavn, gc);
-		eksternBrukerNavn.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-			}
-		});
-		
 		eksternBrukerEmailLabel=new JLabel("Mail: ");
+	    gc.gridx = 1;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(5, 0, 0, 0);
 		add(eksternBrukerEmailLabel, gc);
 		
-		eksternBrukerEmail=new JTextField(30);
+		eksternBrukerEmail=new JTextField(20);
+	    gc.gridx = 1;
+	    gc.gridy = 10;
+	    gc.insets = new Insets(5, 0, 0, 0);
 		add(eksternBrukerEmail, gc);
 		eksternBrukerEmail.addKeyListener(new KeyListener() {
 			
+			//naar du skriver inn mail og trykker enter eller bytter skal det sjekkes om personen finnes i databasen og da skal navnet fylles ut
+			
 			@Override
-			public void keyTyped(KeyEvent e) {				
+			public void keyTyped(KeyEvent arg0) {
 			}
 			
 			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
+			public void keyReleased(KeyEvent arg0) {
+				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
+					try {
+						if(db.eksternBrukerenEksisterer(eksternBrukerEmail.getText())){
+							eksternBrukerNavn.setText(db.getEksternBruker(eksternBrukerEmail.getText()).getNavn());
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyPressed(KeyEvent arg0) {
 			}
 		});
 		
-		leggTilEksternBrukerButton=new JButton("Add");
+		eksternBrukerNavnLabel=new JLabel("Navn: ");
+	    gc.gridx = 3;
+	    gc.gridy = 9;
+	    gc.insets = new Insets(5, 0, 0, 0);
+		add(eksternBrukerNavnLabel, gc);
+		
+		eksternBrukerNavn=new JTextField(20);
+	    gc.gridx = 3;
+	    gc.gridy = 10;
+	    gc.insets = new Insets(5, 0, 0, 0);
+		add(eksternBrukerNavn, gc);
+		
+		leggTilEksternBrukerButton=new JButton("<= Legg til");
+	    gc.gridx = 5;
+	    gc.gridy = 10;
+	    gc.insets = new Insets(5, 0, 0, 0);
 		add(leggTilEksternBrukerButton,gc);
 		leggTilEksternBrukerButton.addActionListener(new ActionListener() {
 			
 			@Override
+			//legger til eksternBruker i deltager liste
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				String mail=eksternBrukerEmail.getText();
+				String navn=eksternBrukerNavn.getText();
+				try {
+					if(!db.eksternBrukerenEksisterer(mail)){//ser om brukeren eksisterer
+						if(validMail(mail)){
+							db.setNyEksternBruker(mail, navn);//hvis han ikke gjore det blir han lagt til
+						}else{
+							JOptionPane.showMessageDialog(popUpWithMessage, "Ugyldig email");
+						}
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				EksternBruker bruker;
+				try {
+					bruker = db.getEksternBruker(mail);
+					deltagerModell.addElement(bruker);//legger til personen i listen
+					eksternBrukerEmail.setText("");//feltene blir tomme naar personen blir lagt til
+					eksternBrukerNavn.setText("");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			private boolean validMail(String mail) {//sjekker at mailadressen er gyldig
+				if(mail.contains("@")&&mail.contains(".")){//skal endres
+					return true;
+				}
+				return false;
 			}
 		});
 	}

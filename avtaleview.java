@@ -49,7 +49,7 @@ public class avtaleview extends JPanel {
 		DeltagereL = new JLabel("Deltagere: ");
 		model = new DefaultListModel<Ansatt>();
 		db = new Database();
-		model = db.alleDeltagere(avtale);
+		model = db.alleDeltagere(avtale.getId());
 		Deltagere.setModel(model);
 		//maks antall elementer som sees på en gang
 		Deltagere.setVisibleRowCount(5);
