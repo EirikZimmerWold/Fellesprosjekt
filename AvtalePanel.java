@@ -22,6 +22,7 @@ public class AvtalePanel extends JPanel{
 	private Avtale avtale;
 	private GridBagConstraints gbc;
 	private PropertyChangeSupport pcs;
+	private Database db;
 	public final static String SEPAAAVTALE_PROPERTY="sepaaAvtaleButton";
 	
 	public static void main(String[] args) throws SQLException {
@@ -39,6 +40,7 @@ public class AvtalePanel extends JPanel{
 	}
 	
 	public AvtalePanel(Avtale avtale){
+		db=new Database();
 		pcs=new PropertyChangeSupport(this);
 		this.avtale=avtale;
 		
@@ -75,14 +77,15 @@ public class AvtalePanel extends JPanel{
 		gbc.gridy=2;
 		add(leder,gbc);
 		
-		status=new JLabel("FSSHg");
+		status=new JLabel(getStatus());
+		gbc.gridwidth=2;
 		gbc.gridx=0;
 		gbc.gridy=3;
 		add(status,gbc);
 		
 		sepaaAvtaleButton=new JButton("Info");
-		gbc.gridx=1;
-		gbc.gridy=3;
+		gbc.gridx=0;
+		gbc.gridy=4;
 		add(sepaaAvtaleButton,gbc);
 		sepaaAvtaleButton.addActionListener(new ActionListener() {
 			
@@ -93,6 +96,33 @@ public class AvtalePanel extends JPanel{
 		});
 	}
 	
+	public String getStatus(){
+		try {
+			DefaultListModel deltagere=db.alleDeltagere(avtale.getId());
+			int avslaatt=0;
+			int venter=0;
+			for (int i=0; i < deltagere.getSize(); i++){
+				Ansatt deltager=(Ansatt)deltagere.get(i);
+				int status=db.getStatus(avtale.getId(), deltager.getBrukernavn());
+				if(status==0){
+					avslaatt++;
+				}else if(status==-1){
+					venter++;
+				}
+			}
+			if(avslaatt!=0){
+				return avslaatt+" personer har avslått";
+			}else if(venter!=0){
+				return venter+" har ikke svart";
+			}else{
+				return "Alle har bekreftet";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
 	public Avtale getAvtale(){
 		return this.avtale;
 	}
@@ -100,5 +130,4 @@ public class AvtalePanel extends JPanel{
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		pcs.addPropertyChangeListener(listener);		
 	}
-
 }
