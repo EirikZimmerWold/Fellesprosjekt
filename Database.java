@@ -361,10 +361,6 @@ public class Database {
 		return IDene;
 	}
 	
-<<<<<<< HEAD
->>>>>>> 97e97eafe41536cbe3afba6408d2f0474f4cfb58
-=======
->>>>>>> 97e97eafe41536cbe3afba6408d2f0474f4cfb58
 }
 
 
