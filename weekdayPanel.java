@@ -34,18 +34,13 @@ public class weekdayPanel extends JPanel{
 		
 		DefaultListModel data = new DefaultListModel();
 		
-		//Test
-		
-		for (int i = 0; i<100; i++){
-		data.addElement("10:00" + "    " + "Møte");
-		//Trenger metoder for å hente ut møteinfo
-		}
 		
 	
 		JList appointments = new JList(data);
 		JScrollPane scrollPane = new JScrollPane(appointments);
-		appointments.setFixedCellHeight(25);	
+		appointments.setFixedCellHeight(25);
 		appointments.setVisibleRowCount(10);
+		//scrollPane
 			
 		
 		add(dayName, gc);

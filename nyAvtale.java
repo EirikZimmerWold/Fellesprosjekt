@@ -28,7 +28,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import oving4.PersonPanel;
 
 public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListener{
 
