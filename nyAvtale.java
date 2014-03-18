@@ -823,15 +823,15 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridx = 1;
 	    gc.gridy = 10;
 	    gc.insets = new Insets(5, 0, 0, 0);
-		add(eksternBrukerEmail, gc);
-		eksternBrukerEmail.addKeyListener(new KeyListener() {
+		//add(eksternBrukerEmail, gc);
+		//eksternBrukerEmail.addKeyListener(new KeyListener() {
 			
 			//naar du skriver inn mail og trykker enter eller bytter skal det sjekkes om personen finnes i databasen og da skal navnet fylles ut
 			
+	    /*
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 			}
-			
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
@@ -844,7 +844,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 					}
 				}
 			}
-			
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 			}
@@ -867,8 +866,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridy = 10;
 	    gc.insets = new Insets(5, 0, 0, 0);
 		add(leggTilEksternBrukerButton,gc);
-		leggTilEksternBrukerButton.addActionListener(new ActionListener() {
-			
+		//leggTilEksternBrukerButton.addActionListener(new ActionListener() {
+		 
 			@Override
 			//legger til eksternBruker i deltager liste
 			public void actionPerformed(ActionEvent arg0) {
@@ -902,7 +901,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				}
 				return false;
 			}
-		});
+		//});*/
 	}
 	
 	@Override
