@@ -1,6 +1,7 @@
 package Fellesprosjektet;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -83,6 +84,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			frame.pack();
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}else if(event.getSource()==logoutItem){
+			disableComponents();
+			setUser(null);
+			mainPanel.setCurrUser("");
 		}
 	}
 	

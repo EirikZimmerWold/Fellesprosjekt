@@ -24,6 +24,8 @@ public class EksternBruker {
 		this.navn = navn;
 	}
 	
-	
+	public String toString(){
+		return this.navn;
+	}
 
 }
