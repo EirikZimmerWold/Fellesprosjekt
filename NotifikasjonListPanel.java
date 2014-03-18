@@ -82,6 +82,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
         gbc.weighty = 1;
         list.add(new JPanel(), gbc);
         list.setBackground(Color.white);
+        notifyCount=0;
         
 	}
 	public String getPanelName(){

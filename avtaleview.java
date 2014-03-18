@@ -25,7 +25,7 @@ import javax.swing.event.ChangeListener;
 //den henter inn avtaleinfo og lager en liste som har alle deltagerene
 //det er 4 knapper. bekreft/Avsla for deltagerne og endre/slette avtale for Leder
 
-public class avtaleview extends JPanel {
+public class avtaleview extends JFrame {
 	JScrollPane rull;
 	JList<Ansatt> Deltagere;
 	JButton Bekreft;

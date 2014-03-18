@@ -145,13 +145,13 @@ public class weekView extends JPanel implements ActionListener{
 	}
 
 	public void initDesign(){
-		wkdPanel = new weekdayPanel("Mandag");
-		wkdPanel2 = new weekdayPanel("Tirsdag");
-		wkdPanel3 = new weekdayPanel("Onsdag");
-		wkdPanel4 = new weekdayPanel("Torsdag");
-		wkdPanel5 = new weekdayPanel("Fredag");
-		wkdPanel6= new weekdayPanel("Lørdag");
-		wkdPanel7= new weekdayPanel("Søndag");
+		wkdPanel = new weekdayPanel("Mandag", frame);
+		wkdPanel2 = new weekdayPanel("Tirsdag", frame);
+		wkdPanel3 = new weekdayPanel("Onsdag", frame);
+		wkdPanel4 = new weekdayPanel("Torsdag", frame);
+		wkdPanel5 = new weekdayPanel("Fredag", frame);
+		wkdPanel6= new weekdayPanel("Lørdag", frame);
+		wkdPanel7= new weekdayPanel("Søndag", frame);
 		nyAvtaleKnapp = new JButton("Ny avtale");
 		nyAvtaleKnapp.addActionListener(this);
 

@@ -1,10 +1,12 @@
 package Fellesprosjektet;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 
@@ -17,7 +19,10 @@ import javax.swing.JPanel;
 public class AvtalePanel extends JPanel{
 	private JLabel tid, rom, leder, status, romLabel, lederLabel;
 	private JButton sepaaAvtaleButton;
+	private Avtale avtale;
 	private GridBagConstraints gbc;
+	private PropertyChangeSupport pcs;
+	public final static String SEPAAAVTALE_PROPERTY="sepaaAvtaleButton";
 	
 	public static void main(String[] args) throws SQLException {
 		Rom rom=new Rom("r2");
@@ -34,10 +39,14 @@ public class AvtalePanel extends JPanel{
 	}
 	
 	public AvtalePanel(Avtale avtale){
+		pcs=new PropertyChangeSupport(this);
+		this.avtale=avtale;
+		
 		gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		gbc.insets=new Insets(5,5,5,5);
+		this.setPreferredSize(new Dimension(150,150));
 		
 		tid=new JLabel(avtale.getStartTid()+" - "+avtale.getSluttTid());
 		gbc.gridwidth=2;
@@ -79,10 +88,17 @@ public class AvtalePanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				//naar du trykker paa info skal du komme til avtaleview
+				firePropertyChange(SEPAAAVTALE_PROPERTY, "oldValue", "newValue");
 			}
 		});
+	}
+	
+	public Avtale getAvtale(){
+		return this.avtale;
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		pcs.addPropertyChangeListener(listener);		
 	}
 
 }

@@ -57,8 +57,8 @@ public class Database {
 			System.out.println("GruppeID: " + id);
 			String navn = rs3.getString("gruppeNavn");
 			medlemmer = getDeltagereIGruppe(id);
-			Gruppe gruppe = new Gruppe(id, navn, medlemmer);
-			result.addElement((Gruppe) gruppe);
+			//Gruppe gruppe = new Gruppe(id, navn, medlemmer);
+			//result.addElement((Gruppe) gruppe);
 		}
 		return result;
 	}
