@@ -364,16 +364,17 @@ public class Database {
 		return IDene;
 	}
 	
+	// sjekker om ekstern bruker finnes i databasen eller ikke
 	public boolean eksternBrukerenEksisterer(String mail) throws SQLException{
 		st=c.createStatement();
-		query="SELECT * FROM eksternBruker WHERE mail='"+mail.toLowerCase()+"';";
+		query="SELECT mail FROM EksternBruker WHERE mail='"+mail.toLowerCase()+"';";
 		rs=st.executeQuery(query);
 		if(rs.next()){
 			return true;
 		}
 		return false;
 	}
-	
+
 	// legger ny ekstern bruker i database
 	public void setNyEksternBruker(String mail, String navn) throws SQLException{
 		st=c.createStatement();
