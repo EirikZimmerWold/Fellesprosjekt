@@ -293,7 +293,6 @@ public class Database {
 		return string;
 	}
 
-
 	public Avtale getBestemtAvtale(int avtaleid) throws SQLException {
 		st = c.createStatement();
 		query = "SELECT * FROM Avtale WHERE AvtaleId='"+avtaleid+"';";
