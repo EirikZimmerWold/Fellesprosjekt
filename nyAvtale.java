@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import oving4.PersonPanel;
+
 public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListener{
 
 	GridBagConstraints gc;
@@ -36,7 +38,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	JScrollPane listScrollPane;
 	Database db;
 	Ansatt vert;
-	boolean avtaleEndres = false;
+	Avtale oldAvtale = null;
 	
 	//Starttid
 	JLabel startTidLabel;
@@ -476,7 +478,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(grupperLabel, gc);
 	    
-		gruppeModell = new DefaultListModel();
+	    gruppeModell = db.getAlleGrupper();
+		//gruppeModell = new DefaultListModel();
 		grupperList = new JListScroll(gruppeModell);
 	    gc.gridwidth = 1;
 	    gc.gridheight = 1;
@@ -758,12 +761,13 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				// finner lagrede felter : start- og sluttid.
 				String st = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+"-"+startTidKl.getText();
 				String sl = sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+"-"+sluttTidKl.getText();
-				
-				// fjerner gammel avtale dersom en bare endres paa
-				
-				
+			
 				Avtale avtale;
 				try {
+					// fjerner gammel avtale dersom en bare endres paa
+					if (oldAvtale != null) {
+						db.fjerneAvtale(oldAvtale);
+					}
 					// oppretter ny avtale med de feltene som er fylt inn i GUI
 					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
 					// legger til avtalen i databasen
@@ -900,13 +904,9 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	public void actionPerformed(ActionEvent e) {
 		this.dispose();
 	}
-	
-	private void erRomLedig() {
-		
-	}
 
 	public void endreAvtale(Avtale a) {
-		avtaleEndres = true;
+		oldAvtale = a;
 	}
 
 	protected enum Maaned {
@@ -924,6 +924,15 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		Desember
 	}
 	
+	/*
+	public static void main(String[] args) throws SQLException {
+		JFrame frame = new JFrame();
+		frame.setSize(new Dimension(400,200));
+		nyAvtale pp = new nyAvtale();
+		frame.setContentPane(pp);
+		frame.setVisible(true);
+	}
+	*/
 	
 	/*
 	 * // CELL-RENDERER - brukes ikke n , men kan tas ibruk dersom vi trenger!

@@ -7,20 +7,15 @@ import javax.swing.JList;
 
 
 public class Gruppe {
-	
-	private static int count = 0;
-	
 	private int gruppeId;
 	private String navn;
 	private JList medlemmer;
 	private DefaultListModel medlemmerModell;
 
-	public Gruppe(String n) {
-		medlemmerModell = new DefaultListModel();
-		medlemmer = new JList(medlemmerModell);
-		count += 1;
-		gruppeId = count;
-		navn = n;
+	public Gruppe(int id, String navn, DefaultListModel gruppeModell) {
+		this.medlemmerModell = gruppeModell;
+		this.medlemmer = new JList(medlemmerModell);
+		this.navn = navn;
 	}
 	
 	public void setMedlem(Ansatt ansatt) {
