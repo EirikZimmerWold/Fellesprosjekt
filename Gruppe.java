@@ -16,6 +16,7 @@ public class Gruppe {
 		this.medlemmerModell = gruppeModell;
 		this.medlemmer = new JList(medlemmerModell);
 		this.navn = navn;
+		this.gruppeId = id;
 	}
 	
 	public void setMedlem(Ansatt ansatt) {

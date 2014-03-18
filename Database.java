@@ -48,12 +48,13 @@ public class Database {
 	public DefaultListModel getAlleGrupper() throws SQLException {
 		st = c.createStatement();
 		query = "SELECT * FROM Gruppe;";
-		rs = st.executeQuery(query);
+		rs3 = st.executeQuery(query);
 		DefaultListModel result = new DefaultListModel();
 		DefaultListModel medlemmer;
-		while (rs.next()) {
-			int id = rs.getInt("gruppeId");
-			String navn = rs.getString("gruppeNavn");
+		while (rs3.next()) {
+			int id = rs3.getInt("gruppeId");
+			System.out.println("GruppeID: " + id);
+			String navn = rs3.getString("gruppeNavn");
 			medlemmer = getDeltagereIGruppe(id);
 			Gruppe gruppe = new Gruppe(id, navn, medlemmer);
 			result.addElement((Gruppe) gruppe);
