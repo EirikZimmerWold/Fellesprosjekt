@@ -403,7 +403,7 @@ public class Database {
 	
 	public int getStatus(int avtaleId, String brukernavn) throws SQLException{
 		st=c.createStatement();
-		query= "SELECT bekreftet FROM PersonDeltarAvtale WHERE avtaleId='"+avtaleId+"' AND brukernavn='"+brukernavn+",;";
+		query= "SELECT bekreftet FROM PersonDeltarAvtale WHERE avtaleId = '"+avtaleId+"' AND brukernavn = '"+brukernavn+"';";
 		rs=st.executeQuery(query);
 		rs.next();
 		int bekreftet=rs.getInt("bekreftet");

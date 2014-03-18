@@ -840,7 +840,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			}
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
+				if(arg0.getKeyCode()==KeyEvent.VK_ENTER||arg0.getKeyCode()==KeyEvent.VK_SPACE){
 					try {
 						if(db.eksternBrukerenEksisterer(eksternBrukerEmail.getText())){
 							eksternBrukerNavn.setText(db.getEksternBruker(eksternBrukerEmail.getText()).getNavn());

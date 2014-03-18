@@ -18,12 +18,10 @@ import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 
 import java.awt.GridBagLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 
 
-public class weekdayPanel extends JPanel implements PropertyChangeListener{
+public class weekdayPanel extends JPanel{
 	private JLabel dayName;
 	private JLabel dayDate;
 	private JPanel list;
@@ -146,33 +144,13 @@ public class weekdayPanel extends JPanel implements PropertyChangeListener{
 		}
 	}
 	public void addAvtalePanel(Avtale avtale){
-		AvtalePanel panel=new AvtalePanel(avtale);
+		AvtalePanel panel=new AvtalePanel(avtale, frame);
 		gbc=new GridBagConstraints();
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx=1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel.addPropertyChangeListener(this);
         list.add(panel, gbc, 0);
         validate();
         repaint();
 	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		
-		avtaleview avtaleview;
-			//try {
-				Avtale test= ((AvtalePanel) evt.getSource()).getAvtale();
-				System.out.println(test.getId());
-				//avtaleview = new avtaleview((test, frame);
-			//} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-			//}
-			//avtaleview.pack();
-			//avtaleview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			//avtaleview.setVisible(true);
-
-	//}
-}
 }

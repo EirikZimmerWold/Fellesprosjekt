@@ -6,8 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 
 import javax.swing.DefaultListModel;
@@ -21,14 +19,13 @@ public class AvtalePanel extends JPanel{
 	private JButton sepaaAvtaleButton;
 	private Avtale avtale;
 	private GridBagConstraints gbc;
-	private PropertyChangeSupport pcs;
 	private Database db;
-	public final static String SEPAAAVTALE_PROPERTY="sepaaAvtaleButton";
+	private ProgramFrame frame;
 	
-	public AvtalePanel(Avtale avtale){
+	public AvtalePanel(final Avtale avtale, final ProgramFrame frame){
 		db=new Database();
-		pcs=new PropertyChangeSupport(this);
 		this.avtale=avtale;
+		this.frame=frame;
 		
 		gbc=new GridBagConstraints();
 		setLayout(new GridBagLayout());
@@ -78,7 +75,15 @@ public class AvtalePanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				firePropertyChange(SEPAAAVTALE_PROPERTY, "oldValue", "newValue");
+				avtaleview avtaleview;
+				try {
+					avtaleview = new avtaleview(avtale, frame);
+					avtaleview.pack();
+					avtaleview.setVisible(true);
+					avtaleview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -112,9 +117,5 @@ public class AvtalePanel extends JPanel{
 	
 	public Avtale getAvtale(){
 		return this.avtale;
-	}
-
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		pcs.addPropertyChangeListener(listener);		
 	}
 }
