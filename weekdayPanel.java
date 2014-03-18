@@ -159,14 +159,20 @@ public class weekdayPanel extends JPanel implements PropertyChangeListener{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		
 		avtaleview avtaleview;
-		try {
-			avtaleview = new avtaleview(((AvtalePanel)evt.getSource()).getAvtale(), frame);
-			avtaleview.pack();
-			avtaleview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			avtaleview.setVisible(true);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-	}
+			//try {
+				Avtale test= ((AvtalePanel) evt.getSource()).getAvtale();
+				System.out.println(test.getId());
+				//avtaleview = new avtaleview((test, frame);
+			//} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			//}
+			//avtaleview.pack();
+			//avtaleview.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			//avtaleview.setVisible(true);
+
+	//}
+}
 }

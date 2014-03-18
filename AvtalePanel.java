@@ -37,7 +37,7 @@ public class AvtalePanel extends JPanel{
 		this.setPreferredSize(new Dimension(150,150));
 		String [] ST = avtale.getStartTid().split("-");
 		String [] SL = avtale.getSluttTid().split("-");
-		tid=new JLabel(ST[3]+" - "+SL[3]);
+		tid=new JLabel(ST[0]+" - "+SL[0]);
 		gbc.gridwidth=2;
 		gbc.gridx=0;
 		gbc.gridy=0;

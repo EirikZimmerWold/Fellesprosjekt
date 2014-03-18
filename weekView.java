@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -26,6 +27,7 @@ public class weekView extends JPanel implements ActionListener{
 	private String panelName = "Kalender";
 	private JButton nyAvtaleKnapp, nextButton, backButton;
 	private Calendar cal;
+	private JComboBox kalendere;
 
 	private weekdayPanel wkdPanel, wkdPanel2, wkdPanel3, wkdPanel4, wkdPanel5, wkdPanel6, wkdPanel7;
 	
@@ -193,6 +195,7 @@ public class weekView extends JPanel implements ActionListener{
 		wkdPanel7.setMinimumSize((new Dimension(175,500)));
 		nyAvtaleKnapp = new JButton("Ny avtale");
 		nyAvtaleKnapp.addActionListener(this);
+		
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
