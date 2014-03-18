@@ -1,5 +1,6 @@
 package Fellesprosjektet;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,7 +29,7 @@ public class weekView extends JPanel implements ActionListener{
 
 	private weekdayPanel wkdPanel, wkdPanel2, wkdPanel3, wkdPanel4, wkdPanel5, wkdPanel6, wkdPanel7;
 	
-	public weekView(ProgramFrame frame){
+	public weekView(ProgramFrame frame) throws SQLException{
 		this.frame = frame;
 		
 		initDesign();
@@ -72,7 +73,7 @@ public class weekView extends JPanel implements ActionListener{
 		return monDate+"/"+month+"/"+year;
 	}
 	
-	public void generateThisWeek(int monDate, int month, int year){
+	public void generateThisWeek(int monDate, int month, int year) throws SQLException{
 		System.out.println("dato: " + monDate + "/" + month + "/" + year);
 		cal = Calendar.getInstance();
 		
@@ -85,17 +86,24 @@ public class weekView extends JPanel implements ActionListener{
 		
 		wkdPanel.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
+		wkdPanel.leggeTilAvtale(frame.getUser());
 		wkdPanel2.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
+		wkdPanel2.leggeTilAvtale(frame.getUser());
 		wkdPanel3.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
+		wkdPanel3.leggeTilAvtale(frame.getUser());
 		wkdPanel4.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
+		wkdPanel4.leggeTilAvtale(frame.getUser());
 		wkdPanel5.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
+		wkdPanel5.leggeTilAvtale(frame.getUser());
 		wkdPanel6.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
+		wkdPanel6.leggeTilAvtale(frame.getUser());
 		wkdPanel7.setDate(getDate(cal));
+		wkdPanel7.leggeTilAvtale(frame.getUser());
 	}
 	
 	public String getPanelName(){
@@ -128,7 +136,12 @@ public class weekView extends JPanel implements ActionListener{
 		    int date = Integer.parseInt(dates[0]); 
 		    int month = Integer.parseInt(dates[1]);         
 		    int year = Integer.parseInt(dates[2]);          
-		    generateThisWeek(date, month, year);
+		    try {
+				generateThisWeek(date, month, year);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}if(e.getSource().equals(nextButton)){
 			cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
 			cal.add(Calendar.DATE, 7);
@@ -140,18 +153,44 @@ public class weekView extends JPanel implements ActionListener{
 		    int date = Integer.parseInt(dates[0]); 
 		    int month = Integer.parseInt(dates[1]);         
 		    int year = Integer.parseInt(dates[2]);          
-		    generateThisWeek(date, month, year);    
+		    try {
+				generateThisWeek(date, month, year);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}    
     	}
 	}
 
 	public void initDesign(){
 		wkdPanel = new weekdayPanel("Mandag", frame);
+		wkdPanel.setPreferredSize((new Dimension(175,500)));
+		wkdPanel.setMaximumSize((new Dimension(175,500)));
+		wkdPanel.setMinimumSize((new Dimension(175,500)));
 		wkdPanel2 = new weekdayPanel("Tirsdag", frame);
+		wkdPanel2.setPreferredSize((new Dimension(175,500)));
+		wkdPanel2.setMaximumSize((new Dimension(175,500)));
+		wkdPanel2.setMinimumSize((new Dimension(175,500)));
 		wkdPanel3 = new weekdayPanel("Onsdag", frame);
+		wkdPanel3.setPreferredSize((new Dimension(175,500)));
+		wkdPanel3.setMaximumSize((new Dimension(175,500)));
+		wkdPanel3.setMinimumSize((new Dimension(175,500)));
 		wkdPanel4 = new weekdayPanel("Torsdag", frame);
+		wkdPanel4.setPreferredSize((new Dimension(175,500)));
+		wkdPanel4.setMaximumSize((new Dimension(175,500)));
+		wkdPanel4.setMinimumSize((new Dimension(175,500)));
 		wkdPanel5 = new weekdayPanel("Fredag", frame);
+		wkdPanel5.setPreferredSize((new Dimension(175,500)));
+		wkdPanel5.setMaximumSize((new Dimension(175,500)));
+		wkdPanel5.setMinimumSize((new Dimension(175,500)));
 		wkdPanel6= new weekdayPanel("Lørdag", frame);
+		wkdPanel6.setPreferredSize((new Dimension(175,500)));
+		wkdPanel6.setMaximumSize((new Dimension(175,500)));
+		wkdPanel6.setMinimumSize((new Dimension(175,500)));
 		wkdPanel7= new weekdayPanel("Søndag", frame);
+		wkdPanel7.setPreferredSize((new Dimension(175,500)));
+		wkdPanel7.setMaximumSize((new Dimension(175,500)));
+		wkdPanel7.setMinimumSize((new Dimension(175,500)));
 		nyAvtaleKnapp = new JButton("Ny avtale");
 		nyAvtaleKnapp.addActionListener(this);
 
