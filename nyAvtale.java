@@ -38,6 +38,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	Database db;
 	Ansatt vert;
 	Avtale oldAvtale = null;
+	ProgramFrame frame;
 	
 	//Starttid
 	JLabel startTidLabel;
@@ -104,7 +105,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	JButton avbrytButton;
 	
 	public nyAvtale() throws SQLException  {
-		
 		setLayout(new GridBagLayout());
 		gc = new GridBagConstraints();
 		tid = new GregorianCalendar();
@@ -510,7 +510,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				deltagereList.updateUI();	
 				
 			}
-		});
+	    });
 	    
 	    inviterGruppeButton.addActionListener(new ActionListener() {
 	    	
@@ -519,19 +519,29 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				Gruppe g = (Gruppe) grupperList.getJList().getSelectedValue();
 				for (int r = 0; r < g.getCount(); r++) {
 					Ansatt medlem = g.getAnsatt(r);
-					if (deltagerModell.contains(medlem)) {
+					Ansatt faktisk = new Ansatt("tull");
+					for (int t=0;t < personModell.getSize(); t++){
+						Ansatt Test = (Ansatt) personModell.get(t);
+						if (medlem.getBrukernavn().equals(Test.getBrukernavn())){
+							faktisk = Test;
+							t = personModell.getSize();
+						}
+					if (deltagerModell.contains(faktisk)) {
 						String message = medlem.getBrukernavn() + " er allerede invitert";
 						JOptionPane.showMessageDialog(popUpWithMessage, message);
 					}
 					else {
-						deltagerModell.addElement(medlem);
-						deltagereList.setDefaultListModel(deltagerModell);
-						personModell.removeElement(medlem);
-						personerList.setDefaultListModel(personModell);
+						}
+						if (faktisk.getBrukernavn()!= "tull"){
+							deltagerModell.addElement(faktisk);
+							deltagereList.setDefaultListModel(deltagerModell);
+							personModell.removeElement(faktisk);
+							personerList.setDefaultListModel(personModell);	
+						}
+						}
 					}
 				}
-			}
-		});
+			});
 	    
 	    fjernButton.addActionListener(new ActionListener() {
 			
@@ -548,8 +558,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 					deltagereList.setDefaultListModel(deltagerModell);
 				//}
 			}
-		});
-	}
+	    });}
 	
 	private void rom() throws SQLException {
 		
