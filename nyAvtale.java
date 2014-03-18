@@ -105,7 +105,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	JButton avbrytButton;
 	
 	public nyAvtale() throws SQLException  {
-		frame = new ProgramFrame();
 		setLayout(new GridBagLayout());
 		gc = new GridBagConstraints();
 		tid = new GregorianCalendar();
@@ -404,7 +403,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		// Legger til vert
 
 		try {
-			Ansatt bruker = frame.getUser();
 			vert = db.getBestemtAnsatt("henrik");
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
