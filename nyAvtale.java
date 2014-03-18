@@ -771,32 +771,24 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 					//Inviterer alle deltagerne
 					for (int a = 0; a < deltagerModell.getSize(); a++) {
 						// Inviterer hver enkelt som er valgt
-						String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
-						((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
+						if(deltagerModell.get(a) instanceof Ansatt){//deltageren er ansatt
+							String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
+							try {
+								((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+						}else{//deltageren er eksternbruker
+							String invitert = ((EksternBruker) deltagerModell.get(a)).getMail();
+							try {
+								((Database) db).setPersonDeltarAvtale(invitert, avtale.getId());
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+						}
 					}
-					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
-				}
-				
-				//Inviterer alle deltagerne
-				for (int a = 0; a < deltagerModell.getSize(); a++) {
-					// Inviterer hver enkelt som er valgt
-					if(deltagerModell.get(a) instanceof Ansatt){//deltageren er ansatt
-						String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
-						try {
-							((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-					}else{//deltageren er eksternbruker
-						String invitert = ((EksternBruker) deltagerModell.get(a)).getMail();
-						try {
-							((Database) db).setPersonDeltarAvtale(invitert, avtale.getId());
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
-					}
 				}
 			}
 		});
@@ -823,12 +815,12 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridx = 1;
 	    gc.gridy = 10;
 	    gc.insets = new Insets(5, 0, 0, 0);
-		//add(eksternBrukerEmail, gc);
-		//eksternBrukerEmail.addKeyListener(new KeyListener() {
+		add(eksternBrukerEmail, gc);
+		eksternBrukerEmail.addKeyListener(new KeyListener() {
 			
-			//naar du skriver inn mail og trykker enter eller bytter skal det sjekkes om personen finnes i databasen og da skal navnet fylles ut
+		//naar du skriver inn mail og trykker enter eller bytter skal det sjekkes om personen finnes i databasen og da skal navnet fylles ut
 			
-	    /*
+	    
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 			}
@@ -866,7 +858,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridy = 10;
 	    gc.insets = new Insets(5, 0, 0, 0);
 		add(leggTilEksternBrukerButton,gc);
-		//leggTilEksternBrukerButton.addActionListener(new ActionListener() {
+		leggTilEksternBrukerButton.addActionListener(new ActionListener() {
 		 
 			@Override
 			//legger til eksternBruker i deltager liste
@@ -901,7 +893,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				}
 				return false;
 			}
-		//});*/
+		});
 	}
 	
 	@Override
