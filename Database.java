@@ -292,7 +292,6 @@ public class Database {
 		}
 		return string;
 	}
-<<<<<<< HEAD
 	
 	public boolean eksternBrukerenEksisterer(String mail) throws SQLException{
 		st=c.createStatement();
@@ -326,7 +325,6 @@ public class Database {
 		EksternBruker bruker=new EksternBruker(eksternBrukerMail, eksternBrukerNavn);
 		return bruker;
 	}
-=======
 
 	public Avtale getBestemtAvtale(int avtaleid) throws SQLException {
 		st = c.createStatement();
@@ -363,6 +361,9 @@ public class Database {
 		return IDene;
 	}
 	
+<<<<<<< HEAD
+>>>>>>> 97e97eafe41536cbe3afba6408d2f0474f4cfb58
+=======
 >>>>>>> 97e97eafe41536cbe3afba6408d2f0474f4cfb58
 }
 

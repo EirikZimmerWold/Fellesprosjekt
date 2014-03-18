@@ -1,4 +1,4 @@
-ï»¿package Fellesprosjektet;
+package Fellesprosjektet;
 
 import java.awt.Checkbox;
 import java.awt.Color;
@@ -127,7 +127,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(startTidLabel, gc);
 	    
-	    // START ï¿½R
+	    // START  R
 	    
 	    startTidAar = new JComboBox();
 	    for (int k = tid.getTime().getYear()+1900; k < 2031; k++) {
@@ -138,7 +138,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridy = 1;
 	    add(startTidAar, gc);
 	    
-	    // START Mï¿½NED
+	    // START M NED
 	    
 	    startTidMaaned = new JComboBox(Maaned.values());
 	    startTidMaaned.setSelectedIndex(tid.getTime().getMonth());
@@ -187,7 +187,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.insets = new Insets(0, 0, 0, 0);
 	    add(sluttTidLabel, gc);
 	    
-	    // SLUTT-TID ï¿½R
+	    // SLUTT-TID  R
 	    
 	    sluttTidAar = new JComboBox();
 	    for (int k = tid.getTime().getYear()+1900; k < 2031; k++) {
@@ -199,7 +199,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.gridy = 2;
 	    add(sluttTidAar, gc);
 	    
-	    // SLUTT-TID Mï¿½NED
+	    // SLUTT-TID M NED
 	    
 	    sluttTidMaaned = new JComboBox(Maaned.values());
 	    sluttTidMaaned.setSelectedIndex(tid.getTime().getMonth());
@@ -277,7 +277,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			    //setter antall dager som hoorer til current maaned
 				settStartDager();
 			
-				//Sjekker at starttid skal vï¿½re fï¿½r sluttid
+				//Sjekker at starttid skal v re f r sluttid
 				if ((Integer) startTidAar.getSelectedItem()-(Integer) sluttTidAar.getSelectedItem() == 0) {
 					if ((Integer) startTidMaaned.getSelectedIndex() > (Integer) sluttTidMaaned.getSelectedIndex()) {
 						sluttTidMaaned.setSelectedIndex(startTidMaaned.getSelectedIndex());
@@ -342,7 +342,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			for (int dag = 1; dag < 29; dag++) {
 				startTidDag.addItem(dag);
 			}
-			// Dersom det er skuddï¿½r skal det vï¿½re 29 dager i februar
+			// Dersom det er skudd r skal det v re 29 dager i februar
 			if (tid.getTime().getYear() % 4 == 0) {
 				startTidDag.addItem(29);
 			}
@@ -369,7 +369,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			for (int dag = 1; dag < 29; dag++) {
 				sluttTidDag.addItem(dag);
 			}
-			// Dersom det er skuddï¿½r skal det vï¿½re 29 dager i februar
+			// Dersom det er skudd r skal det v re 29 dager i februar
 			if (tid.getTime().getYear() % 4 == 0) {
 				sluttTidDag.addItem(29);
 			}
@@ -537,7 +537,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			public void actionPerformed(ActionEvent arg0) {
 				/*
 				if (deltagereList.getJList().getSelectedValue() == vert) {
-					JOptionPane.showMessageDialog(popUpWithMessage, "Verten mï¿½ delta pï¿½ arrangementet. Kan ikke fjernes.");
+					JOptionPane.showMessageDialog(popUpWithMessage, "Verten m  delta p  arrangementet. Kan ikke fjernes.");
 				}
 				else {*/
 					personModell.addElement(deltagereList.getJList().getSelectedValue());
@@ -551,8 +551,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	
 	private void rom() throws SQLException {
 		
-		// Mï¿½TEROM
-	    mooteromLabel = new JLabel("Mï¿½terom:");
+		// M TEROM
+	    mooteromLabel = new JLabel("M terom:");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 1;
 	    gc.gridy = 11;
@@ -560,7 +560,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    add(mooteromLabel, gc);
 	    
 	    
-	    // Finn et mï¿½terom
+	    // Finn et m terom
 	    
 	    finnEtRomLabel = new JLabel("Finn et rom: ");
 	    gc.gridwidth = 1;
@@ -597,7 +597,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    gc.insets = new Insets(10, 0, 0, 0);
 	    add(finnPassendeRomButton, gc);
 	    
-	    beskjedEtterFunnetRomLabel = new JLabel("med tanke pï¿½ antall deltagere");
+	    beskjedEtterFunnetRomLabel = new JLabel("med tanke p  antall deltagere");
 	    gc.fill = GridBagConstraints.HORIZONTAL;
 	    gc.gridx = 5;
 	    gc.gridy = 12;
@@ -606,7 +606,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    
 	    // Beskrivelse av rom
 	    
-	    beskrivelseAvRomLabel = new JLabel("Her kommer rombeskrivelse nï¿½r du har valgt rom");
+	    beskrivelseAvRomLabel = new JLabel("Her kommer rombeskrivelse n r du har valgt rom");
 	    gc.gridwidth = 3;
 	    gc.gridheight = 1;
 	    gc.fill = GridBagConstraints.HORIZONTAL;
@@ -660,7 +660,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				int antallDeltagere = deltagereList.getDefaultListModel().getSize();
 				Rom passendeRom = (Rom) romBox.getItemAt(0);
 				
-				// mï¿½ sï¿½ke gjennom alle avtaler, og sjekke om det passende mï¿½terommet er ledig pï¿½ gitt tidspunkt
+				// m  s ke gjennom alle avtaler, og sjekke om det passende m terommet er ledig p  gitt tidspunkt
 				String datoTest = "testDato";
 				
 				for (int s = 0; s < romBox.getItemCount(); s++) {
@@ -676,7 +676,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				beskrivelseAvRomLabel.setText(passendeRom.getBeskrivelse());
 				
 				if (passendeRom.getMaksAntallPersoner() < antallDeltagere) {
-					JOptionPane.showMessageDialog(popUpWithMessage, "Det finnes dessverre ikke et stort nok mï¿½terom");
+					JOptionPane.showMessageDialog(popUpWithMessage, "Det finnes dessverre ikke et stort nok m terom");
 				}
 				
 			}
@@ -751,8 +751,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//ToDo: nyAvtale() skal ogsÃ¥ fungere som endreAvtale(), slik at nÃ¥r man trykker pÃ¥ "lagre" mÃ¥ det sjekkes om en avtale opprettes
-				// eller oppdateres.Dersom den oppdateres mÃ¥ den gamle slettes og en ny, oppdatert, lages.
+				//ToDo: nyAvtale() skal også fungere som endreAvtale(), slik at når man trykker på "lagre" må det sjekkes om en avtale opprettes
+				// eller oppdateres.Dersom den oppdateres må den gamle slettes og en ny, oppdatert, lages.
 				
 				
 				// finner lagrede felter : start- og sluttid.
@@ -779,7 +779,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 					e1.printStackTrace();
 				}
 				
-<<<<<<< HEAD
 				//Inviterer alle deltagerne
 				for (int a = 0; a < deltagerModell.getSize(); a++) {
 					// Inviterer hver enkelt som er valgt
@@ -799,9 +798,6 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 						}
 					}
 				}
-=======
-
->>>>>>> 97e97eafe41536cbe3afba6408d2f0474f4cfb58
 			}
 		});
 	    avbrytButton.addActionListener(this);
@@ -939,7 +935,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	
 	
 	/*
-	 * // CELL-RENDERER - brukes ikke nï¿½, men kan tas ibruk dersom vi trenger!
+	 * // CELL-RENDERER - brukes ikke n , men kan tas ibruk dersom vi trenger!
 	private static class JListCellRenderer extends DefaultListCellRenderer {  
         public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {  
             Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );  
