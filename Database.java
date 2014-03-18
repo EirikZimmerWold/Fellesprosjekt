@@ -47,7 +47,7 @@ public class Database {
 	// Sjekker om en avtale eksisterer i databasen (brukes i nyAvtale() for å sjekke om en avtale opprettes eller bare endres på)
 	public boolean avtaleEksisterer(int id) throws SQLException {
 		st = c.createStatement();
-		query = "SELECT avtaleId FROM avtale WHERE avtaleId = '" + id + "';";
+		query = "SELECT avtaleId FROM Avtale WHERE avtaleId = '" + id + "';";
 		rs = st.executeQuery(query);
 		if (rs.next()) {
 			return true;
@@ -56,6 +56,21 @@ public class Database {
 			return false;
 		}
 	}
+	
+	// Returnerer avtaleID til konstruktooren i Avtale. Brukes når avtale opprettes / endres
+	public int getNyAvtaleID() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT MAX(avtaleId) FROM Avtale;";
+		st.executeQuery(query);
+		rs = st.getResultSet();
+		int i = -1;
+		while (rs.next()) {
+			i = rs.getInt(1);
+		}
+		
+		return i+1;
+	}
+	
 	
 	// Legg inn ny avtale
 	public void setNyAvtale(Avtale avtale) throws SQLException {

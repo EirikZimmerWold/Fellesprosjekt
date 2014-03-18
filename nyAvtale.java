@@ -760,26 +760,25 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				
 				// fjerner gammel avtale dersom en bare endres paa
 				
-				// oppretter ny avtale med de feltene som er fylt inn i GUI
-				Avtale avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
 				
+				Avtale avtale;
 				try {
+					// oppretter ny avtale med de feltene som er fylt inn i GUI
+					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
 					// legger til avtalen i databasen
 					db.setNyAvtale(avtale);
+					//Inviterer alle deltagerne
+					for (int a = 0; a < deltagerModell.getSize(); a++) {
+						// Inviterer hver enkelt som er valgt
+						String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
+						((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
+					}
+					
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 				
-				//Inviterer alle deltagerne
-				for (int a = 0; a < deltagerModell.getSize(); a++) {
-					// Inviterer hver enkelt som er valgt
-					String ansattInvitert = ((Ansatt) deltagerModell.get(a)).getBrukernavn().toLowerCase();
-					try {
-						((Database) db).setPersonDeltarAvtale(ansattInvitert, avtale.getId());
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-				}
+
 			}
 		});
 	    avbrytButton.addActionListener(this);
