@@ -150,9 +150,11 @@ public class avtaleview extends JFrame {
 	class SLETT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (frame.getUser() == avtale.getLeder()){
+			if (frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
 				try {
 					db.fjerneAvtale(avtale);
+					dispose();
+					frame.update();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
