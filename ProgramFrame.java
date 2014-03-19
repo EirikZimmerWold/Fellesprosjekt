@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -44,6 +45,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private Ansatt User = null;
 	private Ansatt kalenderEier = null;
 	private GregorianCalendar tid;
+	private PeriodiskSjekk sjekkern;
+	
+	final JFrame popUpWithMessage = new JFrame();
+	private String message = "";
 	/*
 	 * Contructor for the window/frame. Sets up everything.
 	 */	
@@ -115,6 +120,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		mainPanel.enableComponents();
 		
 		
+		//et forsok paa periodisk sjekke noe
+		//sjekkern = new PeriodiskSjekk(this);
+		
+		
 	}
 	
 	/*
@@ -127,6 +136,12 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		/*acceptNetItem.setEnabled(false);
 		connectNetItem.setEnabled(false);
 		disconnectNetItem.setEnabled(false);*/
+		
+		//forsok paa avslutte periodisk sjekk
+		/*if (sjekkern != null){
+			sjekkern.avslutt();
+		}*/
+		
 		
 		mainPanel.disableComponents();
 		
@@ -243,7 +258,11 @@ public class ProgramFrame extends JFrame implements ActionListener{
             }
         });
 	}
-	
+	public void kjørAlarm(String alarmTid) throws SQLException{
+		int avtaleID = db.finnAvtale(alarmTid, getUser().getBrukernavn());
+		message = "ALARM! alarm for avtalen som starter: " + db.getBestemtAvtale(avtaleID);
+		JOptionPane.showMessageDialog(popUpWithMessage, message);
+	}
 	public void update(){
 		tid.set(Calendar.DAY_OF_WEEK, tid.getFirstDayOfWeek());
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
