@@ -172,6 +172,7 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 		if(e.getSource().equals(egenKalender)){
 			frame.setKalenderEier(frame.getUser());
 			setKalender();
+			frame.enableComponents();
 		}
 	}
 	
@@ -196,7 +197,9 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 	}
 	
 	public void setKalender(){
-		//kalendere.setSelectedItem(frame.getKalenderEier());
+		if(kalendere.getSelectedItem() != frame.getKalenderEier()){
+			kalendere.setSelectedItem(frame.getKalenderEier());
+		}
 		kalendere.updateUI();
 	}
 
@@ -237,7 +240,7 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 		egenKalender.addActionListener(this);
 		kalendereL = new JLabel("se andres Kalendre: ");
 		kalendere = new JComboBox<Ansatt>();
-		DefaultListModel folk = db.getAlleAnsatte();
+		DefaultListModel<Ansatt> folk = db.getAlleAnsatte();
 		for(int a =0; a < folk.getSize(); a++){
 			kalendere.addItem((folk.getElementAt(a)));
 		}
