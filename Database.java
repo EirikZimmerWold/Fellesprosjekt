@@ -294,15 +294,6 @@ public class Database {
 		
 	}
 	
-	//setter inn varsel i databasen
-	public void setVarsel(Avtale avtale, int varseltidFoorAvtale, Ansatt ansatt) throws SQLException {
-		st = c.createStatement();
-		int id = avtale.getId();
-		String brukernavn = ansatt.getBrukernavn();
-		int varselId = 45;
-		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId) VALUES('"+varselId+"','"+varseltidFoorAvtale+"','"+brukernavn+"','"+id+"');";
-		st.executeUpdate(query);
-	}
 	
 	//henter passordet til avtalen
 	public String getPassord(String brukernavn) throws SQLException{
@@ -420,6 +411,33 @@ public class Database {
 		rs.next();
 		int bekreftet=rs.getInt("bekreftet");
 		return bekreftet;
+	}
+	
+	public void setAlarm(String brukernavn, String tid, int avi) throws SQLException{
+		st = c.createStatement();
+		int varsid = getNyVarselID();
+		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId)" +
+				" VALUES('"+varsid+"','"+tid+"','"+brukernavn+ "', '"+ avi+"') ;";
+		st.executeUpdate(query);
+	}
+	
+	
+	public int getNyVarselID() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT MAX(varselId) FROM Varsel;";
+		st.executeQuery(query);
+		rs = st.getResultSet();
+		int i = -1;
+		while (rs.next()) {
+			i = rs.getInt(1);
+		}
+		return i+1;
+	}
+	public ResultSet getAlarmer(String brukernavn) throws SQLException{
+		st = c.createStatement();
+		query = "SELECT varselTidFoorAvtale FROM Varsel WHERE brukernavn = '"+ brukernavn + "' ;";
+		rs = st.executeQuery(query);
+		return rs;
 	}
 	
 	public DefaultListModel alleEksterneDeltagere(int avtaleId) throws SQLException{

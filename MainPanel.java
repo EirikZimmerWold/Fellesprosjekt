@@ -14,6 +14,7 @@ import javax.swing.event.ChangeListener;
 
 public class MainPanel extends JPanel {
 
+	//Fields
 	private ProgramFrame frame;
 	
 	private JTabbedPane panelTabs;
@@ -26,7 +27,9 @@ public class MainPanel extends JPanel {
 	private String currUser = "";
 	
 	private Database db;
-	
+	/*
+	 * Contructor for main panel
+	 */
 	public MainPanel(ProgramFrame frame) throws SQLException {
 		this.frame = frame;
 		
@@ -60,6 +63,9 @@ public class MainPanel extends JPanel {
 		}
 	}
 	
+	/*
+	 * Method to update the title of a tab in the tabbed pane
+	 */
 	public void updatePanelTabTitle(Component object, String title){
 		Component[] clist = panelTabs.getComponents();
 		for(int i = 0;i<clist.length; i++){
@@ -69,10 +75,16 @@ public class MainPanel extends JPanel {
 		}
 	}
 	
+	/*
+	 * Get-method for the weekview object.
+	 */
 	public weekView getWeekview(){
 		return this.weekPanel;
 	}
 	
+	/*
+	 * Enables a selection of the components
+	 */
 	public void enableComponents(){
 		panelTabs.setEnabled(true);
 		for(Component c : weekPanel.getComponents()){
@@ -81,6 +93,9 @@ public class MainPanel extends JPanel {
 		loggedInLabel.setEnabled(true);
 	}
 	
+	/*
+	 * Disables a selection of the components.
+	 */
 	public void disableComponents(){
 		panelTabs.setEnabled(false);
 		for(Component c : weekPanel.getComponents()){
@@ -89,6 +104,9 @@ public class MainPanel extends JPanel {
 		loggedInLabel.setEnabled(false);
 	}
 	
+	/*
+	 * Iniializes the design.
+	 */
 	public void initDesign(){
 		GroupLayout layout = new GroupLayout(this);
 		setLayout(layout);
@@ -102,6 +120,9 @@ public class MainPanel extends JPanel {
 		);
 	}
 	
+	/*
+	 * Sets the string for the current logged in user.
+	 */
 	public void setCurrUser(String brukernavn){
 		try {
 			currUser=db.getNavn(brukernavn);
@@ -111,6 +132,9 @@ public class MainPanel extends JPanel {
 		}
 	}
 	
+	/*
+	 * Swaps the tabbet pane to the week view tab.
+	 */
 	public void byttTilWeekView(){
 		panelTabs.setSelectedComponent(weekPanel);
 	}

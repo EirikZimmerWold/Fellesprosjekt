@@ -205,7 +205,7 @@ public class avtaleview extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			alarmController na;
 
-			na = new alarmController(avtale.getStartTid());
+			na = new alarmController(avtale, frame);
 			na.pack();
 			na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			na.setVisible(true);

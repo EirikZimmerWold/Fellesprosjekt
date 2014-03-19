@@ -1,12 +1,22 @@
 package Fellesprosjektet;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class PeriodiskSjekk {
 	private Timer t;
 	private ResultSet alarmer;
+	private ProgramFrame frame;
+	private Database db;
 	
 	  // hent alle alarms
-	 public PeriodiskSjekk(String Brukernavn){
+	 public PeriodiskSjekk(String Brukernavn, ProgramFrame frame) throws SQLException{
+		 this.frame = frame;
+		 db = frame.getDB();
 		 
+		 alarmer = db.getAlarmer(Brukernavn);
 		 t = new Timer();
 		 
 		 t.scheduleAtFixedRate(
@@ -21,8 +31,8 @@ public class PeriodiskSjekk {
 						 String time = getTime();
 						 String date = getDate();
 						 
-						 for(Alarm a : alarms){
-							 if(a.getTime().equals(o) && a.getDate().equals(date)) { 
+						 for(Alarm a : alarmer){
+							 if(a.getTime().equals(time) && a.getDate().equals(date)) { 
 								 new AlarmPanel(parent, user, a);
 							 }
 						 }

@@ -21,13 +21,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
 /*
- * Hovedklassen som blir kjøres når programmet starter.
+ * Main-class
  */
 
 public class ProgramFrame extends JFrame implements ActionListener{
 	
 	/*
-	 * Div variabler. 
+	 * Fields.
 	 */
 	private final Dimension windowSize = new Dimension(1350,650); 
 	private JMenuBar menubar;
@@ -45,7 +45,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private Ansatt kalenderEier = null;
 	private GregorianCalendar tid;
 	/*
-	 * Konstruktøren. Starter generelt gui med design. 
+	 * Contructor for the window/frame. Sets up everything.
 	 */	
 	public ProgramFrame() throws SQLException {
 		init();
@@ -63,7 +63,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	}
 	
 	/*
-	 * Get-metode for databaseobjekt
+	 * Get-method for the database object.
 	 */
 	
 	public Database getDB(){
@@ -71,7 +71,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	}
 	
 	/*
-	 * Get-metode for mainPanel som holder annet design og views. 
+	 * Get-method for mainPanel.  
 	 */
 	
 	public MainPanel getMainPanel(){
@@ -79,9 +79,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	}
 	
 	/*
-	 * (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 * 
+	 * Actionlistener method for log in and log out buttons.
 	 */
 	
 	@Override
@@ -99,6 +97,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			mainPanel.setCurrUser("");
 			mainPanel.byttTilWeekView();
 			update();
+			loggedIn(false);
 		}
 	}
 	
@@ -119,7 +118,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	}
 	
 	/*
-	 * Gjør at komponentene ikke kan brukes. 
+	 * Disables some of the components in the program.
 	 */
 	
 	public void disableComponents(){
@@ -133,6 +132,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		
 	}
 	
+	/*
+	 * Initializes the menubar at the top of the program.
+	 */
 	public void initMenu(){
 		menubar = new JMenuBar();
 		
@@ -177,13 +179,23 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		setJMenuBar(menubar);
 	}
 	
-	
+	/*
+	 * Sets the owner of the current calendar shown. 
+	 */
 	public void setKalenderEier(Ansatt eier){
 		this.kalenderEier=eier;
 	}
+	
+	/*
+	 * Gets the owner of the current calendar shown.
+	 */
 	public Ansatt getKalenderEier(){
 		return kalenderEier;
 	}
+	
+	/*
+	 * Sets the user's username.
+	 */
 	public void setUser(String brukernavn){
 		try {
 			this.User=db.getBestemtAnsatt(brukernavn);
@@ -195,6 +207,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		}
 	}
 	
+	/*
+	 * Gets the user.
+	 */
 	public Ansatt getUser(){
 		if (this.User==null){
 			return null;
@@ -202,6 +217,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		return this.User;
 	}
 	
+	/*
+	 * Initializes the settings of the window.
+	 */
 	public void init(){
 		setMinimumSize(windowSize);
 		setPreferredSize(windowSize);
@@ -210,6 +228,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	/*
+	 * Main method of the program. Opens the window, etc.
+	 */
 	public static void main(String[] args){
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -238,6 +259,19 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			weekview.generateThisWeek(date, month, year);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * Changes the menu buttons for log in and log out when you log in and log out.
+	 */
+	public void loggedIn(boolean b) {
+		if(b){
+			loginItem.setEnabled(false);
+			logoutItem.setEnabled(true);
+		}else{
+			loginItem.setEnabled(true);
+			logoutItem.setEnabled(false);
 		}
 	}
 }
