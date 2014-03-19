@@ -957,10 +957,17 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			personModell.removeElement(eksterneDeltagere.get(i));
 		}
 		//setter rom
-		if(oldAvtale.getRom()!=null){
-			romBox.setSelectedItem(oldAvtale.getRom());
-		}else{
+		if(oldAvtale.getRom().getNavn().equals("0")){
+			egetRomCheckbox.setSelected(true);
+			finnEtRomCheckbox.setSelected(false);
+			egetRomFelt.setEditable(true);
+			romBox.setEnabled(false);
+			romBox.setEnabled(false);
 			egetRomFelt.setText(oldAvtale.getSted());
+		}else{
+			finnEtRomCheckbox.setSelected(true);
+			egetRomCheckbox.setSelected(false);
+			romBox.setSelectedItem(oldAvtale.getRom());
 		}
 		
 	}

@@ -46,7 +46,7 @@ public class AvtalePanel extends JPanel{
 		gbc.gridy=1;
 		add(romLabel,gbc);
 		
-		if(avtale.getRom()==null){
+		if(!avtale.getRom().getNavn().equals("0")){
 			rom=new JLabel(avtale.getRom().getNavn());
 		}else{
 			rom=new JLabel(avtale.getSted());

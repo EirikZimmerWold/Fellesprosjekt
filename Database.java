@@ -114,14 +114,14 @@ public class Database {
 		String sluttTid = avtale.getSluttTid();
 		String adminBrukernavn = avtale.getLeder().getBrukernavn();
 		String sted=null;
-		String rom=null;
+		String rom="0";
 		if(avtale.getRom()!=null){
 			rom = avtale.getRom().getNavn();
-		}else{
+		}else if(avtale.getSted()!=null){
 			sted=avtale.getSted();
 		}
-		query = "INSERT INTO Avtale(avtaleId, beskrivelse, startTid, sluttTid, adminBrukernavn, romNr, sted) VALUES('" 
-		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"','"+sted+"');";
+		query = "INSERT INTO Avtale(avtaleId, beskrivelse, startTid, sluttTid, sted, adminBrukernavn, romNr) VALUES('" 
+		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+"','"+sted+ "','"+ adminBrukernavn +"','"+ rom+"');";
 		st.executeUpdate(query);
 	}
 	
@@ -140,8 +140,10 @@ public class Database {
 			String admin = rs.getString("adminBrukernavn");
 			String rom1 = rs.getString("romNr");
 			String sted=rs.getString("sted");
-			
-			Rom rom = getBestemtRom(rom1);
+			Rom rom=null;
+			if(!rom1.equals("0")){
+				rom = getBestemtRom(rom1);
+			}
 			Ansatt ansatt = getBestemtAnsatt(admin);
 			
 			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, alleDeltagere(id), ansatt, sted);

@@ -77,7 +77,7 @@ public class avtaleinfo extends JPanel {
 	public void settInfo(Avtale avtale){
 		starttid.setText(avtale.getStartTid());
 		sluttid.setText(avtale.getSluttTid());
-		if(avtale.getRom()!=null){
+		if(!avtale.getRom().getNavn().equals("0")){
 			moterom.setText(avtale.getRom().getNavn());
 		}else{
 			moterom.setText(avtale.getSted());
