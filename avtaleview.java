@@ -135,7 +135,6 @@ public class avtaleview extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			nyAvtale na;
 			try {
-
 				na = new nyAvtale(frame);
 				na.pack();
 				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
