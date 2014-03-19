@@ -924,8 +924,39 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		this.dispose();
 	}
 
-	public void endreAvtale(Avtale a) {
+	public void endreAvtale(Avtale a, ProgramFrame frame) throws SQLException {
 		oldAvtale = a;
+		//setter start tid
+		String[] startTid=oldAvtale.getStartTid().split("-");
+		startTidAar.setSelectedItem(startTid[0]);
+		startTidMaaned.setSelectedItem(startTid[1]);
+		startTidDag.setSelectedItem(startTid[2]);
+		startTidKl.setText(startTid[3]);
+		//setter slutt tid
+		String[] sluttTid=oldAvtale.getSluttTid().split("-");
+		sluttTidAar.setSelectedItem(sluttTid[0]);
+		sluttTidMaaned.setSelectedItem(sluttTid[1]);
+		sluttTidDag.setSelectedItem(sluttTid[2]);
+		sluttTidKl.setText(sluttTid[3]);
+		//setter beskrivelse
+		beskrivelseFelt.setText(oldAvtale.getBeskrivelse());
+		//setter deltagere
+		deltagerModell.removeElement(frame.getUser());
+		DefaultListModel deltagere=db.alleDeltagere(oldAvtale.getId());
+		for(int i=0; i<deltagere.getSize();i++){
+			deltagerModell.addElement(deltagere.get(i));
+			personModell.removeElement(deltagere.get(i));
+		}
+		DefaultListModel eksterneDeltagere=db.alleEksterneDeltagere(oldAvtale.getId());
+		for(int i=0; i<eksterneDeltagere.getSize();i++){
+			deltagerModell.addElement(eksterneDeltagere.get(i));
+			personModell.removeElement(eksterneDeltagere.get(i));
+		}
+		//setter rom
+		romBox.setSelectedItem(oldAvtale.getRom());
+		//hvis brukeren har valgt å sette eget rom
+		//egetRomFelt.setText()
+		
 	}
 
 	protected enum Maaned {

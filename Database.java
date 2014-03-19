@@ -421,6 +421,18 @@ public class Database {
 		int bekreftet=rs.getInt("bekreftet");
 		return bekreftet;
 	}
+	
+	public DefaultListModel alleEksterneDeltagere(int avtaleId) throws SQLException{
+		st=c.createStatement();
+		query="SELECT mail FROM EksternBrukerDeltarAvtale WHERE avtaleId='"+avtaleId+"';";
+		rs=st.executeQuery(query);
+		DefaultListModel deltagere=new DefaultListModel();
+		while(rs.next()){
+			String mail=rs.getString("mail");
+			deltagere.addElement(getEksternBruker(mail));
+		}
+		return deltagere;
+	}
 }
 
 
