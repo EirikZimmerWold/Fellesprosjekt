@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-//Denne klassen skal dukke opp når man velger en avtale i ukeview.
+//Denne klassen skal dukke opp nï¿½r man velger en avtale i ukeview.
 //den henter inn avtaleinfo og lager en liste som har alle deltagerene
 //det er 4 knapper. bekreft/Avsla for deltagerne og endre/slette avtale for Leder
 
@@ -41,7 +41,7 @@ public class avtaleview extends JFrame {
 	Database db;
 	ProgramFrame frame;
 	
-	//tar inn avtalen man vil se på
+	//tar inn avtalen man vil se pï¿½
 	public avtaleview(Avtale avtalen, ProgramFrame frame) throws SQLException {
 		this.frame = frame; 
 		avtale = avtalen;
@@ -50,9 +50,14 @@ public class avtaleview extends JFrame {
 		model = new DefaultListModel<Ansatt>();
 		db = new Database();
 		model = db.alleDeltagere(avtale.getId());
+		for(int i=0;i<model.size();i++){
+			Ansatt ansatt = model.get(i);
+			ansatt.setStatus(db.getStatus(avtale.getId(), ansatt.getBrukernavn()));
+		}
 		Deltagere.setModel(model);
-		//maks antall elementer som sees på en gang
+		//maks antall elementer som sees pï¿½ en gang
 		Deltagere.setVisibleRowCount(5);
+		Deltagere.setCellRenderer(new DeltagerRenderer());
 		//scroller
 		rull = new JScrollPane(Deltagere);
 		rull.setPreferredSize(new Dimension(125,100));
@@ -97,7 +102,7 @@ public class avtaleview extends JFrame {
 	}
 	
 	public static void main(String[] args) throws SQLException {
-		//skal nok fjernes i ferdig produkt, kjøres i en superklasse
+		//skal nok fjernes i ferdig produkt, kjï¿½res i en superklasse
 		//JFrame frame = new JFrame();
 		//JPanel panel = new avtaleview(new Avtale("", "", "", new Rom("test",10), new DefaultListModel<Ansatt>(), new Ansatt("testperson")), new ProgramFrame());
 		//frame.add(panel);
@@ -109,7 +114,9 @@ public class avtaleview extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
+				Deltagere.getSelectedValue().setStatus(1);
 				db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 1);
+				
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -121,6 +128,7 @@ public class avtaleview extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
+				Deltagere.getSelectedValue().setStatus(0);
 				db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 0);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -129,7 +137,7 @@ public class avtaleview extends JFrame {
 			//sette valgt deltager til Avslatt status
 		}
 	}
-	//sender avtalen til nyAvtale for å endres
+	//sender avtalen til nyAvtale for ï¿½ endres
 	class EDIT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -161,7 +169,7 @@ public class avtaleview extends JFrame {
 			//fjerner avtalen. den slettes fra alle deltagere sine kalendre (cascade?)
 		}
 	}
-	//sender inn starttiden til Alarmview så man kan sette opp alarm
+	//sender inn starttiden til Alarmview sï¿½ man kan sette opp alarm
 	class ALARM implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {

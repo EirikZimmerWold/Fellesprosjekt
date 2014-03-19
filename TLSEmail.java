@@ -13,16 +13,6 @@ public class TLSEmail {
     Use Authentication: Yes
     Port for TLS/STARTTLS: 587
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		
-		
-		TLSEmail ts = new TLSEmail();
-		ts.sendEmail("pingandhispong@hotmail.com", "Ida");
-		
-		
-	}
 	
 	private String fromEmail = "fpgruppe15@gmail.com"; // requires valid gmal id
 	private String password = "51eppurgpf"; // correct password gmail id

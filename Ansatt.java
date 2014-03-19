@@ -13,6 +13,7 @@ public class Ansatt {
 	private String adresse;
 	private String telefon;
 	private String stilling;
+	private int status;
 	
 	protected Ansatt(String b) {
 		// TODO Auto-generated constructor stub
@@ -82,6 +83,14 @@ public class Ansatt {
 
 	public void setStilling(String stilling) {
 		this.stilling = stilling;
+	}
+
+	public void setStatus(int status){
+		this.status = status;
+	}
+
+	public int getStatus(){
+		return status;
 	}
 	
 	public String toString() {
