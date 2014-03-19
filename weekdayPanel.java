@@ -125,7 +125,7 @@ public class weekdayPanel extends JPanel{
 		fjerneFraListe();
 		String avtaler;
 		if (eier != null){
-			avtaler = db.avtalerPersonErMed(eier);
+			avtaler = db.avtalerPersonErMed2(eier);
 			String [] delt = avtaler.split("-");
 			for (String verdi:delt){
 				if (verdi != ""){

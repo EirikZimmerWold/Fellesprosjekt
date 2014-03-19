@@ -363,6 +363,18 @@ public class Database {
 		}
 		return IDene;
 	}
+	//henter ut alle avtaler for en ansatt som ikke har blitt avslått
+	public String avtalerPersonErMed2(Ansatt ansatt) throws SQLException {
+		st = c.createStatement();
+		String brukernavn = ansatt.getBrukernavn();
+		query = "SELECT avtaleId FROM PersonDeltarAvtale WHERE brukernavn = '"+ brukernavn + "' AND bekreftet != 0;";
+		rs = st.executeQuery(query);
+		String IDene ="";
+		while(rs.next()) {
+			IDene += rs.getString("avtaleId")+ "-";
+		}
+		return IDene;
+	}
 	
 	// sjekker om ekstern bruker finnes i databasen eller ikke
 	public boolean eksternBrukerenEksisterer(String mail) throws SQLException{
