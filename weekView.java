@@ -13,9 +13,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -28,6 +30,9 @@ public class weekView extends JPanel implements ActionListener{
 	private JButton nyAvtaleKnapp, nextButton, backButton;
 	private Calendar cal;
 	private JComboBox kalendere;
+	private JLabel kalendereL;
+	private JButton egenKalender;
+	private Database db;
 
 	private weekdayPanel wkdPanel, wkdPanel2, wkdPanel3, wkdPanel4, wkdPanel5, wkdPanel6, wkdPanel7;
 	
@@ -88,24 +93,24 @@ public class weekView extends JPanel implements ActionListener{
 		
 		wkdPanel.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel.leggeTilAvtale(frame.getUser());
+		wkdPanel.leggeTilAvtale(frame.getKalenderEier());
 		wkdPanel2.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel2.leggeTilAvtale(frame.getUser());
+		wkdPanel2.leggeTilAvtale(frame.getKalenderEier());
 		wkdPanel3.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel3.leggeTilAvtale(frame.getUser());
+		wkdPanel3.leggeTilAvtale(frame.getKalenderEier());
 		wkdPanel4.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel4.leggeTilAvtale(frame.getUser());
+		wkdPanel4.leggeTilAvtale(frame.getKalenderEier());
 		wkdPanel5.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel5.leggeTilAvtale(frame.getUser());
+		wkdPanel5.leggeTilAvtale(frame.getKalenderEier());
 		wkdPanel6.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel6.leggeTilAvtale(frame.getUser());
+		wkdPanel6.leggeTilAvtale(frame.getKalenderEier());
 		wkdPanel7.setDate(getDate(cal));
-		wkdPanel7.leggeTilAvtale(frame.getUser());
+		wkdPanel7.leggeTilAvtale(frame.getKalenderEier());
 	}
 	
 	public String getPanelName(){
@@ -162,9 +167,22 @@ public class weekView extends JPanel implements ActionListener{
 				e1.printStackTrace();
 			}    
     	}
+		if(e.getSource().equals(kalendere)){
+			frame.setKalenderEier((Ansatt) kalendere.getSelectedItem());
+		}
+		if(e.getSource().equals(egenKalender)){
+			frame.setKalenderEier(frame.getUser());
+			setKalender();
+		}
+	}
+	
+	
+	public void setKalender(){
+		kalendere.setSelectedItem(frame.getKalenderEier());
+		kalendere.updateUI();
 	}
 
-	public void initDesign(){
+	public void initDesign() throws SQLException{
 		wkdPanel = new weekdayPanel("Mandag", frame);
 		wkdPanel.setPreferredSize((new Dimension(175,500)));
 		wkdPanel.setMaximumSize((new Dimension(175,500)));
@@ -196,12 +214,29 @@ public class weekView extends JPanel implements ActionListener{
 		nyAvtaleKnapp = new JButton("Ny avtale");
 		nyAvtaleKnapp.addActionListener(this);
 		
+		db = frame.getDB();
+		egenKalender = new JButton("gå til egen kalender");
+		egenKalender.addActionListener(this);
+		kalendereL = new JLabel("se andres Kalendre: ");
+		kalendere = new JComboBox<Ansatt>();
+		DefaultListModel folk = db.getAlleAnsatte();
+		for(int a =0; a < folk.getSize(); a++){
+			kalendere.addItem((folk.getElementAt(a)));
+		}
+		kalendere.addActionListener(this);
+		
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 1;
 		c.gridy = 0;
 		add(nyAvtaleKnapp,c);
+		c.gridx = 2;
+		add(kalendereL, c);
+		c.gridx = 3;
+		add(kalendere, c);
+		c.gridx = 4;
+		add(egenKalender,c);
 		backButton = new JButton("<");
 		c.gridx=0;
 		c.gridy=2;

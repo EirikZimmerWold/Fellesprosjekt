@@ -71,6 +71,7 @@ public class MainPanel extends JPanel {
 		for(Component c : weekPanel.getComponents()){
 			c.setEnabled(true);
 		}
+		weekPanel.setKalender();
 		loggedInLabel.setEnabled(true);
 	}
 	

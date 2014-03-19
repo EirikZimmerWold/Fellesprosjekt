@@ -37,6 +37,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private MainPanel mainPanel;
 	private Database db;
 	private Ansatt User = null;
+	private Ansatt kalenderEier = null;
 	/*
 	 * Konstruktøren. Starter generelt gui med design. 
 	 */	
@@ -103,6 +104,8 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		disconnectNetItem.setEnabled(true);
 		
 		mainPanel.enableComponents();
+		
+		
 	}
 	
 	/*
@@ -164,9 +167,17 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		setJMenuBar(menubar);
 	}
 	
+	
+	public void setKalenderEier(Ansatt eier){
+		this.kalenderEier=eier;
+	}
+	public Ansatt getKalenderEier(){
+		return kalenderEier;
+	}
 	public void setUser(String brukernavn){
 		try {
 			this.User=db.getBestemtAnsatt(brukernavn);
+			kalenderEier = db.getBestemtAnsatt(brukernavn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("setUser() virker ikke");
