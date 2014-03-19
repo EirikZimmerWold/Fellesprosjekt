@@ -403,7 +403,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		// Legger til vert
 
 		try {
-			vert = db.getBestemtAnsatt(frame.getUser().getNavn());
+			vert = db.getBestemtAnsatt(frame.getUser().getBrukernavn());
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
