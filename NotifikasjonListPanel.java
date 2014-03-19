@@ -95,11 +95,10 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 			Avtale avtale=((NotifikasjonPanel)evt.getSource()).getNotifikasjon().getAvtale();
 			avtaleinfo.settInfo(avtale);
 		}
-		else if (evt.getPropertyName()== "bekreftButton"){
-			try {
+		else if (evt.getPropertyName()== "bekreftbutton"){ //bekreft og avslaa knapp
+			try {											//avtalen er bekreftet/avslått i notifikasjonPanel
 				seNotifikasjoner();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
