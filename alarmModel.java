@@ -1,4 +1,4 @@
-package Alarm;
+package Fellesprosjektet;
 
 import java.util.ArrayList;
 

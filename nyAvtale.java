@@ -104,11 +104,12 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	JButton lagreButton;
 	JButton avbrytButton;
 	
-	public nyAvtale() throws SQLException  {
+	public nyAvtale(ProgramFrame frame) throws SQLException  {
 		setLayout(new GridBagLayout());
 		gc = new GridBagConstraints();
 		tid = new GregorianCalendar();
 		db = new Database();
+		this.frame=frame;
 		
 		tidBeskrivelse();
 		deltagerePersonerGrupper();
