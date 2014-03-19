@@ -175,19 +175,16 @@ public class avtaleview extends JFrame {
 	class ALARM implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			/*AlarmView na;
-			try {
-				na = new AlarmView(avtale.getStartTid());
-				na.pack();
-				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				na.setVisible(true);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			alarmController na;
+
+			na = new alarmController(avtale.getStartTid());
+			na.pack();
+			na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			na.setVisible(true);
+
 			//sende til alarmsiden med starttid
 			//alarm(avtale.getStartTid)
-			 */
+			 
 		}
 	}
 }

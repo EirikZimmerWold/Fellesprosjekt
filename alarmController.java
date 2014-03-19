@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class alarmController implements ActionListener {
+public class alarmController extends JFrame implements ActionListener {
 	
 	public static void main(String[] arg0){
 		JFrame frame = new JFrame();
