@@ -5,6 +5,11 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,6 +42,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private MainPanel mainPanel;
 	private Database db;
 	private Ansatt User = null;
+	private GregorianCalendar tid;
 	/*
 	 * Konstruktøren. Starter generelt gui med design. 
 	 */	
@@ -47,6 +53,8 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		db = new Database();
 		
 		mainPanel = new MainPanel(this);
+		
+		tid = new GregorianCalendar();
 		
 		disableComponents();
 		
@@ -88,6 +96,8 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			disableComponents();
 			setUser(null);
 			mainPanel.setCurrUser("");
+			
+			update();
 		}
 	}
 	
@@ -195,7 +205,6 @@ public class ProgramFrame extends JFrame implements ActionListener{
                 try {
 					new ProgramFrame();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
             }
@@ -203,6 +212,20 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	}
 	
 	public void update(){
-		
+		tid.set(Calendar.DAY_OF_WEEK, tid.getFirstDayOfWeek());
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date firstDay = tid.getTime();
+		String fDay = df.format(firstDay);
+		System.out.println(fDay);
+		String[] dates = fDay.split("/");
+	    int date = Integer.parseInt(dates[0]); 
+	    int month = Integer.parseInt(dates[1]);         
+	    int year = Integer.parseInt(dates[2]); 
+	    weekView weekview=mainPanel.getWeekview();
+	    try {
+			weekview.generateThisWeek(date, month, year);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

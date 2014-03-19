@@ -803,6 +803,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 					}
 					//lukker vinduet
 					dispose();
+					frame.update();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

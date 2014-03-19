@@ -50,7 +50,7 @@ public class weekView extends JPanel implements ActionListener{
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Date firstDay = cal.getTime();
 		String fDay = df.format(firstDay);
-		System.out.println(fDay);
+		//System.out.println(fDay);
 		String[] dates = fDay.split("/");
 		
 		int date = Integer.parseInt(dates[0]); //date of this weeks monday

@@ -47,6 +47,8 @@ public class MainPanel extends JPanel {
 	class REFRESH implements ChangeListener{
 		@Override
 		public void stateChanged(ChangeEvent e) {
+			//if(panelTabs.)
+			//frame.update();
 			try {
 				notifikasjonPanel.seNotifikasjoner();
 			} catch (SQLException e1) {
@@ -65,7 +67,11 @@ public class MainPanel extends JPanel {
 			}
 		}
 	}
-
+	
+	public weekView getWeekview(){
+		return this.weekPanel;
+	}
+	
 	public void enableComponents(){
 		panelTabs.setEnabled(true);
 		for(Component c : weekPanel.getComponents()){
