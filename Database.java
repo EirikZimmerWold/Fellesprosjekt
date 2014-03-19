@@ -413,33 +413,6 @@ public class Database {
 		return bekreftet;
 	}
 	
-
-	public void setAlarm(String brukernavn, String tid, int avi) throws SQLException{
-		st = c.createStatement();
-		int varsid = getNyVarselID();
-		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId)" +
-				" VALUES('"+varsid+"','"+tid+"','"+brukernavn+ "', '"+ avi+"') ;";
-		st.executeUpdate(query);
-	}
-	
-	
-	public int getNyVarselID() throws SQLException {
-		st = c.createStatement();
-		query = "SELECT MAX(varselId) FROM Varsel;";
-		st.executeQuery(query);
-		rs = st.getResultSet();
-		int i = -1;
-		while (rs.next()) {
-			i = rs.getInt(1);
-		}
-		return i+1;
-	}
-	public ResultSet getAlarmer(String brukernavn) throws SQLException{
-		st = c.createStatement();
-		query = "SELECT varselTidFoorAvtale FROM Varsel WHERE brukernavn = '"+ brukernavn + "' ;";
-		rs = st.executeQuery(query);
-		return rs;
-
 	public DefaultListModel alleEksterneDeltagere(int avtaleId) throws SQLException{
 		st=c.createStatement();
 		query="SELECT mail FROM EksternBrukerDeltarAvtale WHERE avtaleId='"+avtaleId+"';";
