@@ -24,16 +24,16 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	/*
 	 * Div variabler. 
 	 */
-	private final Dimension windowSize = new Dimension(800,650); 
+	private final Dimension windowSize = new Dimension(1350,650); 
 	private JMenuBar menubar;
 	private JMenu fileMenu;
-	private JMenu netMenu;
+	//private JMenu netMenu;
 	private JMenuItem exitItem;
 	private JMenuItem loginItem;
 	private JMenuItem logoutItem;
-	private JMenuItem acceptNetItem;
+	/*private JMenuItem acceptNetItem;
 	private JMenuItem connectNetItem;
-	private JMenuItem disconnectNetItem;
+	private JMenuItem disconnectNetItem;*/
 	private MainPanel mainPanel;
 	private Database db;
 	private Ansatt User = null;
@@ -98,9 +98,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	public void enableComponents(){
 		logoutItem.setEnabled(true);
 		loginItem.setEnabled(false);
-		acceptNetItem.setEnabled(true);
+		/*acceptNetItem.setEnabled(true);
 		connectNetItem.setEnabled(true);
-		disconnectNetItem.setEnabled(true);
+		disconnectNetItem.setEnabled(true);*/
 		
 		mainPanel.enableComponents();
 	}
@@ -112,9 +112,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	public void disableComponents(){
 		logoutItem.setEnabled(false);
 		loginItem.setEnabled(true);
-		acceptNetItem.setEnabled(false);
+		/*acceptNetItem.setEnabled(false);
 		connectNetItem.setEnabled(false);
-		disconnectNetItem.setEnabled(false);
+		disconnectNetItem.setEnabled(false);*/
 		
 		mainPanel.disableComponents();
 		
@@ -124,7 +124,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		menubar = new JMenuBar();
 		
 		fileMenu = new JMenu("File");
-		netMenu = new JMenu("Net");
+		//netMenu = new JMenu("Net");
 		
 		exitItem = new JMenuItem("Exit");
 		exitItem.setToolTipText("Exits the application");
@@ -147,7 +147,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		fileMenu.add(logoutItem);
 		fileMenu.add(exitItem);
 		
-		acceptNetItem = new JMenuItem("Accept incoming");
+		/*acceptNetItem = new JMenuItem("Accept incoming");
 		acceptNetItem.setToolTipText("Accept incoming connections");
 		connectNetItem = new JMenuItem("Connect");
 		connectNetItem.setToolTipText("Connect to another user");
@@ -156,10 +156,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		
 		netMenu.add(acceptNetItem);
 		netMenu.add(connectNetItem);
-		netMenu.add(disconnectNetItem);
+		netMenu.add(disconnectNetItem);*/
 		
 		menubar.add(fileMenu);
-		menubar.add(netMenu);
+		//menubar.add(netMenu);
 		
 		setJMenuBar(menubar);
 	}
@@ -167,6 +167,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	public void setUser(String brukernavn){
 		try {
 			this.User=db.getBestemtAnsatt(brukernavn);
+			mainPanel.setCurrUser(this.User.getBrukernavn());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("setUser() virker ikke");
