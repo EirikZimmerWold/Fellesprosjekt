@@ -91,11 +91,12 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName() =="INFO_PROPERTY"){
+		if (evt.getPropertyName() =="infoButton"){
 			Avtale avtale=((NotifikasjonPanel)evt.getSource()).getNotifikasjon().getAvtale();
 			avtaleinfo.settInfo(avtale);
+			System.out.println("info");
 		}
-		else if (evt.getPropertyName()== "UPDATE_PROPERTY"){
+		else if (evt.getPropertyName()== "bekreftButton"){
 			try {
 				seNotifikasjoner();
 			} catch (SQLException e) {
