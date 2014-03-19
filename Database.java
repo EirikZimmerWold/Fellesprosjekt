@@ -337,11 +337,11 @@ public class Database {
 		while(rs3.next()) {
 			String st = (rs3.getString("startTid"));
 			avtale.setStartTid(st);
-			String sl = (rs3.getString("startTid"));
+			String sl = (rs3.getString("sluttTid"));
 			avtale.setSluttTid(sl);
-			String besk = (rs3.getString("startTid"));
+			String besk = (rs3.getString("beskrivelse"));
 			avtale.setBeskrivelse(besk);
-			Rom rom = getBestemtRom(rs3.getString("startTid"));
+			Rom rom = getBestemtRom(rs3.getString("romNr"));
 			avtale.setRom(rom);
 			Ansatt leder = getBestemtAnsatt(rs3.getString("adminBrukernavn"));
 			avtale.setLeder(leder);

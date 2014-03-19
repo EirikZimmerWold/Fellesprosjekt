@@ -32,6 +32,7 @@ public class AvtalePanel extends JPanel{
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		gbc.insets=new Insets(5,5,5,5);
 		this.setPreferredSize(new Dimension(150,150));
+		
 		String [] ST = avtale.getStartTid().split("-");
 		String [] SL = avtale.getSluttTid().split("-");
 		tid=new JLabel(ST[3]+" - "+SL[3]);

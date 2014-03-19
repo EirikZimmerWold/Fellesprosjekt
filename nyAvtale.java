@@ -806,6 +806,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 							}
 						}
 					}
+					db.setBekreftetStatus(vert, avtale, 1);
 					//lukker vinduet
 					dispose();
 					frame.update();
