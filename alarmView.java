@@ -1,4 +1,4 @@
-package Alarm;
+package Fellesprosjektet;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

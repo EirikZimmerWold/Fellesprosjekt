@@ -118,7 +118,7 @@ public class weekView extends JPanel implements ActionListener{
 		if(e.getSource().equals(nyAvtaleKnapp)){
 			nyAvtale na;
 			try {
-				na = new nyAvtale();
+				na = new nyAvtale(frame);
 				na.pack();
 				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				na.setVisible(true);
