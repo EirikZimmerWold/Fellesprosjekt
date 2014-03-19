@@ -135,7 +135,6 @@ public class avtaleview extends JFrame {
 				}
 				
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//sette valgt deltager til bekreftet status
@@ -157,7 +156,6 @@ public class avtaleview extends JFrame {
 					revalidate();
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//sette valgt deltager til Avslatt status
@@ -176,7 +174,6 @@ public class avtaleview extends JFrame {
 					na.setVisible(true);
 					na.endreAvtale(avtale, frame);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -192,7 +189,6 @@ public class avtaleview extends JFrame {
 					dispose();
 					frame.update();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}

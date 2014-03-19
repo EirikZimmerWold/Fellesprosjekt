@@ -113,9 +113,15 @@ public class Database {
 		String startTid = avtale.getStartTid();
 		String sluttTid = avtale.getSluttTid();
 		String adminBrukernavn = avtale.getLeder().getBrukernavn();
-		String rom = avtale.getRom().getNavn();
-		query = "INSERT INTO Avtale(avtaleId, beskrivelse, startTid, sluttTid, adminBrukernavn, romNr) VALUES('" 
-		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"');";
+		String sted=null;
+		String rom=null;
+		if(avtale.getRom()!=null){
+			rom = avtale.getRom().getNavn();
+		}else{
+			sted=avtale.getSted();
+		}
+		query = "INSERT INTO Avtale(avtaleId, beskrivelse, startTid, sluttTid, adminBrukernavn, romNr, sted) VALUES('" 
+		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"','"+sted+"');";
 		st.executeUpdate(query);
 	}
 	
@@ -133,11 +139,12 @@ public class Database {
 			String sluttTid = rs.getString("sluttTid");
 			String admin = rs.getString("adminBrukernavn");
 			String rom1 = rs.getString("romNr");
+			String sted=rs.getString("sted");
 			
 			Rom rom = getBestemtRom(rom1);
 			Ansatt ansatt = getBestemtAnsatt(admin);
 			
-			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, alleDeltagere(id), ansatt);
+			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, alleDeltagere(id), ansatt, sted);
 			result.addElement((Avtale) avtale);
 			
 		}
@@ -324,7 +331,7 @@ public class Database {
 		query = "SELECT * FROM Avtale WHERE AvtaleId='"+avtaleid+"';";
 		rs3 = st.executeQuery(query);
 	
-		Avtale avtale = new Avtale("","","",new Rom("midlertidig"),new DefaultListModel(),new Ansatt("midlertidig"));
+		Avtale avtale = new Avtale("","","",new Rom("midlertidig"),new DefaultListModel(),new Ansatt("midlertidig"),"");
 		while(rs3.next()) {
 			String st = (rs3.getString("startTid"));
 			avtale.setStartTid(st);
@@ -339,6 +346,7 @@ public class Database {
 			DefaultListModel model = alleDeltagere(avtaleid);
 			avtale.setModel(model);
 			avtale.setId(avtaleid);
+			avtale.setSted(rs3.getString("sted"));
 		}	
 		return avtale;
 	}
