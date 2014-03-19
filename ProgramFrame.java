@@ -43,6 +43,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private Database db;
 	private Ansatt User = null;
 	private Ansatt kalenderEier = null;
+	
 
 	/*
 	 * Konstruktøren. Starter generelt gui med design. 
