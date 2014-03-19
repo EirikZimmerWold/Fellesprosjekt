@@ -72,6 +72,9 @@ public class avtaleview extends JFrame {
 		endre.addActionListener(new EDIT());
 		slette = new JButton("slett event");
 		slette.addActionListener(new SLETT());
+		if(frame.getUser().getBrukernavn().equals(avtale.getLeder())){
+			
+		}
 		alarm = new JButton("Sett Alarm");
 		alarm.addActionListener(new ALARM());
 		//panellet med informasjonen om avtalen
@@ -96,12 +99,14 @@ public class avtaleview extends JFrame {
 		c.gridy=4;
 		add(Avsla, c);
 		c.gridx = 2;
-		c.gridy = 0;
-		add(endre, c);
 		c.gridy =1;
 		add(alarm,c);
-		c.gridy =2;
-		add(slette, c);
+		if(frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
+			c.gridy = 0;
+			add(endre, c);
+			c.gridy =2;
+			add(slette, c);
+		}
 	}
 	
 	public static void main(String[] args) throws SQLException {
