@@ -111,5 +111,9 @@ public class MainPanel extends JPanel {
 			e.printStackTrace();
 		}
 	}
+	
+	public void byttTilWeekView(){
+		panelTabs.setSelectedComponent(weekPanel);
+	}
 }
 

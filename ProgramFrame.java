@@ -97,7 +97,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			disableComponents();
 			setUser(null);
 			mainPanel.setCurrUser("");
-			
+			mainPanel.byttTilWeekView();
 			update();
 		}
 	}
