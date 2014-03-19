@@ -77,7 +77,7 @@ public class alarmController extends JFrame implements ActionListener {
 				if (dag<=0){
 					dag=1;
 				}
-				tid = (dag + "-"+ time + "-" + minutt);
+				tid = (dag + "-"+ time + ":" + minutt);
 				try {
 					db.setAlarm(frame.getUser().getBrukernavn(), tid, avtale.getId());
 				} catch (SQLException e1) {

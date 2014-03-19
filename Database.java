@@ -4,6 +4,7 @@ package Fellesprosjektet;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -443,11 +444,27 @@ public class Database {
 		}
 		return i+1;
 	}
-	public ResultSet getAlarmer(String brukernavn) throws SQLException{
+	public ArrayList<String> getAlarmer(String brukernavn) throws SQLException{
 		st = c.createStatement();
 		query = "SELECT varselTidFoorAvtale FROM Varsel WHERE brukernavn = '"+ brukernavn + "' ;";
 		rs = st.executeQuery(query);
-		return rs;
+		ArrayList<String> resultat = null;
+		while (rs.next()){
+			resultat.add(rs.getString("varselTidFoorAvtale"));
+		}
+		return resultat;
+	}
+	
+	public int finnAvtale(String varselTid, String Brukernavn) throws SQLException{
+		st = c.createStatement();
+		query = "SELECT avtaleId FROM Varsel WHERE varselTidFoorAvtale = '"+ varselTid+
+				"' AND brukernavn= '"+Brukernavn+"' ;";
+		rs = st.executeQuery(query);
+		int svar = 0;
+		while (rs.next()){
+			svar =rs.getInt("avtaleId");
+		}
+		return svar;
 	}
 	
 	public DefaultListModel alleEksterneDeltagere(int avtaleId) throws SQLException{
