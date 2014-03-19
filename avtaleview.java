@@ -39,11 +39,11 @@ public class avtaleview extends JFrame {
 	JLabel DeltagereL;
 	Avtale avtale;
 	Database db;
-	ProgramFrame PF;
+	ProgramFrame frame;
 	
 	//tar inn avtalen man vil se på
 	public avtaleview(Avtale avtalen, ProgramFrame frame) throws SQLException {
-		PF = frame; 
+		this.frame = frame; 
 		avtale = avtalen;
 		Deltagere = new JList<Ansatt>();
 		DeltagereL = new JLabel("Deltagere: ");
@@ -135,7 +135,9 @@ public class avtaleview extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			nyAvtale na;
 			try {
-				na = new nyAvtale(PF);
+
+				na = new nyAvtale(frame);
+				
 				na.pack();
 				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				na.setVisible(true);
@@ -150,7 +152,7 @@ public class avtaleview extends JFrame {
 	class SLETT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (PF.getUser() == avtale.getLeder()){
+			if (frame.getUser() == avtale.getLeder()){
 				try {
 					db.fjerneAvtale(avtale);
 				} catch (SQLException e1) {

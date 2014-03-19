@@ -201,4 +201,8 @@ public class ProgramFrame extends JFrame implements ActionListener{
             }
         });
 	}
+	
+	public void update(){
+		
+	}
 }
