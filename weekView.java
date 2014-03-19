@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 
-public class weekView extends JPanel implements ActionListener{
+public class weekView extends JPanel implements ActionListener, ItemListener{
 	
 	private ProgramFrame frame;
 	private String panelName = "Kalender";
@@ -167,18 +169,34 @@ public class weekView extends JPanel implements ActionListener{
 				e1.printStackTrace();
 			}    
     	}
-		if(e.getSource().equals(kalendere)){
-			frame.setKalenderEier((Ansatt) kalendere.getSelectedItem());
-		}
 		if(e.getSource().equals(egenKalender)){
 			frame.setKalenderEier(frame.getUser());
 			setKalender();
 		}
 	}
 	
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if(e.getSource().equals(kalendere)){
+			frame.setKalenderEier((Ansatt) kalendere.getSelectedItem());
+			Ansatt ansatt = (Ansatt)kalendere.getSelectedItem();
+			if(ansatt != null){	
+				if(!frame.getUser().getNavn().equals(ansatt.getNavn())){
+					frame.disableComponents();
+					this.backButton.setEnabled(true);
+					this.nextButton.setEnabled(true);
+					this.egenKalender.setEnabled(true);
+					this.kalendere.setEnabled(true);
+				}else{
+					frame.enableComponents();
+				}
+			}
+			setKalender();
+		}
+	}
 	
 	public void setKalender(){
-		kalendere.setSelectedItem(frame.getKalenderEier());
+		//kalendere.setSelectedItem(frame.getKalenderEier());
 		kalendere.updateUI();
 	}
 
@@ -215,7 +233,7 @@ public class weekView extends JPanel implements ActionListener{
 		nyAvtaleKnapp.addActionListener(this);
 		
 		db = frame.getDB();
-		egenKalender = new JButton("gå til egen kalender");
+		egenKalender = new JButton("gï¿½ til egen kalender");
 		egenKalender.addActionListener(this);
 		kalendereL = new JLabel("se andres Kalendre: ");
 		kalendere = new JComboBox<Ansatt>();
@@ -223,8 +241,7 @@ public class weekView extends JPanel implements ActionListener{
 		for(int a =0; a < folk.getSize(); a++){
 			kalendere.addItem((folk.getElementAt(a)));
 		}
-		kalendere.addActionListener(this);
-		
+		kalendere.addItemListener(this);
 
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -273,4 +290,5 @@ public class weekView extends JPanel implements ActionListener{
 		nextButton.addActionListener(this);
 		backButton.addActionListener(this);
 	}
+
 }
