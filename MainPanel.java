@@ -47,13 +47,14 @@ public class MainPanel extends JPanel {
 	class REFRESH implements ChangeListener{
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			//if(panelTabs.)
-			//frame.update();
-			try {
-				notifikasjonPanel.seNotifikasjoner();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if(panelTabs.getSelectedComponent()==weekPanel){
+				frame.update();
+			}else if(panelTabs.getSelectedComponent()==notifikasjonPanel){
+				try {
+					notifikasjonPanel.seNotifikasjoner();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
 			//sette valgt deltager til bekreftet status
 		}
