@@ -413,6 +413,7 @@ public class Database {
 		return bekreftet;
 	}
 	
+
 	public void setAlarm(String brukernavn, String tid, int avi) throws SQLException{
 		st = c.createStatement();
 		int varsid = getNyVarselID();
@@ -438,6 +439,7 @@ public class Database {
 		query = "SELECT varselTidFoorAvtale FROM Varsel WHERE brukernavn = '"+ brukernavn + "' ;";
 		rs = st.executeQuery(query);
 		return rs;
+
 	public DefaultListModel alleEksterneDeltagere(int avtaleId) throws SQLException{
 		st=c.createStatement();
 		query="SELECT mail FROM EksternBrukerDeltarAvtale WHERE avtaleId='"+avtaleId+"';";
