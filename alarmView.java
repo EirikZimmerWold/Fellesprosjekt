@@ -43,7 +43,7 @@ public class alarmView extends JPanel {
 			
 			startTimeLabel = new JLabel();
 
-			String[] hour = {"15 min", "30 min", "1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "1 day", "2 days", "1 week"};
+			String[] hour = {"5 min", "10 min", "15 min", "30 min", "1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "1 day", "2 days", "1 week"};
 			endHour = new JComboBox(hour);
 			confirmButton = new JButton();
 			confirmButton.setText("Confirm");

@@ -8,14 +8,14 @@ import javax.swing.JPanel;
 
 public class alarmController extends JFrame implements ActionListener {
 	
-	public static void main(String[] arg0){
+/*	public static void main(String[] arg0){
 		JFrame frame = new JFrame();
 		frame.setSize(400, 200);
 		alarmController ac = new alarmController("2014-March-13-16:10");
 		frame.add(ac.view);
 		frame.setVisible(true);
 
-	}
+	}*/
 
 	// Fields
 		private alarmModel model;
@@ -29,6 +29,7 @@ public class alarmController extends JFrame implements ActionListener {
 			System.out.println(model.getHour());
 			view = new alarmView();
 			view.addButtonsListener(this);
+			add(view);
 			this.updateUI();			
 		}
 
