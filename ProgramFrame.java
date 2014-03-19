@@ -169,10 +169,14 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			this.User=db.getBestemtAnsatt(brukernavn);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("setUser() virker ikke");
 		}
 	}
 	
 	public Ansatt getUser(){
+		if (this.User==null){
+			return null;
+		}
 		return this.User;
 	}
 	

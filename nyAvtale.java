@@ -401,14 +401,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    add(deltagereLabel, gc);
 	    
 		// Legger til vert
-
-		try {
-			vert = db.getBestemtAnsatt(frame.getUser().getBrukernavn());
-		} catch (SQLException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-			vert = new Ansatt("Dette gikk ikke");
-		}
+		vert = frame.getUser();
 	    
 		deltagerModell = new DefaultListModel();
 		deltagerModell.addElement(vert);
