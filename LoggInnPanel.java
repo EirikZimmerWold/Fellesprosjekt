@@ -104,6 +104,7 @@ public class LoggInnPanel extends JPanel implements ActionListener, KeyListener{
 				frame.getMainPanel().setCurrUser(brukernavn);
 				frame.setUser(brukernavn);
 				frame.update();
+				frame.loggedIn(true);
 			}else{
 				JOptionPane.showMessageDialog(popUpWithMessage, message);
 			}

@@ -162,16 +162,18 @@ public class avtaleview extends JFrame {
 	class EDIT implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			nyAvtale na;
-			try {
-				na = new nyAvtale(frame);
-				na.pack();
-				na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				na.setVisible(true);
-				na.endreAvtale(avtale);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if(frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
+				nyAvtale na;
+				try {
+					na = new nyAvtale(frame);
+					na.pack();
+					na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					na.setVisible(true);
+					na.endreAvtale(avtale, frame);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	}
