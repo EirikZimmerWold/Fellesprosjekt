@@ -60,6 +60,9 @@ public class avtaleview extends JFrame {
 		Deltagere.setCellRenderer(new DeltagerRenderer());
 		//scroller
 		rull = new JScrollPane(Deltagere);
+		if(!frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
+			Deltagere.disable();
+		}
 		rull.setPreferredSize(new Dimension(125,100));
 		Bekreft = new JButton("Bekreft");
 		Bekreft.addActionListener(new OK());
@@ -114,8 +117,17 @@ public class avtaleview extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Deltagere.getSelectedValue().setStatus(1);
-				db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 1);
+				if(avtale.getLeder().getBrukernavn().equals(frame.getUser().getBrukernavn())){
+					Deltagere.getSelectedValue().setStatus(1);
+					db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 1);
+					repaint();
+					revalidate();
+				}else{
+					frame.getUser().setStatus(1);
+					db.setBekreftetStatus(frame.getUser(),avtale, 1);
+					repaint();
+					revalidate();
+				}
 				
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -128,8 +140,17 @@ public class avtaleview extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				Deltagere.getSelectedValue().setStatus(0);
-				db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 0);
+				if(frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
+					Deltagere.getSelectedValue().setStatus(0);
+					db.setBekreftetStatus(Deltagere.getSelectedValue(),avtale, 0);
+					repaint();
+					revalidate();
+				}else{
+					frame.getUser().setStatus(0);
+					db.setBekreftetStatus(frame.getUser(), avtale, 0);
+					repaint();
+					revalidate();
+				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
