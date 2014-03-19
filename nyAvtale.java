@@ -440,6 +440,14 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	    
 		personModell = db.getAlleAnsatte();
 	    //personModell = new DefaultListModel();
+		
+		for (int t = 0; t < personModell.getSize(); t++){
+			Ansatt aaa =(Ansatt) personModell.getElementAt(t);
+			if (vert.getBrukernavn().equals(aaa.getBrukernavn())){
+				personModell.removeElement(aaa);
+				t = personModell.getSize() +1;
+			}
+		}
 		personerList = new JListScroll(personModell);
 	    gc.weightx = 0.5;
 	    gc.gridwidth = 1;
