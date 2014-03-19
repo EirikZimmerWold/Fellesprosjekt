@@ -18,7 +18,7 @@ public class TLSEmail {
 	private String password = "51eppurgpf"; // correct password gmail id
 	private String toEmail; // any email id
 	
-	public void sendEmail(String toemail, String byUsername){
+	public void sendEmail(String toemail, String byUsername, String hostMail){
 		toEmail = toemail;
 		
 		Properties prop = new Properties();
@@ -37,7 +37,7 @@ public class TLSEmail {
 		
 		Session session = Session.getInstance(prop, auth);
 		// change the value of subject and body as you want
-		String body = "Du har blitt til en avtale av: "+ byUsername + "\n" +"Svar p� invitasjonen til: " + toemail;
+		String body = "Du har blitt til en avtale av: "+ byUsername + "\n" +"Svar p� invitasjonen til: " + hostMail;
 		EmailHandlerUtil.sendEmail(session, toEmail, "M�teinvitasjon", body);
 	}
 

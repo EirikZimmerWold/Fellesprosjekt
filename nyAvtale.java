@@ -799,8 +799,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 						}else{//deltageren er eksternbruker
 							String invitert = ((EksternBruker) deltagerModell.get(a)).getMail();
 							try {
-								((Database) db).setPersonDeltarAvtale(invitert, avtale.getId());
-								emailHandler.sendEmail(invitert, vert.getNavn());
+								((Database) db).setEksternBrukerDeltar(invitert, avtale.getId());
+								emailHandler.sendEmail(invitert, vert.getNavn(),vert.getEmail());
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
