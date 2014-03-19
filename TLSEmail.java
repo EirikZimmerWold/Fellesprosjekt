@@ -1,4 +1,4 @@
-package EmailHandler;
+package Fellesprosjektet;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -47,8 +47,8 @@ public class TLSEmail {
 		
 		Session session = Session.getInstance(prop, auth);
 		// change the value of subject and body as you want
-		String body = "Du har blitt til en avtale av: "+ byUsername + "\n" +"Svar pŒ invitasjonen til: " + toemail;
-		EmailHandlerUtil.sendEmail(session, toEmail, "M¿teinvitasjon", body);
+		String body = "Du har blitt til en avtale av: "+ byUsername + "\n" +"Svar pï¿½ invitasjonen til: " + toemail;
+		EmailHandlerUtil.sendEmail(session, toEmail, "Mï¿½teinvitasjon", body);
 	}
 
 }

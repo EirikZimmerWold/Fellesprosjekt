@@ -1,4 +1,4 @@
-package EmailHandler;
+package Fellesprosjektet;
 
 import java.util.Date;
 
