@@ -40,6 +40,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	Avtale oldAvtale = null;
 	ProgramFrame frame;
 	
+	TLSEmail emailHandler;
+	
 	//Starttid
 	JLabel startTidLabel;
 	JComboBox startTidDag;
@@ -110,6 +112,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		tid = new GregorianCalendar();
 		db = new Database();
 		this.frame=frame;
+		
+		emailHandler = new TLSEmail();
 		
 		tidBeskrivelse();
 		deltagerePersonerGrupper();
@@ -764,8 +768,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//ToDo: nyAvtale() skal også fungere som endreAvtale(), slik at når man trykker på "lagre" må det sjekkes om en avtale opprettes
-				// eller oppdateres.Dersom den oppdateres må den gamle slettes og en ny, oppdatert, lages.
+				//ToDo: nyAvtale() skal ogsï¿½ fungere som endreAvtale(), slik at nï¿½r man trykker pï¿½ "lagre" mï¿½ det sjekkes om en avtale opprettes
+				// eller oppdateres.Dersom den oppdateres mï¿½ den gamle slettes og en ny, oppdatert, lages.
 				
 				
 				// finner lagrede felter : start- og sluttid.
@@ -796,6 +800,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 							String invitert = ((EksternBruker) deltagerModell.get(a)).getMail();
 							try {
 								((Database) db).setPersonDeltarAvtale(invitert, avtale.getId());
+								emailHandler.sendEmail(invitert, vert.getNavn());
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
