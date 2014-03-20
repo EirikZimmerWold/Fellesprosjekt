@@ -783,7 +783,11 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 						db.fjerneAvtale(oldAvtale);
 					}
 					// oppretter ny avtale med de feltene som er fylt inn i GUI
-					avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert);
+					if(finnEtRomCheckbox.isSelected()){
+						avtale = new Avtale(st, sl, beskrivelseFelt.getText(), (Rom) romBox.getSelectedItem(), deltagerModell, vert, null);
+					}else{
+						avtale = new Avtale(st, sl, beskrivelseFelt.getText(), null, deltagerModell, vert, egetRomFelt.getText());
+					}
 					// legger til avtalen i databasen
 					db.setNyAvtale(avtale);
 					//Inviterer alle deltagerne
@@ -953,9 +957,18 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			personModell.removeElement(eksterneDeltagere.get(i));
 		}
 		//setter rom
-		romBox.setSelectedItem(oldAvtale.getRom());
-		//hvis brukeren har valgt å sette eget rom
-		//egetRomFelt.setText()
+		if(oldAvtale.getRom().getNavn().equals("0")){
+			egetRomCheckbox.setSelected(true);
+			finnEtRomCheckbox.setSelected(false);
+			egetRomFelt.setEditable(true);
+			romBox.setEnabled(false);
+			romBox.setEnabled(false);
+			egetRomFelt.setText(oldAvtale.getSted());
+		}else{
+			finnEtRomCheckbox.setSelected(true);
+			egetRomCheckbox.setSelected(false);
+			romBox.setSelectedItem(oldAvtale.getRom());
+		}
 		
 	}
 

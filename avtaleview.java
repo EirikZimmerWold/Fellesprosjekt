@@ -72,6 +72,9 @@ public class avtaleview extends JFrame {
 		endre.addActionListener(new EDIT());
 		slette = new JButton("slett event");
 		slette.addActionListener(new SLETT());
+		if(frame.getUser().getBrukernavn().equals(avtale.getLeder())){
+			
+		}
 		alarm = new JButton("Sett Alarm");
 		alarm.addActionListener(new ALARM());
 		//panellet med informasjonen om avtalen
@@ -96,12 +99,14 @@ public class avtaleview extends JFrame {
 		c.gridy=4;
 		add(Avsla, c);
 		c.gridx = 2;
-		c.gridy = 0;
-		add(endre, c);
 		c.gridy =1;
 		add(alarm,c);
-		c.gridy =2;
-		add(slette, c);
+		if(frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
+			c.gridy = 0;
+			add(endre, c);
+			c.gridy =2;
+			add(slette, c);
+		}
 	}
 	
 	public static void main(String[] args) throws SQLException {
@@ -130,7 +135,6 @@ public class avtaleview extends JFrame {
 				}
 				
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//sette valgt deltager til bekreftet status
@@ -152,7 +156,6 @@ public class avtaleview extends JFrame {
 					revalidate();
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//sette valgt deltager til Avslatt status
@@ -171,7 +174,6 @@ public class avtaleview extends JFrame {
 					na.setVisible(true);
 					na.endreAvtale(avtale, frame);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -187,7 +189,6 @@ public class avtaleview extends JFrame {
 					dispose();
 					frame.update();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -200,7 +201,7 @@ public class avtaleview extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			alarmController na;
 
-			na = new alarmController(avtale.getStartTid());
+			na = new alarmController(avtale, frame);
 			na.pack();
 			na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			na.setVisible(true);

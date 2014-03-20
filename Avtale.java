@@ -13,8 +13,9 @@ public class Avtale {
 	private Ansatt leder;
 	private DefaultListModel model;
 	private Database db;
+	private String sted;
 	
-	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel deltagere, Ansatt leder) throws SQLException {
+	public Avtale(String st, String sl, String besk, Rom r, DefaultListModel deltagere, Ansatt leder, String sted) throws SQLException {
 		/*
 		 * Dette kan brukes dersom tid skal hentes ut av databasen!
 		 * 
@@ -36,6 +37,7 @@ public class Avtale {
 		this.rom = r;
 		model = deltagere;
 		this.leder=leder;
+		this.sted=sted;
 		
 		db = new Database();
 		this.id = db.getNyAvtaleID();
@@ -102,5 +104,11 @@ public class Avtale {
 	}
 	public DefaultListModel getModel(){
 		return model;
+	}
+	public void setSted(String sted){
+		this.sted=sted;
+	}
+	public String getSted(){
+		return this.sted;
 	}
 }

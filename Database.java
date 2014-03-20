@@ -4,6 +4,7 @@ package Fellesprosjektet;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -113,9 +114,15 @@ public class Database {
 		String startTid = avtale.getStartTid();
 		String sluttTid = avtale.getSluttTid();
 		String adminBrukernavn = avtale.getLeder().getBrukernavn();
-		String rom = avtale.getRom().getNavn();
-		query = "INSERT INTO Avtale(avtaleId, beskrivelse, startTid, sluttTid, adminBrukernavn, romNr) VALUES('" 
-		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+ "','"+ adminBrukernavn +"','"+ rom+"');";
+		String sted=null;
+		String rom="0";
+		if(avtale.getRom()!=null){
+			rom = avtale.getRom().getNavn();
+		}else if(avtale.getSted()!=null){
+			sted=avtale.getSted();
+		}
+		query = "INSERT INTO Avtale(avtaleId, beskrivelse, startTid, sluttTid, sted, adminBrukernavn, romNr) VALUES('" 
+		+id+"','"+beskrivelse+ "','" +startTid+ "','"+ sluttTid+"','"+sted+ "','"+ adminBrukernavn +"','"+ rom+"');";
 		st.executeUpdate(query);
 	}
 	
@@ -133,11 +140,14 @@ public class Database {
 			String sluttTid = rs.getString("sluttTid");
 			String admin = rs.getString("adminBrukernavn");
 			String rom1 = rs.getString("romNr");
-			
-			Rom rom = getBestemtRom(rom1);
+			String sted=rs.getString("sted");
+			Rom rom=null;
+			if(!rom1.equals("0")){
+				rom = getBestemtRom(rom1);
+			}
 			Ansatt ansatt = getBestemtAnsatt(admin);
 			
-			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, alleDeltagere(id), ansatt);
+			Avtale avtale = new Avtale(startTid, sluttTid, beskrivelse, rom, alleDeltagere(id), ansatt, sted);
 			result.addElement((Avtale) avtale);
 			
 		}
@@ -294,15 +304,6 @@ public class Database {
 		
 	}
 	
-	//setter inn varsel i databasen
-	public void setVarsel(Avtale avtale, int varseltidFoorAvtale, Ansatt ansatt) throws SQLException {
-		st = c.createStatement();
-		int id = avtale.getId();
-		String brukernavn = ansatt.getBrukernavn();
-		int varselId = 45;
-		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId) VALUES('"+varselId+"','"+varseltidFoorAvtale+"','"+brukernavn+"','"+id+"');";
-		st.executeUpdate(query);
-	}
 	
 	//henter passordet til avtalen
 	public String getPassord(String brukernavn) throws SQLException{
@@ -333,7 +334,7 @@ public class Database {
 		query = "SELECT * FROM Avtale WHERE AvtaleId='"+avtaleid+"';";
 		rs3 = st.executeQuery(query);
 	
-		Avtale avtale = new Avtale("","","",new Rom("midlertidig"),new DefaultListModel(),new Ansatt("midlertidig"));
+		Avtale avtale = new Avtale("","","",new Rom("midlertidig"),new DefaultListModel(),new Ansatt("midlertidig"),"");
 		while(rs3.next()) {
 			String st = (rs3.getString("startTid"));
 			avtale.setStartTid(st);
@@ -348,6 +349,7 @@ public class Database {
 			DefaultListModel model = alleDeltagere(avtaleid);
 			avtale.setModel(model);
 			avtale.setId(avtaleid);
+			avtale.setSted(rs3.getString("sted"));
 		}	
 		return avtale;
 	}
@@ -420,6 +422,49 @@ public class Database {
 		rs.next();
 		int bekreftet=rs.getInt("bekreftet");
 		return bekreftet;
+	}
+	
+	public void setAlarm(String brukernavn, String tid, int avi) throws SQLException{
+		st = c.createStatement();
+		int varsid = getNyVarselID();
+		query = "INSERT INTO Varsel(varselId, varselTidFoorAvtale, brukernavn, avtaleId)" +
+				" VALUES('"+varsid+"','"+tid+"','"+brukernavn+ "', '"+ avi+"') ;";
+		st.executeUpdate(query);
+	}
+	
+	
+	public int getNyVarselID() throws SQLException {
+		st = c.createStatement();
+		query = "SELECT MAX(varselId) FROM Varsel;";
+		st.executeQuery(query);
+		rs = st.getResultSet();
+		int i = -1;
+		while (rs.next()) {
+			i = rs.getInt(1);
+		}
+		return i+1;
+	}
+	public ArrayList<String> getAlarmer(String brukernavn) throws SQLException{
+		st = c.createStatement();
+		query = "SELECT varselTidFoorAvtale FROM Varsel WHERE brukernavn = '"+ brukernavn + "' ;";
+		rs = st.executeQuery(query);
+		ArrayList<String> resultat = null;
+		while (rs.next()){
+			resultat.add(rs.getString("varselTidFoorAvtale"));
+		}
+		return resultat;
+	}
+	
+	public int finnAvtale(String varselTid, String Brukernavn) throws SQLException{
+		st = c.createStatement();
+		query = "SELECT avtaleId FROM Varsel WHERE varselTidFoorAvtale = '"+ varselTid+
+				"' AND brukernavn= '"+Brukernavn+"' ;";
+		rs = st.executeQuery(query);
+		int svar = 0;
+		while (rs.next()){
+			svar =rs.getInt("avtaleId");
+		}
+		return svar;
 	}
 	
 	public DefaultListModel alleEksterneDeltagere(int avtaleId) throws SQLException{

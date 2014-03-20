@@ -10,6 +10,7 @@ import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -48,6 +50,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private Ansatt kalenderEier = null;
 	private GregorianCalendar tid;
 	private boolean loggedIn;
+
 	/*
 	 * Contructor for the window/frame. Sets up everything.
 	 */	
@@ -109,6 +112,12 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	 * GjÃ¸r at alle komponentene i programmet kan brukes.
 	 */ 
 	
+/*	public void settalarm() throws SQLException{
+		System.out.println("førstart");
+		aa = db.getAlarmer(getUser().getBrukernavn());
+		sjekkern = new PeriodiskSjekk(this, aa);
+	}
+	*/
 	public void enableComponents(){
 		logoutItem.setEnabled(true);
 		loginItem.setEnabled(false);
@@ -131,6 +140,12 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		/*acceptNetItem.setEnabled(false);
 		connectNetItem.setEnabled(false);
 		disconnectNetItem.setEnabled(false);*/
+		
+		//forsok paa avslutte periodisk sjekk
+		/*if (sjekkern != null){
+			sjekkern.avslutt();
+		}*/
+		
 		
 		mainPanel.disableComponents();
 		
@@ -248,7 +263,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		swingThread.run();
 		alarmThread.run();
 	}
-	
+
 	public void update(){
 		tid.set(Calendar.DAY_OF_WEEK, tid.getFirstDayOfWeek());
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
