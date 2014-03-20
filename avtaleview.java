@@ -129,6 +129,7 @@ public class avtaleview extends JFrame {
 					revalidate();
 				}else{
 					frame.getUser().setStatus(1);
+					
 					db.setBekreftetStatus(frame.getUser(),avtale, 1);
 					repaint();
 					revalidate();
