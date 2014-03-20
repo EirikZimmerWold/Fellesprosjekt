@@ -108,9 +108,15 @@ public class AvtalePanel extends JPanel{
 				}
 			}
 			if(avslaatt!=0){
+				if(avslaatt==1){
+					return "1 peroson har avslått";
+				}
 				return avslaatt+" personer har avslått";
 			}else if(venter!=0){
-				return venter+" har ikke svart";
+				if(avslaatt==1){
+					return "1 person har ikke svart";
+				}
+				return venter+" personer har ikke svart";
 			}else{
 				return "Alle har bekreftet";
 			}
