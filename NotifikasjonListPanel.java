@@ -51,6 +51,7 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 	public void seNotifikasjoner() throws SQLException{
 		fjernListe();
 		Ansatt bruker = frame.getUser();
+		int i = 0;
 		if (bruker != null){
 			notifiks = db.avtalerPersonErMed(bruker);
 			String [] delt = notifiks.split("-");
@@ -58,8 +59,13 @@ public class NotifikasjonListPanel extends JPanel implements PropertyChangeListe
 				if (verdi != ""){
 					int avID = Integer.parseInt(verdi);
 					addNotifikasjonPanel(db.getBestemtAvtale(avID));
+					i++;
 				}
 			}
+		}
+		if (i != 0){
+			String not = "Notifikasjoner " + i;
+			frame.getMainPanel().updatePanelTabTitle(this, not);
 		}
 	}
 	public void addNotifikasjonPanel(Avtale avtale){

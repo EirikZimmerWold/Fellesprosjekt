@@ -125,7 +125,7 @@ public class weekdayPanel extends JPanel{
 	public void leggeTilAvtale(Ansatt eier, String tidene) throws SQLException{
 		fjerneFraListe();
 		String avtaler = tidene;
-		if (eier != null){
+		if (eier != null && avtaler != ""){
 			String [] delt = avtaler.split("#");
 			for (String dato: delt){
 						String [] avtaledag = dato.split("-");
