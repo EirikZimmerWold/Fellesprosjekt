@@ -29,6 +29,7 @@ public class AlarmThread extends Thread implements Runnable{
 			frame = swingThread.getFrame();
 			frame.revalidate();
 			while(true){
+				//Alarmer
 				time = getTime();
 				String[] currTime = time.split("-");
 				System.out.println("ALarmThread: "+  frame.getLoggedIn());
@@ -42,6 +43,9 @@ public class AlarmThread extends Thread implements Runnable{
 						}
 					}
 				}
+				
+				//Notifikasjoner
+				frame.getMainPanel().getNotifikasjonPanel().seNotifikasjoner();
 				
 				try{
 					Thread.sleep(59000);		

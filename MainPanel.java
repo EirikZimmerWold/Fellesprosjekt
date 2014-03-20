@@ -83,6 +83,13 @@ public class MainPanel extends JPanel {
 	}
 	
 	/*
+	 * Get-method for the notifikasjonPanel object 
+	 */
+	public NotifikasjonListPanel getNotifikasjonPanel(){
+		return this.notifikasjonPanel;
+	}
+	
+	/*
 	 * Enables a selection of the components
 	 */
 	public void enableComponents(){
