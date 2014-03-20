@@ -186,8 +186,8 @@ public class avtaleview extends JFrame {
 			if (frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
 				try {
 					db.fjerneAvtale(avtale);
-					dispose();
 					frame.update();
+					dispose();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

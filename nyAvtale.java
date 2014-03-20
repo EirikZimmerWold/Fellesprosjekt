@@ -678,11 +678,14 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				Rom passendeRom = (Rom) romBox.getItemAt(0);
 				
 				// m  s ke gjennom alle avtaler, og sjekke om det passende m terommet er ledig p  gitt tidspunkt
-				String datoTest = "testDato";
+				String datoSt = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+
+						"-"+startTidKl.getText();
+				String datoSl=sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+
+						"-"+sluttTidKl.getText();
 				
 				for (int s = 0; s < romBox.getItemCount(); s++) {
 					Rom rom = (Rom) romBox.getItemAt(s);
-					if (rom.getMaksAntallPersoner() >= antallDeltagere && (rom.romLedigPaaGittTidspunkt(datoTest)==true)) {
+					if (rom.getMaksAntallPersoner() >= antallDeltagere && rom.romLedigPaaGittTidspunkt(datoSt+"/"+datoSl)) {
 						if ((rom.getMaksAntallPersoner()-antallDeltagere) <= (passendeRom.getMaksAntallPersoner()-antallDeltagere) || passendeRom.getMaksAntallPersoner()-antallDeltagere <= 0) {
 							passendeRom = rom;
 						}

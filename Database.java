@@ -249,11 +249,12 @@ public class Database {
 		query = "SELECT * FROM Rom;";
 		rs = st.executeQuery(query);
 		JComboBox result = new JComboBox();
-		
 		while(rs.next()) {
 			Rom rom = new Rom(rs.getString("romNr"));
-			rom.setMaksAntallPersoner(rs.getInt("maksAntallDeltagere"));
-			result.addItem((Rom) rom);
+			if(!rom.getNavn().equals("0")){
+				rom.setMaksAntallPersoner(rs.getInt("maksAntallDeltagere"));
+				result.addItem((Rom) rom);
+			}
         }
 		return result;
 		
@@ -478,6 +479,21 @@ public class Database {
 		}
 		return deltagere;
 	}
+	
+	public DefaultListModel<String> alleAvtaler(String romNr) throws SQLException{
+		st=c.createStatement();
+		query="SELECT startTid, sluttTid FROM Avtale WHERE romNr='"+romNr+"';";
+		rs=st.executeQuery(query);
+		DefaultListModel<String> avtaler=new DefaultListModel<String>();
+		while (rs.next()){
+			String st=rs.getString("startTid");
+			String sl=rs.getString("sluttTid");
+			avtaler.addElement(st+"/"+sl);
+		}
+		System.out.println(avtaler);
+		return avtaler;
+	}
+	
 }
 
 
