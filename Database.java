@@ -33,7 +33,7 @@ public class Database {
 		}
 	}
 	
-	// Denne metoden er bare for Œ sjekke at brukeren har et brukernavn #TEST
+	// Denne metoden er bare for ï¿½ sjekke at brukeren har et brukernavn #TEST
 	public boolean checkUsername(String brukernavn) throws SQLException {
 		st = c.createStatement();
 		query = "SELECT brukernavn FROM Ansatt WHERE brukernavn = '" + brukernavn + "';";
@@ -78,7 +78,7 @@ public class Database {
 		return result;
 	}
 	
-	// Sjekker om en avtale eksisterer i databasen (brukes i nyAvtale() for Œ sjekke om en avtale opprettes eller bare endres pŒ)
+	// Sjekker om en avtale eksisterer i databasen (brukes i nyAvtale() for ï¿½ sjekke om en avtale opprettes eller bare endres pï¿½)
 	public boolean avtaleEksisterer(int id) throws SQLException {
 		st = c.createStatement();
 		query = "SELECT avtaleId FROM Avtale WHERE avtaleId = '" + id + "';";
@@ -91,7 +91,7 @@ public class Database {
 		}
 	}
 	
-	// Returnerer avtaleID til konstruktooren i Avtale. Brukes nŒr avtale opprettes / endres
+	// Returnerer avtaleID til konstruktooren i Avtale. Brukes nï¿½r avtale opprettes / endres
 	public int getNyAvtaleID() throws SQLException {
 		st = c.createStatement();
 		query = "SELECT MAX(avtaleId) FROM Avtale;";
@@ -162,7 +162,7 @@ public class Database {
 				+brukernavn+ "','" +navn+ "','"+ adresse+ "','"+ telefon +"','"+stilling+"','"+ passord+"');";
 	}
 	
-	// NŒ blir deltagerne i avtalen invitert til avtalen, med -1 som bekreftet-status fordi de ikke har svart enda
+	// Nï¿½ blir deltagerne i avtalen invitert til avtalen, med -1 som bekreftet-status fordi de ikke har svart enda
 	public void setPersonDeltarAvtale(String ansattInvitert, int id) throws SQLException {
 		st = c.createStatement();
 		int b = -1;
@@ -184,9 +184,9 @@ public class Database {
 	//fjerner valgt avtale
 	public void fjerneAvtale (Avtale avtale) throws SQLException {
 		st = c.createStatement();
-		//if setningen kan brukes når vi har satt opp at vi kan sjekke hvem som er pålogget
+		//if setningen kan brukes nï¿½r vi har satt opp at vi kan sjekke hvem som er pï¿½logget
 		//String leder = avtale.getLeder().getBrukernavn();
-		//if (vårtBrukernavn == leder){
+		//if (vï¿½rtBrukernavn == leder){
 			int av = avtale.getId();
 			query = "DELETE FROM Avtale WHERE avtaleId= '" + av+ "';";
 			st.executeUpdate(query);
@@ -317,7 +317,7 @@ public class Database {
 		return string;
 	}
 	
-	//henter navnet når man har et brukernavn
+	//henter navnet nï¿½r man har et brukernavn
 	public String getNavn(String brukernavn) throws SQLException{
 		st=c.createStatement();
 		query="SELECT navn FROM Ansatt WHERE brukernavn='"+brukernavn+"';";
@@ -365,7 +365,7 @@ public class Database {
 		}
 		return IDene;
 	}
-	//henter ut alle avtaler for en ansatt som ikke har blitt avslått
+	//henter ut alle avtaler for en ansatt som ikke har blitt avslï¿½tt
 	public String avtalerPersonErMed2(Ansatt ansatt) throws SQLException {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn();
@@ -446,13 +446,24 @@ public class Database {
 	}
 	public ArrayList<String> getAlarmer(String brukernavn) throws SQLException{
 		st = c.createStatement();
-		query = "SELECT varselTidFoorAvtale FROM Varsel WHERE brukernavn = '"+ brukernavn + "' ;";
+		query = "SELECT varselId, varselTidFoorAvtale, avtaleId FROM Varsel WHERE brukernavn = '"+ brukernavn + "' ;";
 		rs = st.executeQuery(query);
-		ArrayList<String> resultat = null;
+		ArrayList<String> resultat = new ArrayList<String>();
 		while (rs.next()){
-			resultat.add(rs.getString("varselTidFoorAvtale"));
+			resultat.add(rs.getString("varselId") + "-"+ rs.getString("varselId") + "-" + rs.getString("varselTidFoorAvtale"));
 		}
 		return resultat;
+	}
+	
+	//fjerner alarm som er fyrt av
+	public void fjerneAlarm(int id) throws SQLException {
+		st = c.createStatement();
+		//if setningen kan brukes nï¿½r vi har satt opp at vi kan sjekke hvem som er pï¿½logget
+		//String leder = avtale.getLeder().getBrukernavn();
+		//if (vï¿½rtBrukernavn == leder){
+			query = "DELETE FROM Varsel WHERE varselId= '" +id+ "';";
+			st.executeUpdate(query);
+		//}
 	}
 	
 	public int finnAvtale(String varselTid, String Brukernavn) throws SQLException{

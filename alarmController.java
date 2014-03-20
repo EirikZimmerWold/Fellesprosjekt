@@ -52,6 +52,8 @@ public class alarmController extends JFrame implements ActionListener {
 				int minutt =model.getMinute();
 				int time =model.getHour();
 				int dag = model.getDay();
+				String maaned = model.getMonth();
+				int year = model.getYear();
 				String tid ="";
 				if (valgt[1].equals("min")){
 					minutt -= Integer.parseInt(valgt[0]);
@@ -73,11 +75,11 @@ public class alarmController extends JFrame implements ActionListener {
 				}
 				else {
 					dag -= Integer.parseInt(valgt[0]);
-					}
+				}
 				if (dag<=0){
 					dag=1;
 				}
-				tid = (dag + "-"+ time + ":" + minutt);
+				tid = (year+ "-" + maaned + "-" + dag + "-"+ time + ":" + minutt);
 				try {
 					db.setAlarm(frame.getUser().getBrukernavn(), tid, avtale.getId());
 				} catch (SQLException e1) {

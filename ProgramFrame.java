@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 /*
  * Main-class
@@ -49,7 +50,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private Ansatt User = null;
 	private Ansatt kalenderEier = null;
 	private GregorianCalendar tid;
-	private boolean loggedIn;
+	private boolean loggedIn = false;
 
 	/*
 	 * Contructor for the window/frame. Sets up everything.
@@ -57,16 +58,13 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	public ProgramFrame() throws SQLException {
 		init();
 		initMenu();
-		
 		db = new Database();
-		
 		mainPanel = new MainPanel(this);
-		
 		tid = new GregorianCalendar();
-		
 		disableComponents();
-		
 		add(mainPanel);
+		mainPanel.setVisible(true);
+		setFocusable(true);
 	}
 	
 	/*
@@ -113,7 +111,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	 */ 
 	
 /*	public void settalarm() throws SQLException{
-		System.out.println("førstart");
+		System.out.println("fï¿½rstart");
 		aa = db.getAlarmer(getUser().getBrukernavn());
 		sjekkern = new PeriodiskSjekk(this, aa);
 	}
@@ -244,9 +242,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		setPreferredSize(windowSize);
 		setMaximumSize(windowSize);
 		setVisible(true);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter(){
 			@Override
-			public void windowClosed(WindowEvent e){
+			public void windowClosing(WindowEvent e) {
 				e.getWindow().dispose();
 				System.exit(0);
 			}
@@ -260,8 +259,8 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		Thread alarmThread, swingThread;
 		swingThread = new SwingThread();
 		alarmThread = new AlarmThread((SwingThread)swingThread);
-		swingThread.run();
-		alarmThread.run();
+		swingThread.start();
+		alarmThread.start();
 	}
 
 	public void update(){
@@ -285,8 +284,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	/*
 	 * Changes the menu buttons for log in and log out when you log in and log out.
 	 */
-	public void loggedIn(boolean b) {
-		if(b){
+	public void loggedIn(boolean bool) {
+		System.out.println("Logged inn " + bool);
+		if(bool){
 			loginItem.setEnabled(false);
 			logoutItem.setEnabled(true);
 			loggedIn = true;
