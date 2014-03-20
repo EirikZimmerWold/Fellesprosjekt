@@ -683,12 +683,12 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				String datoSl=sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+
 						"-"+sluttTidKl.getText();
 				
-				for (int s = 0; s < romBox.getItemCount(); s++) {
+				for (int s = romBox.getItemCount()-1; s >= 0; s--) {
 					Rom rom = (Rom) romBox.getItemAt(s);
 					if (rom.getMaksAntallPersoner() >= antallDeltagere && rom.romLedigPaaGittTidspunkt(datoSt+"/"+datoSl)) {
-						if ((rom.getMaksAntallPersoner()-antallDeltagere) <= (passendeRom.getMaksAntallPersoner()-antallDeltagere) || passendeRom.getMaksAntallPersoner()-antallDeltagere <= 0) {
+						//if ((rom.getMaksAntallPersoner()-antallDeltagere) <= (passendeRom.getMaksAntallPersoner()-antallDeltagere) || passendeRom.getMaksAntallPersoner()-antallDeltagere <= 0) {
 							passendeRom = rom;
-						}
+						//}
 					}
 				}
 				romBox.setSelectedItem(passendeRom);
