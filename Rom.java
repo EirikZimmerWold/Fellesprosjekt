@@ -91,18 +91,23 @@ public class Rom {
 				int slTime=Integer.parseInt(slKl[0]);
 				int slMin=Integer.parseInt(slKl[1]);
 				//stAvtale>sl og slAvtale>st
+				System.out.println("stAvtaleAar: " + stAvtaleAar + ", slAvtaleAar: " + slAvtaleAar + ", stAar: " + stAar + ", slAar: " + slAar);
 				if((stAvtaleAar >= slAar || stAvtaleAar <= stAar) && (slAvtaleAar >=slAar  || slAvtaleAar <= stAar)){
 					System.out.println("år ok");
 					ok = true;
+					System.out.println("stAvtaleMaaned: " + stAvtaleMaaned + ", slAvtaleMaaned: " + slAvtaleMaaned + ", stMaaned: " + stMaaned + ", slMaaned: " + slMaaned);
 					if((stAvtaleMaaned >= slMaaned || stAvtaleMaaned <= stMaaned) && (slAvtaleMaaned >=slMaaned  || slAvtaleMaaned <= stMaaned)){
 						System.out.println("måned ok");
 						ok = true;
+						System.out.println("stAvtaleDag: " + stAvtaleDag + ", slAvtaleDag: " + slAvtaleDag + ", stDag: " + stDag + ", slDag: " + slDag);
 						if((stAvtaleDag >= slDag || stAvtaleDag <= stDag) && (slAvtaleDag >=slDag  || slAvtaleDag <= stDag)){
 							System.out.println("dag ok");
 							ok = true;
+							System.out.println("stAvtaleTime: " + stAvtaleTime + ", slAvtaleTime: " + slAvtaleTime + ", stTime: " + stTime + ", slTime: " + slTime);
 							if((stAvtaleTime >= slTime || stAvtaleTime <= stTime) && (slAvtaleTime >=slTime  || slAvtaleTime <= stTime)){
 								System.out.println("time ok");
 								ok = true;
+								System.out.println("stAvtaleMin: " + stAvtaleMin + ", slAvtaleMin: " + slAvtaleMin + ", stMin: " + stMin + ", slMin: " + slMin);
 								if((stAvtaleMin > slMin || stAvtaleMin < stMin) && (slAvtaleMin > slMin  || slAvtaleMin < stMin)){
 									System.out.println("min ok");
 									ok = true;
