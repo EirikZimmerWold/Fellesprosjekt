@@ -70,7 +70,7 @@ public class Rom {
 		int slAvtaleMin=Integer.parseInt(slAvtaleKl[1]);
 		try {
 			DefaultListModel<String> avtaler=db.alleAvtaler(navn);
-			boolean ok = false;
+			boolean ok = true;
 			for(int i=0;i<avtaler.getSize();i++){
 				String[] tid=avtaler.get(i).split("/");
 				System.out.println("avtale fra database"+avtaler.get(i) + ", Tid avtale:" + dato);
@@ -92,7 +92,50 @@ public class Rom {
 				int slMin=Integer.parseInt(slKl[1]);
 				//stAvtale>sl og slAvtale>st
 				
+				if ((stAar == stAvtaleAar) && (stMaaned == stAvtaleMaaned) && (stDag == stAvtaleDag)){
+					if (stAvtaleTime == stTime && stAvtaleMin > stMin){
+						if (stAvtaleTime < slTime){
+							ok = false;
+						}
+						else if (stAvtaleTime == slTime && stAvtaleMin < slMin){
+							ok = false;
+						}
+					}
+					
+					
+					if (stAvtaleTime == slTime && stAvtaleMin < slMin){
+						if (stAvtaleTime > stTime){
+							ok = false;
+						}
+						else if (stAvtaleTime == stTime && stAvtaleMin > stMin){
+							ok = false;
+						}
+					}
+					
+					
+					if (slAvtaleTime == stTime && slAvtaleMin > stMin){
+						if (slAvtaleTime < slTime){
+							ok = false;
+						}
+						else if (slAvtaleTime == slTime && slAvtaleMin < slMin){
+							ok = false;
+						}
+					}
+					
+					
+					if (slAvtaleTime == slTime && slAvtaleMin < slMin){
+						if (slAvtaleTime > stTime){
+							ok = false;
+						}
+						else if (slAvtaleTime == stTime && slAvtaleMin > stMin){
+							ok = false;
+						}
+					}
+				}
+				
+				
 				System.out.println("Sjekket rom");
+				System.out.println(ok);
 			}
 			return ok;
 		} catch (SQLException e) {
