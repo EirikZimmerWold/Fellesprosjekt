@@ -51,7 +51,6 @@ public class Rom {
 	}
 	
 	public boolean romLedigPaaGittTidspunkt(String dato) {
-		System.out.println(dato);
 		String[] tidAvtale=dato.split("/");
 		
 		String[] stAvtale=tidAvtale[0].split("-");//startTid nyavtale
@@ -71,9 +70,10 @@ public class Rom {
 		int slAvtaleMin=Integer.parseInt(slAvtaleKl[1]);
 		try {
 			DefaultListModel<String> avtaler=db.alleAvtaler(navn);
+			boolean ok = false;
 			for(int i=0;i<avtaler.getSize();i++){
 				String[] tid=avtaler.get(i).split("/");
-				System.out.println("avtale fra database"+avtaler.get(i));
+				System.out.println("avtale fra database"+avtaler.get(i) + ", Tid avtale:" + dato);
 				
 				String[] st=tid[0].split("-");//startTid
 				int stAar=Integer.parseInt(st[0]);
@@ -91,28 +91,49 @@ public class Rom {
 				int slTime=Integer.parseInt(slKl[0]);
 				int slMin=Integer.parseInt(slKl[1]);
 				//stAvtale>sl og slAvtale>st
-				if(stAvtaleAar>=slAar&&slAvtaleAar<=stAar){
-					if(stAvtaleMaaned>=slMaaned&&slAvtaleMaaned<=stMaaned){
-						if(stAvtaleDag>=slDag&&slAvtaleDag<=stDag){
-							if(stAvtaleTime>=slTime&&slAvtaleTime<=stTime){
-								if(stAvtaleMin>=slMin&&slAvtaleMin<=stMin){
+				if((stAvtaleAar >= slAar || stAvtaleAar <= stAar) && (slAvtaleAar >=slAar  || slAvtaleAar <= stAar)){
+					System.out.println("år ok");
+					ok = true;
+					if((stAvtaleMaaned >= slMaaned || stAvtaleMaaned <= stMaaned) && (slAvtaleMaaned >=slMaaned  || slAvtaleMaaned <= stMaaned)){
+						System.out.println("måned ok");
+						ok = true;
+						if((stAvtaleDag >= slDag || stAvtaleDag <= stDag) && (slAvtaleDag >=slDag  || slAvtaleDag <= stDag)){
+							System.out.println("dag ok");
+							ok = true;
+							if((stAvtaleTime >= slTime || stAvtaleTime <= stTime) && (slAvtaleTime >=slTime  || slAvtaleTime <= stTime)){
+								System.out.println("time ok");
+								ok = true;
+								if((stAvtaleMin > slMin || stAvtaleMin < stMin) && (slAvtaleMin > slMin  || slAvtaleMin < stMin)){
+									System.out.println("min ok");
+									ok = true;
 								}else{
-									return false;
+									System.out.println("Ikke ok!");
+									ok = false;
+									break;
 								}
 							}else{
-								return false;
+								System.out.println("Ikke ok!");
+								ok = false;
+								break;
 							}
 						}else{
-							return false;
+							System.out.println("Ikke ok!");
+							ok = false;
+							break;
 						}
 					}else{
-						return false;
+						System.out.println("Ikke ok!");
+						ok = false;
+						break;
 					}
 				}else{
-					return false;
+					System.out.println("Ikke ok!");
+					ok = false;
+					break;
 				}
+				System.out.println("Sjekket rom");
 			}
-			return true;
+			return ok;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
