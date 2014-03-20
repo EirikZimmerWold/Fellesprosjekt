@@ -771,6 +771,19 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if (startTidDag.getSelectedItem()==sluttTidDag.getSelectedItem()){
+					String [] splitt = startTidKl.getText().split(":");
+					String [] splitt2 = sluttTidKl.getText().split(":");
+					if (Integer.parseInt(splitt[0])>= Integer.parseInt(splitt2[0])){
+						if (Integer.parseInt(splitt[0])>= Integer.parseInt(splitt2[0])){
+							JOptionPane.showMessageDialog(popUpWithMessage, "feil start/sluttid");
+							return;
+						}
+	    }
+					
+				}
+				
 				//ToDo: nyAvtale() skal ogs� fungere som endreAvtale(), slik at n�r man trykker p� "lagre" m� det sjekkes om en avtale opprettes
 				// eller oppdateres.Dersom den oppdateres m� den gamle slettes og en ny, oppdatert, lages.
 				
@@ -817,6 +830,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 					//lukker vinduet
 					dispose();
 					frame.update();
+					frame.revalidate();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
