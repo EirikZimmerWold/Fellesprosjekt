@@ -119,7 +119,8 @@ public class weekdayPanel extends JPanel{
         gc.weighty= 1;
         gc.gridx=0;
         gc.gridy=2;
-		
+        this.repaint();
+		this.revalidate();
 	}
 	public void leggeTilAvtale(Ansatt eier) throws SQLException{
 		fjerneFraListe();

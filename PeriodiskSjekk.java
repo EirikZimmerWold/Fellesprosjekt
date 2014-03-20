@@ -8,18 +8,24 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class PeriodiskSjekk {
 	private Timer t;
 	private ArrayList<String> alarmer;
 	private ProgramFrame frame;
 	private Database db;
+	private String message = "";
+	final JFrame popUpWithMessage = new JFrame();
 	
 	  // hent alle alarms
-	 public PeriodiskSjekk(final ProgramFrame frame) throws SQLException{
+	 public PeriodiskSjekk(ProgramFrame frame, ArrayList<String> aa){
 		 this.frame = frame;
 		 db = frame.getDB();
-		 
-		 alarmer = db.getAlarmer(frame.getUser().getBrukernavn());
+		 System.out.println("startet");
+		 alarmer = aa;
+				 
 		 t = new Timer();
 		 
 		 
@@ -37,7 +43,7 @@ public class PeriodiskSjekk {
 						 for(String a : alarmer){
 							 if(a.equals(time)) { 
 								 try {
-									frame.kjørAlarm(a);
+									kjørAlarm(a);
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -47,7 +53,7 @@ public class PeriodiskSjekk {
 						 
 					 }
 				 },
-				 0,20000); // Repeat each 60 seconds
+				 0,200); // Repeat each 60 seconds
 	 }
 	 private String getTime(){		 
 		 return new SimpleDateFormat("dd-HH:mm").format(Calendar.getInstance().getTime());
@@ -55,6 +61,13 @@ public class PeriodiskSjekk {
 	 public void avslutt(){
 		 t.cancel();
 	 }
+	 
+	 
+	public void kjørAlarm(String alarmTid) throws SQLException{
+		int avtaleID = db.finnAvtale(alarmTid, frame.getUser().getBrukernavn());
+		message = "ALARM! alarm for avtalen som starter: " + db.getBestemtAvtale(avtaleID);
+		JOptionPane.showMessageDialog(popUpWithMessage, message);
+	}
 	 
 	 
 

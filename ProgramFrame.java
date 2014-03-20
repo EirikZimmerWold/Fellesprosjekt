@@ -4,9 +4,13 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 /*
  * Main-class
@@ -45,26 +50,21 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private Ansatt User = null;
 	private Ansatt kalenderEier = null;
 	private GregorianCalendar tid;
-	private PeriodiskSjekk sjekkern;
-	
-	final JFrame popUpWithMessage = new JFrame();
-	private String message = "";
+	private boolean loggedIn = false;
+
 	/*
 	 * Contructor for the window/frame. Sets up everything.
 	 */	
 	public ProgramFrame() throws SQLException {
 		init();
 		initMenu();
-		
 		db = new Database();
-		
 		mainPanel = new MainPanel(this);
-		
 		tid = new GregorianCalendar();
-		
 		disableComponents();
-		
 		add(mainPanel);
+		mainPanel.setVisible(true);
+		setFocusable(true);
 	}
 	
 	/*
@@ -110,6 +110,12 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	 * GjÃ¸r at alle komponentene i programmet kan brukes.
 	 */ 
 	
+/*	public void settalarm() throws SQLException{
+		System.out.println("fï¿½rstart");
+		aa = db.getAlarmer(getUser().getBrukernavn());
+		sjekkern = new PeriodiskSjekk(this, aa);
+	}
+	*/
 	public void enableComponents(){
 		logoutItem.setEnabled(true);
 		loginItem.setEnabled(false);
@@ -118,10 +124,6 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		disconnectNetItem.setEnabled(true);*/
 		
 		mainPanel.enableComponents();
-		
-		
-		//et forsok paa periodisk sjekke noe
-		//sjekkern = new PeriodiskSjekk(this);
 		
 		
 	}
@@ -240,29 +242,27 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		setPreferredSize(windowSize);
 		setMaximumSize(windowSize);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent e) {
+				e.getWindow().dispose();
+				System.exit(0);
+			}
+		});
 	}
 	
 	/*
 	 * Main method of the program. Opens the window, etc.
 	 */
 	public static void main(String[] args){
-		SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-					new ProgramFrame();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-            }
-        });
+		Thread alarmThread, swingThread;
+		swingThread = new SwingThread();
+		alarmThread = new AlarmThread((SwingThread)swingThread);
+		swingThread.start();
+		alarmThread.start();
 	}
-	public void kjørAlarm(String alarmTid) throws SQLException{
-		int avtaleID = db.finnAvtale(alarmTid, getUser().getBrukernavn());
-		message = "ALARM! alarm for avtalen som starter: " + db.getBestemtAvtale(avtaleID);
-		JOptionPane.showMessageDialog(popUpWithMessage, message);
-	}
+
 	public void update(){
 		tid.set(Calendar.DAY_OF_WEEK, tid.getFirstDayOfWeek());
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -284,13 +284,23 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	/*
 	 * Changes the menu buttons for log in and log out when you log in and log out.
 	 */
-	public void loggedIn(boolean b) {
-		if(b){
+	public void loggedIn(boolean bool) {
+		System.out.println("Logged inn " + bool);
+		if(bool){
 			loginItem.setEnabled(false);
 			logoutItem.setEnabled(true);
+			loggedIn = true;
 		}else{
 			loginItem.setEnabled(true);
 			logoutItem.setEnabled(false);
+			loggedIn = false;
 		}
+	}
+	
+	/*
+	 * Gets the loggedIn bool-variable
+	 */
+	public boolean getLoggedIn(){
+		return loggedIn;
 	}
 }
