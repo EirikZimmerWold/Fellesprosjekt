@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,6 +47,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private Ansatt User = null;
 	private Ansatt kalenderEier = null;
 	private GregorianCalendar tid;
+	private boolean loggedIn;
 	/*
 	 * Contructor for the window/frame. Sets up everything.
 	 */	
@@ -225,23 +229,24 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		setPreferredSize(windowSize);
 		setMaximumSize(windowSize);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosed(WindowEvent e){
+				e.getWindow().dispose();
+				System.exit(0);
+			}
+		});
 	}
 	
 	/*
 	 * Main method of the program. Opens the window, etc.
 	 */
 	public static void main(String[] args){
-		SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-					new ProgramFrame();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-            }
-        });
+		Thread alarmThread, swingThread;
+		swingThread = new SwingThread();
+		alarmThread = new AlarmThread((SwingThread)swingThread);
+		swingThread.run();
+		alarmThread.run();
 	}
 	
 	public void update(){
@@ -269,9 +274,18 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		if(b){
 			loginItem.setEnabled(false);
 			logoutItem.setEnabled(true);
+			loggedIn = true;
 		}else{
 			loginItem.setEnabled(true);
 			logoutItem.setEnabled(false);
+			loggedIn = false;
 		}
+	}
+	
+	/*
+	 * Gets the loggedIn bool-variable
+	 */
+	public boolean getLoggedIn(){
+		return loggedIn;
 	}
 }
