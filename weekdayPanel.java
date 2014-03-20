@@ -122,28 +122,23 @@ public class weekdayPanel extends JPanel{
         this.repaint();
 		this.revalidate();
 	}
-	public void leggeTilAvtale(Ansatt eier) throws SQLException{
+	public void leggeTilAvtale(Ansatt eier, String tidene) throws SQLException{
 		fjerneFraListe();
-		String avtaler;
+		String avtaler = tidene;
 		if (eier != null){
-			avtaler = db.avtalerPersonErMed2(eier);
-			String [] delt = avtaler.split("-");
-			for (String verdi:delt){
-				if (verdi != ""){
-					int avID = Integer.parseInt(verdi);
-					Avtale avtalen=db.getBestemtAvtale(avID);
-					String [] avtaledag = avtalen.getStartTid().split("-");
-					if (Dag.equals(avtaledag[2])){
-						if(aar.equals(avtaledag[0])){
-							if (maanedsjekk(avtaledag[1],Maaned) == true){
-								addAvtalePanel(avtalen);
-							}	
+			String [] delt = avtaler.split("#");
+			for (String dato: delt){
+						String [] avtaledag = dato.split("-");
+						if (Dag.equals(avtaledag[2])){
+							if(aar.equals(avtaledag[0])){
+								if (maanedsjekk(avtaledag[1],Maaned) == true){
+									addAvtalePanel(db.getBestemtAvtale(Integer.parseInt(avtaledag[4])));
+								}	
+							}
 						}
 					}
 				}
 			}
-		}
-	}
 	public void addAvtalePanel(Avtale avtale){
 		AvtalePanel panel=new AvtalePanel(avtale, frame);
 		gbc=new GridBagConstraints();

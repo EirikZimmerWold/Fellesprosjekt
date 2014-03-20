@@ -14,7 +14,7 @@ import com.mysql.jdbc.Statement;
 
 public class Database {
 	private String url = "jdbc:mysql://mysql.stud.ntnu.no/andresly_KalenderGruppe15";
-	private String brukernavn ="andresly";
+	private String brukernavn ="andresly_eirik";
 	private String passord = "FPGruppe15";
 	private java.sql.Connection c;
 	private java.sql.Statement st;

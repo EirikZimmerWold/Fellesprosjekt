@@ -35,6 +35,8 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 	private JLabel kalendereL;
 	private JButton egenKalender;
 	private Database db;
+	private String Listavtaler = "";
+	private Ansatt Eier;
 
 	private weekdayPanel wkdPanel, wkdPanel2, wkdPanel3, wkdPanel4, wkdPanel5, wkdPanel6, wkdPanel7;
 	
@@ -93,26 +95,43 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
 		System.out.println(cal.getTime());
 		
+		
+		Eier = frame.getKalenderEier();
+		String tider = "";
+		if (Eier != null){
+			Listavtaler = db.avtalerPersonErMed2(Eier);
+			String [] delt = Listavtaler.split("-");
+			for (String verdi:delt){
+				if (verdi != ""){
+					int avID = Integer.parseInt(verdi);
+					Avtale avtalen=db.getBestemtAvtale(avID);
+					tider += avtalen.getStartTid() + "-"+avID + "#";
+				}
+			}
+		}
+		
+		
 		wkdPanel.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel.leggeTilAvtale(frame.getKalenderEier());
+		wkdPanel.leggeTilAvtale(Eier,tider);
 		wkdPanel2.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel2.leggeTilAvtale(frame.getKalenderEier());
+		wkdPanel2.leggeTilAvtale(Eier,tider);
 		wkdPanel3.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel3.leggeTilAvtale(frame.getKalenderEier());
+		wkdPanel3.leggeTilAvtale(Eier,tider);
 		wkdPanel4.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel4.leggeTilAvtale(frame.getKalenderEier());
+		wkdPanel4.leggeTilAvtale(Eier,tider);
 		wkdPanel5.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel5.leggeTilAvtale(frame.getKalenderEier());
+		wkdPanel5.leggeTilAvtale(Eier,tider);
 		wkdPanel6.setDate(getDate(cal));
 		cal.add(Calendar.DATE, 1);
-		wkdPanel6.leggeTilAvtale(frame.getKalenderEier());
+		wkdPanel6.leggeTilAvtale(Eier,tider);
 		wkdPanel7.setDate(getDate(cal));
-		wkdPanel7.leggeTilAvtale(frame.getKalenderEier());
+		wkdPanel7.leggeTilAvtale(Eier,tider);
+		
 	}
 	
 	public String getPanelName(){
