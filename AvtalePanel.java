@@ -66,7 +66,11 @@ public class AvtalePanel extends JPanel{
 		gbc.gridy=2;
 		add(leder,gbc);
 		
-		status=new JLabel(getStatus());
+		if(frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
+			status=new JLabel(getStatusVert());
+		}else{
+			status=new JLabel(getStatusInvitert());
+		}
 		gbc.gridwidth=2;
 		gbc.gridx=0;
 		gbc.gridy=3;
@@ -93,7 +97,7 @@ public class AvtalePanel extends JPanel{
 		});
 	}
 	
-	public String getStatus(){
+	public String getStatusVert(){
 		try {
 			DefaultListModel deltagere=db.alleDeltagere(avtale.getId());
 			int avslaatt=0;
@@ -119,6 +123,20 @@ public class AvtalePanel extends JPanel{
 				return venter+" personer har ikke svart";
 			}else{
 				return "Alle har bekreftet";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	public String getStatusInvitert(){
+		try {
+			int status = db.getStatus(avtale.getId(), frame.getUser().getBrukernavn());
+			if(status==-1){
+				return "Du har ikke svart";
+			}else if(status==1){
+				return "Du har bekreftet";
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
