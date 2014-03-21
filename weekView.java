@@ -87,8 +87,9 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 		cal.set(Calendar.YEAR, year);
 		cal.set(Calendar.MONTH, month-1);
 		cal.set(Calendar.DAY_OF_MONTH, monDate);
+		cal.getTime();
 		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-		
+		cal.getTime();
 		
 		
 		Eier = frame.getKalenderEier();
