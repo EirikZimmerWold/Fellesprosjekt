@@ -128,17 +128,17 @@ public class weekdayPanel extends JPanel{
 		if (eier != null && avtaler != ""){
 			String [] delt = avtaler.split("#");
 			for (String dato: delt){
-						String [] avtaledag = dato.split("-");
-						if (Dag.equals(avtaledag[2])){
-							if(aar.equals(avtaledag[0])){
-								if (maanedsjekk(avtaledag[1],Maaned) == true){
-									addAvtalePanel(db.getBestemtAvtale(Integer.parseInt(avtaledag[4])));
-								}	
-							}
-						}
+				String [] avtaledag = dato.split("-");
+				if (Dag.equals(avtaledag[2])){
+					if(aar.equals(avtaledag[0])){
+						if (maanedsjekk(avtaledag[1],Maaned) == true){
+							addAvtalePanel(db.getBestemtAvtale(Integer.parseInt(avtaledag[4])));
+						}	
 					}
 				}
 			}
+		}
+	}
 	public void addAvtalePanel(Avtale avtale){
 		AvtalePanel panel=new AvtalePanel(avtale, frame);
 		gbc=new GridBagConstraints();
