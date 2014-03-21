@@ -33,6 +33,7 @@ public class avtaleview extends JFrame {
 	JButton endre;
 	JButton slette;
 	JButton alarm;
+	JButton Exit;
 	GridBagConstraints c;
 	DefaultListModel<Ansatt> model;
 	avtaleinfo avt;
@@ -72,6 +73,8 @@ public class avtaleview extends JFrame {
 		endre.addActionListener(new EDIT());
 		slette = new JButton("slett event");
 		slette.addActionListener(new SLETT());
+		Exit = new JButton("exit");
+		Exit.addActionListener(new EXIT());
 		if(frame.getUser().getBrukernavn().equals(avtale.getLeder())){
 			
 		}
@@ -101,6 +104,8 @@ public class avtaleview extends JFrame {
 		c.gridx = 2;
 		c.gridy =1;
 		add(alarm,c);
+		c.gridy = 5;
+		add(Exit,c);
 		if(frame.getUser().getBrukernavn().equals(avtale.getLeder().getBrukernavn())){
 			c.gridy = 0;
 			add(endre, c);
@@ -155,6 +160,7 @@ public class avtaleview extends JFrame {
 					db.setBekreftetStatus(frame.getUser(), avtale, 0);
 					repaint();
 					revalidate();
+					dispose();
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -174,6 +180,7 @@ public class avtaleview extends JFrame {
 					na.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					na.setVisible(true);
 					na.endreAvtale(avtale, frame);
+					dispose();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -210,6 +217,13 @@ public class avtaleview extends JFrame {
 			//sende til alarmsiden med starttid
 			//alarm(avtale.getStartTid)
 			 
+		}
+	}
+	class EXIT implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			frame.update();
+			dispose();	 
 		}
 	}
 }
