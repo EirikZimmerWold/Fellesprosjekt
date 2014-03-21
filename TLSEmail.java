@@ -17,9 +17,11 @@ public class TLSEmail {
 	private String fromEmail = "fpgruppe15@gmail.com"; // requires valid gmal id
 	private String password = "51eppurgpf"; // correct password gmail id
 	private String toEmail; // any email id
+	private Avtale avtale;
 	
-	public void sendEmail(String toemail, String byUsername, String hostMail){
+	public void sendEmail(String toemail, String byUsername, String hostMail, Avtale avtale){
 		toEmail = toemail;
+		this.avtale=avtale;
 		
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com"); // SMTP host
@@ -37,8 +39,19 @@ public class TLSEmail {
 		
 		Session session = Session.getInstance(prop, auth);
 		// change the value of subject and body as you want
-		String body = "Du har blitt til en avtale av: "+ byUsername + "\n" +"Svar p� invitasjonen til: " + hostMail;
-		EmailHandlerUtil.sendEmail(session, toEmail, "M�teinvitasjon", body);
+		if(avtale.getRom()==null){
+			String body = "Du har blitt invitert til en avtale av: "+ byUsername + "\n"+
+					"Tid: "+avtale.getStartTid()+" - "+avtale.getSluttTid()+"\n"+
+					"Sted: "+avtale.getSted()+"\n"+
+					"Beskrivelse: "+avtale.getBeskrivelse();
+			EmailHandlerUtil.sendEmail(session, toEmail, "M�teinvitasjon", body);
+		}else{
+			String body = "Du har blitt invitert til en avtale av: "+ byUsername + "\n"+
+					"Tid: "+avtale.getStartTid()+" - "+avtale.getSluttTid()+"\n"+
+					"Rom: "+avtale.getRom()+"\n"+
+					"Beskrivelse: "+avtale.getBeskrivelse();
+			EmailHandlerUtil.sendEmail(session, toEmail, "M�teinvitasjon", body);
+		}
 	}
 
 }
