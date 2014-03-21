@@ -820,7 +820,7 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 							String invitert = ((EksternBruker) deltagerModell.get(a)).getMail();
 							try {
 								((Database) db).setEksternBrukerDeltar(invitert, avtale.getId());
-								emailHandler.sendEmail(invitert, vert.getNavn(),vert.getEmail());
+								emailHandler.sendEmail(invitert, vert.getNavn(),vert.getEmail(),avtale);
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
