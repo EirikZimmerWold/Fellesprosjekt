@@ -17,8 +17,6 @@ public class AlarmThread extends Thread implements Runnable{
 	public AlarmThread(SwingThread swingThread){
 		this.swingThread = swingThread;
 		db = new Database();
-		String time = getTime();
-		System.out.println("timetimetime:" + time);
 	}
 
 	@Override
@@ -32,10 +30,8 @@ public class AlarmThread extends Thread implements Runnable{
 				//Alarmer
 				time = getTime();
 				String[] currTime = time.split("-");
-				System.out.println("ALarmThread: "+  frame.getLoggedIn());
 				if(frame.getLoggedIn()){
 					ArrayList<String> alarmList = db.getAlarmer(frame.getUser().getBrukernavn());
-					System.out.println("AlarmThread, list:" + alarmList.size());
 					for(String alarm : alarmList){
 						String[] alarmTime = alarm.split("-");
 						if(checkAlarm(currTime, alarmTime)){
@@ -90,7 +86,8 @@ public class AlarmThread extends Thread implements Runnable{
 	 private void fireAlarmWarning(String varselId, String avtaleId){
 		 String message= "";
 		 try{
-			 message = "ALARM! alarm for avtalen som starter: " + db.getBestemtAvtale(Integer.parseInt(avtaleId));
+			 Avtale avtale = db.getBestemtAvtale(Integer.parseInt(avtaleId));
+			 message = "ALARM! \nAlarm for avtalen som starter: " + avtale.getStartTid() + "\n Rom: " + avtale.getRom();
 			 db.fjerneAlarm(Integer.parseInt(varselId));
 		 }catch(Exception e){
 			 e.printStackTrace();

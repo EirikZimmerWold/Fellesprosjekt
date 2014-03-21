@@ -54,19 +54,16 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 
 		// get start of this week in milliseconds
 		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-		System.out.println("Start of this week:       " + cal.getTime());
 		
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Date firstDay = cal.getTime();
 		String fDay = df.format(firstDay);
-		//System.out.println(fDay);
 		String[] dates = fDay.split("/");
 		
 		int date = Integer.parseInt(dates[0]); //date of this weeks monday
 		int month = Integer.parseInt(dates[1]);		//current month
 		int year = Integer.parseInt(dates[2]);		//current year
 		
-		//System.out.println(thisWeek);
 		generateThisWeek(date, month, year);
 		
 	}
@@ -85,15 +82,13 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 	}
 	
 	public void generateThisWeek(int monDate, int month, int year) throws SQLException{
-		System.out.println("dato: " + monDate + "/" + month + "/" + year);
 		cal = Calendar.getInstance();
 		
 		cal.set(Calendar.YEAR, year);
 		cal.set(Calendar.MONTH, month-1);
 		cal.set(Calendar.DAY_OF_MONTH, monDate);
-		System.out.println(cal.getTime());
 		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-		System.out.println(cal.getTime());
+		
 		
 		
 		Eier = frame.getKalenderEier();
@@ -159,7 +154,6 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			Date firstDay = cal.getTime();
 			String fDay = df.format(firstDay);
-			System.out.println(fDay);
 			String[] dates = fDay.split("/");
 		    int date = Integer.parseInt(dates[0]); 
 		    int month = Integer.parseInt(dates[1]);         
@@ -176,7 +170,6 @@ public class weekView extends JPanel implements ActionListener, ItemListener{
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			Date firstDay = cal.getTime();
 			String fDay = df.format(firstDay);
-			System.out.println(fDay);
 			String[] dates = fDay.split("/");
 		    int date = Integer.parseInt(dates[0]); 
 		    int month = Integer.parseInt(dates[1]);         

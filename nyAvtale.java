@@ -1014,30 +1014,5 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 		November,
 		Desember
 	}
-	
-	/*
-	public static void main(String[] args) throws SQLException {
-		JFrame frame = new JFrame();
-		frame.setSize(new Dimension(400,200));
-		nyAvtale pp = new nyAvtale();
-		frame.setContentPane(pp);
-		frame.setVisible(true);
-	}
-	*/
-	
-	/*
-	 * // CELL-RENDERER - brukes ikke n , men kan tas ibruk dersom vi trenger!
-	private static class JListCellRenderer extends DefaultListCellRenderer {  
-        public Component getListCellRendererComponent( JList list, Object value, int index, boolean isSelected, boolean cellHasFocus ) {  
-            Component c = super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );  
-            c.setBackground(Color.white);
-            c.setForeground(Color.black);
-            if (cellHasFocus) {
-            	c.setBackground(Color.cyan);
-            }
-            return c;  
-        }  
-    }
-    */ 
 
 }

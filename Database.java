@@ -176,7 +176,6 @@ public class Database {
 		st = c.createStatement();
 		String brukernavn = ansatt.getBrukernavn().toLowerCase();
 		int av = avtale.getId();
-		System.out.println(brukernavn + " "+ status + " " + av);
 		query = "UPDATE PersonDeltarAvtale SET bekreftet='"+status+"' WHERE brukernavn= '"+brukernavn+"' AND avtaleId = '"+av+"';";
 		st.executeUpdate(query);
 	}
@@ -184,13 +183,9 @@ public class Database {
 	//fjerner valgt avtale
 	public void fjerneAvtale (Avtale avtale) throws SQLException {
 		st = c.createStatement();
-		//if setningen kan brukes n�r vi har satt opp at vi kan sjekke hvem som er p�logget
-		//String leder = avtale.getLeder().getBrukernavn();
-		//if (v�rtBrukernavn == leder){
-			int av = avtale.getId();
-			query = "DELETE FROM Avtale WHERE avtaleId= '" + av+ "';";
-			st.executeUpdate(query);
-		//}
+		int av = avtale.getId();
+		query = "DELETE FROM Avtale WHERE avtaleId= '" + av+ "';";
+		st.executeUpdate(query);
 	}
 	
 	//gir en liste av alle deltagere i gitte avtalen
@@ -451,7 +446,7 @@ public class Database {
 		rs = st.executeQuery(query);
 		ArrayList<String> resultat = new ArrayList<String>();
 		while (rs.next()){
-			resultat.add(rs.getString("varselId") + "-"+ rs.getString("varselId") + "-" + rs.getString("varselTidFoorAvtale"));
+			resultat.add(rs.getString("varselId") + "-"+ rs.getString("avtaleId") + "-" + rs.getString("varselTidFoorAvtale"));
 		}
 		return resultat;
 	}
@@ -459,12 +454,8 @@ public class Database {
 	//fjerner alarm som er fyrt av
 	public void fjerneAlarm(int id) throws SQLException {
 		st = c.createStatement();
-		//if setningen kan brukes n�r vi har satt opp at vi kan sjekke hvem som er p�logget
-		//String leder = avtale.getLeder().getBrukernavn();
-		//if (v�rtBrukernavn == leder){
-			query = "DELETE FROM Varsel WHERE varselId= '" +id+ "';";
-			st.executeUpdate(query);
-		//}
+		query = "DELETE FROM Varsel WHERE varselId= '" +id+ "';";
+		st.executeUpdate(query);
 	}
 	
 	public int finnAvtale(String varselTid, String Brukernavn) throws SQLException{

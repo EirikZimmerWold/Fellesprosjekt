@@ -73,7 +73,6 @@ public class Rom {
 			boolean ok = true;
 			for(int i=0;i<avtaler.getSize();i++){
 				String[] tid=avtaler.get(i).split("/");
-				System.out.println("avtale fra database"+avtaler.get(i) + ", Tid avtale:" + dato);
 				
 				String[] st=tid[0].split("-");//startTid
 				int stAar=Integer.parseInt(st[0]);
@@ -132,10 +131,6 @@ public class Rom {
 						}
 					}
 				}
-				
-				
-				System.out.println("Sjekket rom");
-				System.out.println(ok);
 			}
 			return ok;
 		} catch (SQLException e) {

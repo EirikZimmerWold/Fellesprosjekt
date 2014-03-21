@@ -38,13 +38,9 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	private final Dimension windowSize = new Dimension(1350,650); 
 	private JMenuBar menubar;
 	private JMenu fileMenu;
-	//private JMenu netMenu;
 	private JMenuItem exitItem;
 	private JMenuItem loginItem;
 	private JMenuItem logoutItem;
-	/*private JMenuItem acceptNetItem;
-	private JMenuItem connectNetItem;
-	private JMenuItem disconnectNetItem;*/
 	private MainPanel mainPanel;
 	private Database db;
 	private Ansatt User = null;
@@ -108,20 +104,10 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	
 	/*
 	 * Gjør at alle komponentene i programmet kan brukes.
-	 */ 
-	
-/*	public void settalarm() throws SQLException{
-		System.out.println("f�rstart");
-		aa = db.getAlarmer(getUser().getBrukernavn());
-		sjekkern = new PeriodiskSjekk(this, aa);
-	}
 	*/
 	public void enableComponents(){
 		logoutItem.setEnabled(true);
 		loginItem.setEnabled(false);
-		/*acceptNetItem.setEnabled(true);
-		connectNetItem.setEnabled(true);
-		disconnectNetItem.setEnabled(true);*/
 		
 		mainPanel.enableComponents();
 		
@@ -135,15 +121,6 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	public void disableComponents(){
 		logoutItem.setEnabled(false);
 		loginItem.setEnabled(true);
-		/*acceptNetItem.setEnabled(false);
-		connectNetItem.setEnabled(false);
-		disconnectNetItem.setEnabled(false);*/
-		
-		//forsok paa avslutte periodisk sjekk
-		/*if (sjekkern != null){
-			sjekkern.avslutt();
-		}*/
-		
 		
 		mainPanel.disableComponents();
 		
@@ -156,7 +133,6 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		menubar = new JMenuBar();
 		
 		fileMenu = new JMenu("File");
-		//netMenu = new JMenu("Net");
 		
 		exitItem = new JMenuItem("Exit");
 		exitItem.setToolTipText("Exits the application");
@@ -179,19 +155,7 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		fileMenu.add(logoutItem);
 		fileMenu.add(exitItem);
 		
-		/*acceptNetItem = new JMenuItem("Accept incoming");
-		acceptNetItem.setToolTipText("Accept incoming connections");
-		connectNetItem = new JMenuItem("Connect");
-		connectNetItem.setToolTipText("Connect to another user");
-		disconnectNetItem = new JMenuItem("Disconnect");
-		disconnectNetItem.setToolTipText("Disconnect from user");
-		
-		netMenu.add(acceptNetItem);
-		netMenu.add(connectNetItem);
-		netMenu.add(disconnectNetItem);*/
-		
 		menubar.add(fileMenu);
-		//menubar.add(netMenu);
 		
 		setJMenuBar(menubar);
 	}
@@ -220,7 +184,6 @@ public class ProgramFrame extends JFrame implements ActionListener{
 			mainPanel.setCurrUser(this.User.getBrukernavn());
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("setUser() virker ikke");
 		}
 	}
 	
