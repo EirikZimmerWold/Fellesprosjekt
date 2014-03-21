@@ -231,7 +231,6 @@ public class ProgramFrame extends JFrame implements ActionListener{
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		Date firstDay = tid.getTime();
 		String fDay = df.format(firstDay);
-		System.out.println(fDay);
 		String[] dates = fDay.split("/");
 	    int date = Integer.parseInt(dates[0]); 
 	    int month = Integer.parseInt(dates[1]);         
@@ -248,7 +247,6 @@ public class ProgramFrame extends JFrame implements ActionListener{
 	 * Changes the menu buttons for log in and log out when you log in and log out.
 	 */
 	public void loggedIn(boolean bool) {
-		System.out.println("Logged inn " + bool);
 		if(bool){
 			loginItem.setEnabled(false);
 			logoutItem.setEnabled(true);

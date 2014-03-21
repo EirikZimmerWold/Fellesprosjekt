@@ -55,7 +55,6 @@ public class Database {
 		DefaultListModel medlemmer;
 		while (rs3.next()) {
 			int id = rs3.getInt("gruppeId");
-			System.out.println("GruppeID: " + id);
 			String navn = rs3.getString("gruppeNavn");
 			medlemmer = getDeltagereIGruppe(id);
 			//Gruppe gruppe = new Gruppe(id, navn, medlemmer);
@@ -492,7 +491,6 @@ public class Database {
 			String sl=rs.getString("sluttTid");
 			avtaler.addElement(st+"/"+sl);
 		}
-		System.out.println(avtaler);
 		return avtaler;
 	}
 	
