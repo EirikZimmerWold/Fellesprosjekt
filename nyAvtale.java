@@ -39,6 +39,8 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 	Ansatt vert;
 	Avtale oldAvtale = null;
 	ProgramFrame frame;
+	String datoSt;
+	String datoSl;
 	
 	TLSEmail emailHandler;
 	
@@ -678,9 +680,9 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 				Rom passendeRom = (Rom) romBox.getItemAt(0);
 				
 				// m  s ke gjennom alle avtaler, og sjekke om det passende m terommet er ledig p  gitt tidspunkt
-				String datoSt = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+
+				datoSt = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+
 						"-"+startTidKl.getText();
-				String datoSl=sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+
+				datoSl=sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+
 						"-"+sluttTidKl.getText();
 				
 				for (int s = romBox.getItemCount()-1; s >= 0; s--) {
@@ -771,6 +773,15 @@ public class nyAvtale<finnEtRomCheckbox> extends JFrame implements ActionListene
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				datoSt = startTidAar.getSelectedItem()+"-"+startTidMaaned.getSelectedItem()+"-"+startTidDag.getSelectedItem()+
+						"-"+startTidKl.getText();
+				datoSl=sluttTidAar.getSelectedItem()+"-"+sluttTidMaaned.getSelectedItem()+"-"+sluttTidDag.getSelectedItem()+
+						"-"+sluttTidKl.getText();
+				if (((Rom) romBox.getSelectedItem()).romLedigPaaGittTidspunkt(datoSt+"/"+datoSl) == false){
+					JOptionPane.showMessageDialog(popUpWithMessage, "Dette rommet er opptatt på det tidspunktet\nvennligst trykk på finn passende rom eller velg et annet rom og prøv igjen");
+					return;
+				}
+				
 				
 				if (startTidDag.getSelectedItem()==sluttTidDag.getSelectedItem()){
 					String [] splitt = startTidKl.getText().split(":");

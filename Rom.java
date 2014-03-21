@@ -93,21 +93,21 @@ public class Rom {
 				//stAvtale>sl og slAvtale>st
 				
 				if ((stAar == stAvtaleAar) && (stMaaned == stAvtaleMaaned) && (stDag == stAvtaleDag)){
-					if (stAvtaleTime == stTime && stAvtaleMin > stMin){
+					if (stAvtaleTime == stTime && stAvtaleMin >= stMin){
 						if (stAvtaleTime < slTime){
 							ok = false;
 						}
-						else if (stAvtaleTime == slTime && stAvtaleMin < slMin){
+						else if (stAvtaleTime == slTime && stAvtaleMin <= slMin){
 							ok = false;
 						}
 					}
 					
 					
-					if (stAvtaleTime == slTime && stAvtaleMin < slMin){
+					if (stAvtaleTime == slTime && stAvtaleMin <= slMin){
 						if (stAvtaleTime > stTime){
 							ok = false;
 						}
-						else if (stAvtaleTime == stTime && stAvtaleMin > stMin){
+						else if (stAvtaleTime == stTime && stAvtaleMin >= stMin){
 							ok = false;
 						}
 					}
